@@ -179,7 +179,8 @@ async function loadAll(){
   try{ const g = await window.storage.get(KEY_GIN,true); state.gyneco = g?JSON.parse(g.value):[]; }catch(e){ state.gyneco=[]; }
   try{ const ls=localStorage.getItem(KEY_SET); if(ls){ const saved=JSON.parse(ls); state.settings={...state.settings,...saved}; if(!state.settings.appsScriptUrl) state.settings.appsScriptUrl='https://script.google.com/macros/s/AKfycbylSTvxHReIjEz-F_5o8kLbo9DcQCKYJ1E9BbfJhRZ4xmtvMpKo1oGVYY-Ljtn2NpfY/exec'; } }catch(e){}
   try{ const s = await window.storage.get(KEY_SET,true); if(s){ const saved=JSON.parse(s.value); state.settings={...state.settings,...saved}; if(!state.settings.appsScriptUrl) state.settings.appsScriptUrl='https://script.google.com/macros/s/AKfycbylSTvxHReIjEz-F_5o8kLbo9DcQCKYJ1E9BbfJhRZ4xmtvMpKo1oGVYY-Ljtn2NpfY/exec'; } }catch(e){}
-  try{ const lg=localStorage.getItem(KEY_GIN); if(lg){ const gd=JSON.parse(lg); if(gd.length&&!state.gyneco.length) state.gyneco=gd; } }catch(e){}
+  try{ const lo=localStorage.getItem(KEY_OBST); if(lo){ const od=JSON.parse(lo); if(od&&od.length&&!state.obstetric.length) state.obstetric=od; } }catch(e){}
+  try{ const lg=localStorage.getItem(KEY_GIN); if(lg){ const gd=JSON.parse(lg); if(gd&&gd.length&&!state.gyneco.length) state.gyneco=gd; } }catch(e){}
 
   // Migrate and render immediately with local data
   state.obstetric = state.obstetric.map(migrateObst);
