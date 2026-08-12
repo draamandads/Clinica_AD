@@ -1,0 +1,2781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Clínica AD · Controle de Partos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>:root{--bg:#F7F5F0; --surface:#FFFFFF; --border:#E3DED2; --ink:#26241F; --ink-muted:#79735F; --teal:#2F5D62; --teal-light:#E4EEED; --teal-dark:#1E3F43; --brick:#9C5233; --brick-light:#F3E6DC; --alert:#B23A32; --alert-light:#FBEAE8; --warn:#B8863B; --warn-light:#FBF1E1; --ok:#3F7A52; --ok-light:#E7F1E9; --radius:10px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5}h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0 0 4px 0;letter-spacing:-0.01em}.mono{font-family:'IBM Plex Mono',monospace}#app{display:flex;min-height:100vh}.sidebar{width:220px;background:var(--teal-dark);color:#EDEBE3;flex-shrink:0;padding:24px 16px;display:flex;flex-direction:column;gap:4px}.brand{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}.brand-sub{font-size:11.5px;color:#B9CFCE;margin-bottom:28px}.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#D9E6E5;cursor:pointer;font-size:13.5px;font-weight:500;border:none;background:transparent;text-align:left;width:100%}.nav-btn:hover{background:#28494D}.nav-btn.active{background:var(--teal);color:#fff}.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0}.sidebar-foot{margin-top:auto;font-size:11px;color:#8FADAC;padding-top:16px}.sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}.sync-ok{background:#4CAF50}.sync-off{background:#999}.sync-err{background:var(--alert)}main{flex:1;padding:28px 36px;max-width:1320px;overflow-y:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;flex-wrap:wrap;gap:12px}.page-head p{color:var(--ink-muted);margin:2px 0 0;font-size:13px}.btn{border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}.btn-primary{background:var(--teal);color:#fff}.btn-primary:hover{background:var(--teal-dark)}.btn-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border)}.btn-secondary:hover{background:#F1EEE6}.btn-brick{background:var(--brick);color:#fff}.btn-danger{background:var(--alert);color:#fff}.btn-ok{background:var(--ok);color:#fff}.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px}.btn:disabled{opacity:.45;cursor:not-allowed}.grid{display:grid;gap:16px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}@media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr}}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}.stat-card .num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--teal-dark);line-height:1}.stat-card .label{font-size:12.5px;color:var(--ink-muted);margin-top:6px}.stat-card .sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px}.section-title{font-size:15px;margin:28px 0 10px;color:var(--teal-dark)}.section-title:first-child{margin-top:0}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}td{padding:9px 10px;border-bottom:1px solid #EEEAE0;vertical-align:middle}tr:hover td{background:#FBFAF7}.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}.tag-teal{background:var(--teal-light);color:var(--teal-dark)}.tag-brick{background:var(--brick-light);color:var(--brick)}.tag-alert{background:var(--alert-light);color:var(--alert)}.tag-warn{background:var(--warn-light);color:var(--warn)}.tag-ok{background:var(--ok-light);color:var(--ok)}.tag-muted{background:#EFEBE2;color:var(--ink-muted)}.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}.empty h3{color:var(--ink);margin-bottom:6px}.gest-timeline{position:relative;height:26px;background:#EFEBE2;border-radius:6px;overflow:hidden;margin:6px 0}.gest-seg{position:absolute;top:0;height:100%}.gest-marker{position:absolute;top:-3px;width:2px;height:32px;background:var(--ink);opacity:.55}.gest-marker-label{position:absolute;top:-16px;font-size:9.5px;color:var(--ink-muted);white-space:nowrap;transform:translateX(-50%)}.gest-now{position:absolute;top:-4px;width:12px;height:34px;background:transparent}.gest-now::after{content:'';position:absolute;left:50%;top:0;width:3px;height:100%;background:var(--teal-dark);transform:translateX(-50%);border-radius:2px}.gest-now-label{position:absolute;top:-16px;font-size:10px;font-weight:700;color:var(--teal-dark);transform:translateX(-50%);white-space:nowrap}.month-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}@media(max-width:900px){.month-grid{grid-template-columns:repeat(3,1fr)}}.month-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s}.month-card:hover{border-color:var(--teal)}.month-card.current{border-color:var(--teal);background:var(--teal-light)}.month-card.past{opacity:.6}.month-card .mc-label{font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.03em}.month-card .mc-count{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal-dark);line-height:1;margin:4px 0}.month-card .mc-names{font-size:11px;color:var(--ink-muted);line-height:1.6}.month-card.expanded .mc-names{max-height:none}.overlay{position:fixed;inset:0;background:rgba(30,28,22,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}.modal{background:var(--surface);border-radius:14px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;padding:26px 28px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.close-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-muted);line-height:1}.field{margin-bottom:14px}.field label{display:block;font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13.5px;background:#FBFAF7}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--teal);outline-offset:0;background:#fff}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EEEAE0}.checkrow:last-child{border-bottom:none}.checkrow input[type=checkbox]{width:17px;height:17px;accent-color:var(--teal);flex-shrink:0}.checkrow .ct{flex:1}.checkrow .ct .t{font-weight:600;font-size:13px}.checkrow .ct .d{font-size:11.5px;color:var(--ink-muted)}.checkrow .dt{width:155px}.checkrow .dt input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;font-family:inherit;background:#FBFAF7}.type-switch{display:flex;gap:8px;margin-bottom:18px}.type-switch button{flex:1;padding:14px;border-radius:9px;border:1.5px solid var(--border);background:#FBFAF7;cursor:pointer;font-weight:600;font-size:13.5px;text-align:left;font-family:inherit}.type-switch button.sel{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark)}.type-switch small{display:block;font-weight:400;color:var(--ink-muted);font-size:11px;margin-top:2px}.hist-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;align-items:center}.hist-item:last-child{border-bottom:none}.banner{padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start}.banner-alert{background:var(--alert-light);color:var(--alert)}.banner-warn{background:var(--warn-light);color:var(--warn)}.banner-note{background:var(--teal-light);color:var(--teal-dark)}.toast{position:fixed;bottom:24px;right:24px;background:var(--teal-dark);color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;z-index:100;box-shadow:0 6px 20px rgba(0,0,0,.2)}.link-btn{background:none;border:none;color:var(--teal);font-weight:600;cursor:pointer;font-size:12.5px;padding:0;font-family:inherit}.muted-x{color:var(--ink-muted);font-size:12px}.card-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--border)}.card-section-title:first-child{margin-top:0;padding-top:0;border-top:none}.parto-badge{display:inline-flex;align-items:center;gap:6px;background:var(--ok-light);color:var(--ok);padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:700;margin-bottom:12px}</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+/* SEED_PATIENTS removido — dados carregados do Sheets ou localStorage */
+const SEED_PATIENTS = [];
+
+
+let state = {
+  view: 'dashboard',
+  obstetric: [],
+  gyneco: [],
+  settings: {
+    metaAnualPartos: 60,
+    valorConsultaObstetrica: 0,
+    valorConsultaGineco: 0,
+    pin: '',
+    appsScriptUrl: 'https://script.google.com/macros/s/AKfycbylSTvxHReIjEz-F_5o8kLbo9DcQCKYJ1E9BbfJhRZ4xmtvMpKo1oGVYY-Ljtn2NpfY/exec',
+  },
+  modal: null,
+  loading: true,
+  novaPacienteTipo: null,
+  toast: null,
+  unlocked: false,
+  pinError: false,
+  expandedMonth: null,
+  syncStatus: 'off', // 'off' | 'ok' | 'err'
+  monthYearFilter: Math.max(new Date().getFullYear(), 2026),
+};
+
+const KEY_OBST = 'patients-obstetric';
+const KEY_GIN  = 'patients-gyneco';
+const KEY_SET  = 'settings';
+
+
+function newObstPatient(){
+  return {
+    id: crypto.randomUUID(),
+    nome: '', telefone: '', dum: '',
+    cadastradoEm: isoDate(today()),
+    retornoMarcado: '',
+    interesseConfirmado: false,
+    dataApresParc: '',
+    apresentadoParceiro: false, dataApresentacao: '',
+    valorContrato: 0,
+    negociacao: '',
+    contratoAssinado: false, dataContrato: '',
+    formaPagamento: '',
+    entrada: 0, dataEntrada: '',
+    pgtoFinalizado: false,
+    notaFiscalEnviada: false,
+    parto: { realizado: false, data: '', hospital: '', equipObstetrica: '', viaParto: '', auxilio: false, auxilioNome: '', medicoTitular: '', observacao: '', temMedicoParceiro: false, nomeMedicoParceiro: '', funcoesParceiro: {apresentacao:false,inducao:false,conducao:false,auxiliar:false,titular:false,visita1:false,visita2:false,outros:''}, parceiroAssinou: false, dataAssinaturaParceiro: '' },
+    posParto: { duasSemanas:{feita:false,data:''}, quarentaDias:{feita:false,data:''}, seisMeses:{feita:false,data:''} },
+    pagamentos: [],
+    numeroContrato: '',
+    migradaDeGineco: false,
+    dppManual: '',
+    desistiu: false,
+    dataDesistencia: '',
+    motivoDesistencia: '',
+  };
+}
+
+
+function migrateObst(p){
+  if(!p.parto) p.parto = { realizado: !!p.dataParto, data: p.dataParto||'', hospital:'', equipObstetrica:'', viaParto:'', auxilio:false, auxilioNome:'', observacao:'' };
+  if(p.parto.data===undefined) p.parto.data = p.dataParto||'';
+  if(p.parto.realizado===undefined) p.parto.realizado = !!p.dataParto;
+  if(!p.parto.medicoTitular) p.parto.medicoTitular = '';
+  if(p.parto.temMedicoParceiro===undefined) p.parto.temMedicoParceiro = false;
+  if(!p.parto.nomeMedicoParceiro) p.parto.nomeMedicoParceiro = '';
+  if(!p.parto.funcoesParceiro) p.parto.funcoesParceiro = {apresentacao:false,inducao:false,conducao:false,auxiliar:false,titular:false,visita1:false,visita2:false,outros:''};
+  else{if(p.parto.funcoesParceiro.apresentacao===undefined)p.parto.funcoesParceiro.apresentacao=false;if(p.parto.funcoesParceiro.visita1===undefined)p.parto.funcoesParceiro.visita1=false;if(p.parto.funcoesParceiro.visita2===undefined)p.parto.funcoesParceiro.visita2=false;}
+  if(p.parto.parceiroAssinou===undefined) p.parto.parceiroAssinou = false;
+  if(!p.parto.dataAssinaturaParceiro) p.parto.dataAssinaturaParceiro = '';
+  if(p.migradaParaGineco===undefined) p.migradaParaGineco = false;
+  if(p.migradaDeGineco===undefined) p.migradaDeGineco = false;
+  if(!p.dppManual) p.dppManual = '';
+  if(p.desistiu===undefined) p.desistiu = false;
+  if(!p.dataDesistencia) p.dataDesistencia = '';
+  if(!p.motivoDesistencia) p.motivoDesistencia = '';
+  if(!p.pagamentos) p.pagamentos = [];
+  if(!p.numeroContrato) p.numeroContrato = '';
+  if(!p.negociacao) p.negociacao = '';
+  if(!p.formaPagamento) p.formaPagamento = '';
+  if(p.entrada===undefined) p.entrada = 0;
+  if(!p.dataEntrada) p.dataEntrada = '';
+  if(p.pgtoFinalizado===undefined) p.pgtoFinalizado = false;
+  if(p.notaFiscalEnviada===undefined) p.notaFiscalEnviada = false;
+  if(!p.retornoMarcado) p.retornoMarcado = '';
+  if(p.interesseConfirmado===undefined) p.interesseConfirmado = false;
+  if(!p.dataApresParc) p.dataApresParc = '';
+  if(p.valorContrato===undefined) p.valorContrato = 0;
+  if(!p.dataApresentacao) p.dataApresentacao = p.dataApresentacao||'';
+  (p.consultas||[]).forEach(c=>{
+    if(c.statusPagamento===undefined){ c.statusPagamento = c.pago?'pendente':'isenta'; c.valor = c.valor||(c.pago?(state.settings.valorConsultaObstetrica||0):0); }
+  });
+  if(!p.posParto) p.posParto = { duasSemanas:{feita:false,data:''}, quarentaDias:{feita:false,data:''}, seisMeses:{feita:false,data:''} };
+  // Auto-marcar retornos passados para partos antigos
+  if(p.parto.realizado && p.parto.data){
+    const dp=parseDate(p.parto.data);
+    if(dp){
+      const dias=diffDays(today(),dp);
+      if(dias>21 && !p.posParto.duasSemanas.feita)
+        p.posParto.duasSemanas = {feita:true, data:''};
+      if(dias>50 && !p.posParto.quarentaDias.feita)
+        p.posParto.quarentaDias = {feita:true, data:''};
+    }
+    // Se parto realizado: contrato e apresentação ao parceiro são dados como concluídos
+    if(!p.contratoAssinado) p.contratoAssinado = true;
+    if(!p.apresentadoParceiro) p.apresentadoParceiro = true;
+  }
+  return p;
+}
+function migrateGin(p){
+  if(!p.consultas) p.consultas = [{id:crypto.randomUUID(), data:p.ultimaConsulta||p.cadastradoEm, valor:state.settings.valorConsultaGineco||0, statusPagamento:'pendente'}];
+  if(!p.papResultado) p.papResultado = ''; // 'normal' | 'alterado' | ''
+  if(p.pacienteNotificada===undefined) p.pacienteNotificada = false;
+  if(p.migradaDeObstetrica===undefined) p.migradaDeObstetrica = false;
+  if(p.migradaParaObstetrica===undefined) p.migradaParaObstetrica = false;
+  if(!p.diu) p.diu = {interesse:false,disponivel:false,agendamento:false,insercao:false,pagamento:false,nf:false};
+  else {
+    if(p.diu.interesse===undefined) p.diu.interesse=false;
+    if(p.diu.disponivel===undefined) p.diu.disponivel=false;
+    if(p.diu.agendamento===undefined) p.diu.agendamento=false;
+    if(p.diu.insercao===undefined) p.diu.insercao=false;
+    if(p.diu.pagamento===undefined) p.diu.pagamento=false;
+    if(p.diu.nf===undefined) p.diu.nf=false;
+  }
+  if(!p.papNomeMedico) p.papNomeMedico = '';
+  if(p.papMedicoResponsavel===undefined) p.papMedicoResponsavel = false;
+  return p;
+}
+
+
+async function fetchFromSheets(showFeedback=false){
+  if(!state.settings.appsScriptUrl) return false;
+  try{
+    state.syncStatus='syncing';
+    if(showFeedback) render();
+    const res = await fetch(state.settings.appsScriptUrl+'?t='+Date.now(), {method:'GET',redirect:'follow'});
+    const data = await res.json();
+    if(data.patients && data.patients.length){
+      state.obstetric = data.patients.map(migrateObst);
+      await saveLocal(KEY_OBST, state.obstetric);
+    }
+    if(data.gyneco && data.gyneco.length){
+      state.gyneco = data.gyneco.map(migrateGin);
+      await saveLocal(KEY_GIN, state.gyneco);
+    }
+    const total = (data.patients||[]).length + (data.gyneco||[]).length;
+    if(total > 0){
+      state.syncStatus='ok';
+      if(showFeedback) showToast('✓ Sheets atualizado: '+( data.patients||[]).length+' gestantes, '+(data.gyneco||[]).length+' ginecológicas.');
+      return true;
+    }
+    state.syncStatus='err';
+    if(showFeedback) showToast('Sheets retornou vazio. Verifique a planilha.');
+    return false;
+  }catch(e){
+    state.syncStatus='err';
+    if(showFeedback) showToast('Não foi possível conectar ao Sheets. Verifique a URL.');
+    console.log('Sheets fetch error:', e);
+    return false;
+  }
+}
+
+async function loadAll(){
+  // Load local first (instant)
+  try{ const o = await window.storage.get(KEY_OBST,true); state.obstetric = o&&JSON.parse(o.value).length?JSON.parse(o.value):[]; }catch(e){ state.obstetric=[]; }
+  try{ const g = await window.storage.get(KEY_GIN,true); state.gyneco = g?JSON.parse(g.value):[]; }catch(e){ state.gyneco=[]; }
+  try{ const ls=localStorage.getItem(KEY_SET); if(ls){ const saved=JSON.parse(ls); state.settings={...state.settings,...saved}; if(!state.settings.appsScriptUrl) state.settings.appsScriptUrl='https://script.google.com/macros/s/AKfycbylSTvxHReIjEz-F_5o8kLbo9DcQCKYJ1E9BbfJhRZ4xmtvMpKo1oGVYY-Ljtn2NpfY/exec'; } }catch(e){}
+  try{ const s = await window.storage.get(KEY_SET,true); if(s){ const saved=JSON.parse(s.value); state.settings={...state.settings,...saved}; if(!state.settings.appsScriptUrl) state.settings.appsScriptUrl='https://script.google.com/macros/s/AKfycbylSTvxHReIjEz-F_5o8kLbo9DcQCKYJ1E9BbfJhRZ4xmtvMpKo1oGVYY-Ljtn2NpfY/exec'; } }catch(e){}
+  try{ const lg=localStorage.getItem(KEY_GIN); if(lg){ const gd=JSON.parse(lg); if(gd.length&&!state.gyneco.length) state.gyneco=gd; } }catch(e){}
+
+  // Migrate and render immediately with local data
+  state.obstetric = state.obstetric.map(migrateObst);
+  state.gyneco = state.gyneco.map(migrateGin);
+  state.loading = false;
+  render();
+
+  // Fetch Sheets in background (non-blocking)
+  if(state.settings.appsScriptUrl){
+    fetchFromSheets(false).then(ok=>{
+      if(ok){
+        state.obstetric = state.obstetric.map(migrateObst);
+        state.gyneco = state.gyneco.map(migrateGin);
+        render();
+      }
+    });
+  } else {
+    state.syncStatus='off';
+  }
+}
+
+async function saveLocal(key, data){
+  try{ await window.storage.set(key, JSON.stringify(data), true); }
+  catch(e){ /* storage unavailable when running locally */ }
+  // localStorage persists between sessions for local file usage
+  try{ localStorage.setItem(key, JSON.stringify(data)); }catch(e){}
+}
+async function saveSet(){
+  try{ await window.storage.set(KEY_SET,JSON.stringify(state.settings),true); }catch(e){}
+  try{ localStorage.setItem(KEY_SET,JSON.stringify(state.settings)); }catch(e){}
+}
+
+async function syncToSheets(action, payload){
+  if(!state.settings.appsScriptUrl) return;
+  try{
+    await fetch(state.settings.appsScriptUrl, {
+      method:'POST', mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify({action, ...payload})
+    });
+    state.syncStatus = 'ok';
+  }catch(e){ state.syncStatus = 'err'; showToast('Sync com Sheets falhou. Dados salvos localmente.'); }
+}
+
+async function saveObst(){
+  await saveLocal(KEY_OBST, state.obstetric);
+  // Per-patient sync happens in commitObstEdit
+}
+async function saveGin(){
+  await saveLocal(KEY_GIN, state.gyneco);
+}
+
+async function fetchFreshList(key){
+  try{ const o = await window.storage.get(key,true); return o?JSON.parse(o.value):[]; }catch(e){ return []; }
+}
+async function addPatient(key, patient){
+  const list = key === KEY_OBST ? [...state.obstetric] : [...state.gyneco];
+  list.push(patient);
+  await saveLocal(key, list);
+  const action = key === KEY_OBST ? 'upsert' : 'upsertGin';
+  await syncToSheets(action, {patient});
+  return list;
+}
+async function commitObstEdit(p){
+  const idx = state.obstetric.findIndex(x=>x.id===p.id);
+  if(idx>=0) state.obstetric[idx]=p; else state.obstetric.push(p);
+  await saveLocal(KEY_OBST, state.obstetric);
+  await syncToSheets('upsert', {patient: p});
+}
+async function commitGinEdit(p){
+  const idx = state.gyneco.findIndex(x=>x.id===p.id);
+  if(idx>=0) state.gyneco[idx]=p; else state.gyneco.push(p);
+  await saveLocal(KEY_GIN, state.gyneco);
+  await syncToSheets('upsertGin', {patient: p});
+}
+
+function openObstetricModal(id){
+  state.modal = { type:'detalheObstetrica', id, editMode:false };
+  render();
+}
+function openGinecoModal(id){
+  state.modal = { type:'detalheGineco', id };
+  render();
+}
+function showToast(msg){ state.toast=msg; render(); setTimeout(()=>{state.toast=null;render();},2800); }
+
+
+const DAY=86400000;
+function today(){ const d=new Date(); d.setHours(0,0,0,0); return d; }
+function parseDate(s){ if(!s) return null; const d=new Date(s+'T00:00:00'); return isNaN(d)?null:d; }
+function fmtDate(d){
+  if(!d) return '—';
+  if(typeof d==='string') d=parseDate(d);
+  else if(!(d instanceof Date)) d=new Date(d);
+  if(!d||isNaN(d)) return '—';
+  return d.toLocaleDateString('pt-BR');
+}
+function isoDate(d){ return d.toISOString().slice(0,10); }
+function addDays(d,n){ return new Date(d.getTime()+n*DAY); }
+function diffDays(a,b){ return Math.floor((a.getTime()-b.getTime())/DAY); }
+function calcDPP(dumStr,dppManual){ if(dumStr){const dum=parseDate(dumStr);if(dum) return addDays(dum,280);} if(dppManual){const d=parseDate(dppManual);if(d) return d;} return null; }
+function calcSemanasNaData(dumStr,dataRef,dppManual){
+  let dum=parseDate(dumStr);
+  if(!dum&&dppManual){const dpp=parseDate(dppManual);if(dpp) dum=addDays(dpp,-280);}
+  if(!dum) return {semanas:0,dias:0};
+  const d=diffDays(dataRef,dum);
+  return {semanas:Math.max(0,Math.floor(d/7)),dias:Math.max(0,d%7)};
+}
+function calcDataApresParc(dumStr){
+  const dpp=calcDPP(dumStr); if(!dpp) return null;
+  return addDays(dpp,-98); // DPP - 98 dias = semana 26
+}
+function faseDaSemana(semanas){
+  if(semanas<28) return {tipo:'mensal',intervalo:30,label:'Mensal'};
+  if(semanas<37) return {tipo:'quinzenal',intervalo:15,label:'Quinzenal'};
+  return {tipo:'semanal',intervalo:7,label:'Semanal'};
+}
+function proximaConsultaSugerida(p){
+  const hist=p.consultas||[];
+  const ultima=hist.length?hist[hist.length-1]:null;
+  const dataBase=ultima?parseDate(ultima.data):parseDate(p.cadastradoEm);
+  if(!dataBase) return null;
+  const {semanas}=calcSemanasNaData(p.dum,dataBase,p.dppManual);
+  const fase=faseDaSemana(semanas);
+  const proxData=addDays(dataBase,fase.intervalo);
+  const {semanas:semanasProx}=calcSemanasNaData(p.dum,proxData,p.dppManual);
+  const faseProx=faseDaSemana(semanasProx);
+  const pago=calcularPagoAlternado(hist,semanasProx);
+  return {data:proxData,semanas:semanasProx,tipo:faseProx.tipo,label:faseProx.label,pago};
+}
+function calcularPagoAlternado(hist,semanasNovaConsulta){
+  if(semanasNovaConsulta<28) return true;
+  const pos28=(hist||[]).filter(c=>c.semanas>=28);
+  if(pos28.length===0) return true;
+  return !pos28[pos28.length-1].pago;
+}
+function registrarConsultaRealizada(p,dataStr){
+  const dataRef=parseDate(dataStr);
+  const {semanas}=calcSemanasNaData(p.dum,dataRef,p.dppManual);
+  const fase=faseDaSemana(semanas);
+  const pago=calcularPagoAlternado(p.consultas,semanas);
+  p.consultas.push({id:crypto.randomUUID(),data:dataStr,semanas,tipo:fase.tipo,pago,
+    valor:pago?(state.settings.valorConsultaObstetrica||0):0,
+    statusPagamento:pago?'pendente':'isenta'});
+  p.consultas.sort((a,b)=>a.data.localeCompare(b.data));
+}
+
+
+function alertasObstetrica(p){
+  const alerts=[];
+  const t=today();
+  const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+  if(!p.parto.realizado){
+    // Contrato
+    if(!p.contratoAssinado){
+      if(semanas>=24) alerts.push({level:'alert',msg:`⚠️ Contrato em atraso — deveria ter sido assinado até 24 semanas. Gestação atual: ${semanas} semanas.`});
+      else if(semanas>=20) alerts.push({level:'warn',msg:`⏰ Contrato não assinado — faltam ${24-semanas} semanas para o prazo (limite: 24 semanas).`});
+    }
+    // Apresentação ao parceiro
+    if(!p.apresentadoParceiro){
+      if(semanas>=28) alerts.push({level:'alert',msg:`⚠️ Apresentação ao parceiro em atraso — janela de 24–28 semanas ultrapassada. Gestação atual: ${semanas} semanas.`});
+      else if(semanas>=24) alerts.push({level:'warn',msg:`⏰ Apresentar ao médico parceiro — janela ideal: 24–28 semanas. Gestação atual: ${semanas} semanas.`});
+    }
+  }
+  if(p.parto.realizado && p.parto.data){
+    const dp=parseDate(p.parto.data);
+    const pp=p.posParto;
+    const dias=diffDays(t,dp);
+    if(dias>=0&&!pp.duasSemanas.feita) alerts.push({level:'warn',msg:`⏰ Retorno de 2 semanas pós-parto${dias<14?' em '+(14-dias)+'d':''}${dias>=14?' — no prazo':''}.`});
+    if(dias>=10&&!pp.quarentaDias.feita) alerts.push({level:'warn',msg:`⏰ Retorno de 40 dias pós-parto${dias<40?' em '+(40-dias)+'d':''}${dias>=40?' — no prazo':''}.`});
+    if(dias>=150&&!pp.seisMeses.feita) alerts.push({level:'warn',msg:`⏰ Retorno de 6 meses pós-parto${dias<180?' em '+(180-dias)+'d':''}${dias>=180?' — no prazo':''}.`});
+  }
+  return alerts;
+}
+function alertasGineco(p){
+  const alerts=[];
+  const t=today();
+  // Papanicolau coletado mas não checado
+  if(p.papColetado&&!p.papChecado){
+    const dc=parseDate(p.dataColeta);
+    const diasEspera = dc ? diffDays(t,dc) : 0;
+    if(dc&&diasEspera>=21) alerts.push({level:'warn',msg:`⏰ Papanicolau coletado há ${diasEspera} dias — resultado ainda não conferido.`});
+  }
+  // Resultado checado: ação necessária
+  if(p.papColetado&&p.papChecado){
+    if(p.papResultado==='alterado'&&!p.retornoMarcado)
+      alerts.push({level:'alert',msg:'⚠️ Papanicolau ALTERADO — agendar retorno urgente com a Dra. Amanda.'});
+    if(p.papResultado==='normal'&&!p.pacienteNotificada)
+      alerts.push({level:'warn',msg:'⏰ Papanicolau normal — enviar devolutiva positiva para a paciente.'});
+  }
+  // Consulta em atraso
+  if(p.ultimaConsulta){
+    const prox=proximoRetornoGineco(p);
+    if(prox){
+      const dias=diffDays(prox,t);
+      const intervaloLabel=({'30dias':'30 dias','3meses':'3 meses','6meses':'6 meses','1ano':'1 ano'}[p.seguimento]||'1 ano');
+      if(dias<0) alerts.push({level:'alert',msg:`⚠️ Retorno de ${intervaloLabel} em atraso — deveria ter retornado em ${fmtDate(prox)} (${Math.abs(dias)} dias atrás).`});
+      else if(dias<=30) alerts.push({level:'warn',msg:`⏰ Retorno de seguimento (${intervaloLabel}) previsto para ${fmtDate(prox)} — faltam ${dias} dias.`});
+    }
+  }
+  return alerts;
+}
+function statusDIU(p){
+  const d=p.diu||{};
+  if(!d.interesse) return null;
+  if(d.insercao&&(!d.pagamento||!d.nf)) return {level:'warn',label:'💳 Financeiro DIU pendente'};
+  if(d.insercao&&d.pagamento&&d.nf) return {level:'ok',label:'✓ DIU concluído'};
+  if(d.agendamento) return {level:'warn',label:'⏰ Inserção DIU pendente'};
+  if(d.disponivel) return {level:'warn',label:'⏰ Agendamento DIU pendente'};
+  return {level:'muted',label:'Aguardando DIU ser disponibilizado'};
+}
+
+function proximoRetornoGineco(p){
+  const baseStr = p.ultimaConsulta || p.cadastradoEm;
+  if(!baseStr) return null;
+  const base=parseDate(baseStr);
+  if(!base) return null;
+  const dias={'30dias':30,'3meses':90,'6meses':182,'1ano':365}[p.seguimento]||365;
+  return addDays(base,dias);
+}
+
+
+function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild; }
+function tag(text,kind){ return `<span class="tag tag-${kind}">${text}</span>`; }
+function alertBanner(a){ return `<div class="banner banner-${a.level}">${a.msg}</div>`; }
+function gestTimeline(semanas){
+  const pct=(n)=>Math.min(100,(n/40)*100);
+  const cur=Math.min(semanas,42);
+  return `<div style="position:relative;padding-top:14px;">
+    <div class="gest-timeline">
+      <div class="gest-seg" style="left:0;width:${pct(28)}%;background:var(--teal-light);"></div>
+      <div class="gest-seg" style="left:${pct(28)}%;width:${pct(37)-pct(28)}%;background:#CFE0DF;"></div>
+      <div class="gest-seg" style="left:${pct(37)}%;width:${100-pct(37)}%;background:var(--teal);"></div>
+      <div class="gest-marker" style="left:${pct(24)}%;"></div>
+      <div class="gest-marker" style="left:${pct(28)}%;"></div>
+      <div class="gest-marker" style="left:${pct(37)}%;"></div>
+      <div class="gest-now" style="left:${pct(cur)}%;"></div>
+    </div>
+    <div class="gest-marker-label" style="left:${pct(24)}%;">24s</div>
+    <div class="gest-marker-label" style="left:${pct(28)}%;">28s</div>
+    <div class="gest-marker-label" style="left:${pct(37)}%;">37s</div>
+    <div class="gest-now-label" style="left:${pct(cur)}%;">${semanas}s</div>
+  </div>`;
+}
+
+
+function renderApp(){
+  const root=document.getElementById('app');
+  root.innerHTML='';
+  if(state.loading){
+    root.innerHTML=`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100vh;color:var(--ink-muted);font-family:'Fraunces',serif;font-size:16px;">Carregando painel…</div>`;
+    return;
+  }
+  if(state.settings.pin&&!state.unlocked){ root.appendChild(renderLockScreen()); return; }
+  root.appendChild(sidebar());
+  const main=document.createElement('main');
+  if(state.view==='dashboard') main.appendChild(viewDashboard());
+  else if(state.view==='gestantes') main.appendChild(viewGestantes());
+  else if(state.view==='gineco'){
+    try{ main.appendChild(viewGineco()); }
+    catch(e){ main.innerHTML=`<div style="padding:20px;"><h3>Erro na aba Ginecológicas</h3><p style="color:var(--alert);">${e.message}</p><pre style="font-size:11px;color:#888;">${e.stack||''}</pre></div>`; }
+  }
+  else if(state.view==='config') main.appendChild(viewConfig());
+  else if(state.view==='parceiro'){
+    try{ main.appendChild(viewParceiro()); }
+    catch(e){ main.innerHTML=`<div style="padding:20px;"><h3>Erro na aba Médico Parceiro</h3><p style="color:var(--alert);">${e.message}</p><pre style="font-size:11px;">${(e.stack||'').slice(0,400)}</pre></div>`; }
+  }
+  root.appendChild(main);
+  if(state.modal) root.appendChild(renderModal());
+  if(state.toast){ root.appendChild(el(`<div class="toast">${state.toast}</div>`)); }
+}
+function render(){ renderApp(); }
+
+
+function renderLockScreen(){
+  const wrap=el(`<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100vh;"></div>`);
+  wrap.innerHTML=`<div class="card" style="width:280px;text-align:center;">
+    <h2 style="margin-bottom:2px;">Clínica AD</h2>
+    <p class="muted-x" style="margin-bottom:16px;">Digite o PIN para acessar</p>
+    <input type="password" inputmode="numeric" id="pin-input" maxlength="12" style="width:100%;text-align:center;letter-spacing:4px;font-size:18px;padding:10px;border:1px solid var(--border);border-radius:7px;margin-bottom:10px;" autofocus>
+    ${state.pinError?`<div style="color:var(--alert);font-size:12px;margin-bottom:10px;">PIN incorreto.</div>`:''}
+    <button class="btn btn-primary" id="pin-enter" style="width:100%;">Entrar</button>
+  </div>`;
+  const input=wrap.querySelector('#pin-input');
+  const tryUnlock=()=>{ if(input.value===state.settings.pin){state.unlocked=true;state.pinError=false;}else{state.pinError=true;} render(); };
+  wrap.querySelector('#pin-enter').onclick=tryUnlock;
+  input.onkeydown=(e)=>{if(e.key==='Enter')tryUnlock();};
+  setTimeout(()=>input&&input.focus(),30);
+  return wrap;
+}
+
+
+function sidebar(){
+  const items=[{id:'dashboard',label:'Controle de Partos'},{id:'gestantes',label:'Gestantes'},{id:'gineco',label:'Ginecológicas'},{id:'parceiro',label:'Médico Parceiro'},{id:'config',label:'Configurações'}];
+  const wrap=el(`<div class="sidebar"></div>`);
+  wrap.innerHTML=`<div class="brand">Clínica AD</div>`;
+  items.forEach(it=>{
+    const b=el(`<button class="nav-btn ${state.view===it.id?'active':''}"><span class="nav-dot"></span>${it.label}</button>`);
+    b.onclick=()=>{state.view=it.id;render();};
+    wrap.appendChild(b);
+  });
+  const syncLabel = state.syncStatus==='ok'?'Sync Sheets ativo':state.syncStatus==='err'?'Sync com erro':'Sem sync Sheets';
+  const syncClass = state.syncStatus==='ok'?'sync-ok':state.syncStatus==='err'?'sync-err':'sync-off';
+  const foot=el(`<div class="sidebar-foot" style="display:flex;flex-direction:column;gap:8px;">
+    <div><span class="sync-dot ${syncClass}"></span>${syncLabel}</div>
+    ${state.settings.appsScriptUrl?`<button id="btn-refresh-sheets" style="background:#28494D;border:none;color:#B9CFCE;font-size:12px;padding:7px 10px;border-radius:6px;cursor:pointer;width:100%;text-align:left;font-family:inherit;">🔄 Atualizar do Sheets</button>`:''}
+  </div>`);
+  wrap.appendChild(foot);
+  const btnRefresh=foot.querySelector('#btn-refresh-sheets');
+  if(btnRefresh) btnRefresh.onclick=async()=>{
+    btnRefresh.textContent='⏳ Buscando…';btnRefresh.disabled=true;
+    await fetchFromSheets(true);
+    render();
+  };
+  return wrap;
+}
+
+
+function viewDashboard(){
+  const t=today();
+  const wrap=el(`<div></div>`);
+  const selectedYear = state.monthYearFilter;
+  const currentYear = t.getFullYear();
+  const yearsAvail = [];
+  for(let y=2026;y<=currentYear+1;y++) yearsAvail.push(y);
+
+  // Stats filtered by selected year(s)
+  const yearsSet = new Set(state.selectedYears||[selectedYear]);
+  const gestantesAtivas = state.obstetric.filter(p=>{
+    if(p.parto.realizado) return false;
+    if(p.desistiu) return false;
+    const dpp=calcDPP(p.dum,p.dppManual);
+    if(!dpp) return yearsSet.size===0; // sem DPP: só na visão "todos"
+    return yearsSet.has(dpp.getFullYear());
+  });
+  const partosRealizados = state.obstetric.filter(p=>{
+    if(!p.parto.realizado||!p.parto.data) return false;
+    const dp=parseDate(p.parto.data);
+    return dp&&yearsSet.has(dp.getFullYear());
+  }).length;
+
+  // Partos por mês
+  // Build month grid for selected years
+  const meses=[];
+  const sortedYears=[...(state.selectedYears||new Set([selectedYear]))].sort();
+  sortedYears.forEach(yr=>{
+    for(let i=0;i<12;i++){
+      const d=new Date(yr,i,1);
+      meses.push({key:`${yr}-${i}`,label:d.toLocaleDateString('pt-BR',{month:'short',year:sortedYears.length>1?'2-digit':undefined}),
+        month:i,year:yr,previstos:[],realizados:[]});
+    }
+  });
+  state.obstetric.forEach(p=>{
+    if(!p.parto.realizado){
+      const dpp=calcDPP(p.dum,p.dppManual); if(!dpp) return;
+      const m=meses.find(mm=>mm.month===dpp.getMonth()&&mm.year===dpp.getFullYear()); if(m) m.previstos.push(p.nome);
+    } else if(p.parto.data){
+      const dp=parseDate(p.parto.data); if(!dp) return;
+      const m=meses.find(mm=>mm.month===dp.getMonth()&&mm.year===dp.getFullYear()); if(m) m.realizados.push(p.nome);
+    }
+  });
+
+
+
+  // Alertas
+  const alertContrato = gestantesAtivas.filter(p=>{
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual); return !p.contratoAssinado&&semanas>=20;
+  }).length;
+  const alertParceiro = gestantesAtivas.filter(p=>{
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual); return !p.apresentadoParceiro&&semanas>=24;
+  }).length;
+  const alertRetorno = state.obstetric.filter(p=>{
+    if(!p.parto.realizado||!p.parto.data) return false;
+    const dp=parseDate(p.parto.data); if(!dp) return false;
+    const dias=diffDays(t,dp);
+    return (dias>=0&&!p.posParto.duasSemanas.feita)||(dias>=10&&!p.posParto.quarentaDias.feita)||(dias>=150&&!p.posParto.seisMeses.feita);
+  }).length;
+
+  wrap.innerHTML=`
+    <div class="page-head">
+      <div><h1>Controle de Partos</h1><p>${t.toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})}</p></div>
+    </div>
+
+    <!-- Filtro de ano -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap;">
+      <span style="font-size:12px;font-weight:600;color:var(--ink-muted);">ANO:</span>
+      <div id="year-btns" style="display:flex;gap:4px;"></div>
+    </div>
+
+    <!-- Stats -->
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:14px;">
+      <div class="card stat-card" style="min-width:150px;flex:0 0 auto;">
+        <div class="num">${partosRealizados}</div>
+        <div class="label">Partos realizados</div>
+      </div>
+      <div class="card stat-card" style="min-width:150px;flex:0 0 auto;">
+        <div class="num">${gestantesAtivas.length}</div>
+        <div class="label">Gestantes em acompanhamento</div>
+      </div>
+    </div>
+
+    <!-- Partos por mês -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+      <h3 class="section-title" style="margin:0;">Partos por mês — ${[...(state.selectedYears||new Set([selectedYear]))].sort().join(' + ')}</h3>
+      <div style="display:flex;gap:12px;font-size:11.5px;color:var(--ink-muted);">
+        <span><span style="color:var(--ok);font-weight:700;">✓</span> realizados</span>
+        <span>○ previstos (DPP)</span>
+      </div>
+    </div>
+    <div class="month-grid" id="month-grid" style="margin-bottom:20px;"></div>
+
+
+
+  `;
+
+  // Year buttons
+  const yrBtns=wrap.querySelector('#year-btns');
+  // Multi-year: selectedYears set (null = all)
+  if(!state.selectedYears) state.selectedYears = new Set([selectedYear]);
+  yearsAvail.forEach(y=>{
+    const sel=state.selectedYears.has(y);
+    const b=el(`<button class="btn btn-sm ${sel?'btn-primary':'btn-secondary'}">${y}</button>`);
+    b.onclick=()=>{
+      if(state.selectedYears.has(y)&&state.selectedYears.size>1) state.selectedYears.delete(y);
+      else state.selectedYears.add(y);
+      state.monthYearFilter=Math.min(...[...state.selectedYears]);
+      render();
+    };
+    yrBtns.appendChild(b);
+  });
+
+  // Month grid
+  const grid=wrap.querySelector('#month-grid');
+  const isCurrent=(m)=>m.month===t.getMonth()&&m.year===t.getFullYear();
+  const isPast=(m)=>new Date(m.year,m.month,1)<new Date(t.getFullYear(),t.getMonth(),1);
+  meses.forEach(m=>{
+    const card=el(`<div class="month-card ${isCurrent(m)?'current':''} ${isPast(m)?'past':''}">
+      <div class="mc-label">${m.label}</div>
+      <div class="mc-count">${m.previstos.length+m.realizados.length}</div>
+      <div class="mc-names">
+        ${m.realizados.length?`<span style="color:var(--ok);font-size:10px;">✓ ${m.realizados.length} realizado${m.realizados.length>1?'s':''}</span><br>`:''}
+        ${m.previstos.length?`<span style="font-size:10px;">${m.previstos.length} previsto${m.previstos.length>1?'s':''}</span>`:''}
+        ${!m.previstos.length&&!m.realizados.length?'<span style="opacity:.5;font-size:10px;">nenhum</span>':''}
+      </div>
+    </div>`);
+    grid.appendChild(card);
+  });
+
+
+  return wrap;
+}
+
+
+
+function viewGestantes(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+
+  // Build month filter options from patient data
+  if(!state.gestantesMeses) state.gestantesMeses = new Set();
+  if(state.buscaGestantes===undefined) state.buscaGestantes='';
+  const allMeses = new Set();
+  state.obstetric.forEach(p=>{
+    const ref = p.parto.realizado && p.parto.data ? parseDate(p.parto.data) : calcDPP(p.dum,p.dppManual);
+    if(ref) allMeses.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  const mesesOrd = [...allMeses].sort();
+  const mesesPillsHtml = mesesOrd.map(m=>{
+    const [y,mo]=m.split('-');
+    const d=new Date(Number(y),Number(mo)-1,1);
+    const label=d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});
+    const sel=state.gestantesMeses.has(m);
+    return `<button class="btn btn-sm ${sel?'btn-primary':'btn-secondary'}" data-mes="${m}">${label}</button>`;
+  }).join('');
+
+  // Filter + sort
+  let lista=[...state.obstetric].sort((a,b)=>{
+    const da=calcDPP(a.dum,a.dppManual),db=calcDPP(b.dum,b.dppManual);
+    return (da&&db)?da-db:0;
+  });
+  if(state.gestantesMeses&&state.gestantesMeses.size>0){
+    lista=lista.filter(p=>{
+      const ref=p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual);
+      if(!ref) return false;
+      const key=`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`;
+      return state.gestantesMeses.has(key);
+    });
+  }
+  if(state.buscaGestantes) lista=lista.filter(p=>(p.nome||'').toLowerCase().includes(state.buscaGestantes.toLowerCase()));
+  if(state.filtroDeGineco) lista=lista.filter(p=>p.migradaDeGineco);
+  if(state.filtroDesistencias) lista=lista.filter(p=>p.desistiu);
+  else lista=lista.filter(p=>!p.desistiu); // hide desistências by default
+
+  wrap.innerHTML=`
+    <div class="page-head">
+      <div><h1>Gestantes</h1><p>${(state.gestantesMeses&&state.gestantesMeses.size>0)?lista.length+' selecionadas · ':''} ${state.obstetric.length} total</p></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <input id="busca-gestantes" type="text" placeholder="🔍 Buscar paciente..." value="${state.buscaGestantes||''}"
+          style="padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;min-width:200px;">
+        <button class="btn btn-secondary" id="btn-alerta-contrato" style="position:relative;">
+          📄 Contrato Pendente<span id="badge-contrato"></span>
+        </button>
+        <button class="btn btn-secondary" id="btn-alerta-parceiro" style="position:relative;">
+          👥 Apres. Parceiro<span id="badge-parceiro"></span>
+        </button>
+        <button class="btn btn-secondary" id="btn-fup" style="position:relative;">
+          📋 F-Up Pós-Parto<span id="fup-badge"></span>
+        </button>
+        <button class="btn btn-primary" id="btn-nova">+ Nova gestante</button>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+      <span style="font-size:12px;font-weight:600;color:var(--ink-muted);">Mês:</span>
+      ${mesesPillsHtml}
+      ${state.gestantesMeses&&state.gestantesMeses.size>0?`<button class="btn btn-secondary btn-sm" id="clear-filter">✕</button>`:''}
+      <button class="btn btn-sm ${state.filtroDeGineco?'btn-primary':'btn-secondary'}" id="btn-filtro-degineco" style="margin-left:4px;">⟳ de gineco${state.filtroDeGineco?' ✓':''}</button>
+      <button class="btn btn-sm ${state.filtroDesistencias?'btn-primary':'btn-secondary'}" id="btn-filtro-desist" style="margin-left:4px;">⚠️ Desistências${state.filtroDesistencias?' ✓':''}</button>
+    </div>
+    <div class="table-wrap" id="tbl"></div>
+  `;
+
+  wrap.querySelector('#btn-nova').onclick=()=>{state.modal={type:'novaPaciente'};state.novaPacienteTipo='obstetrica';render();};
+  // Pill buttons for month filter
+  wrap.querySelectorAll('[data-mes]').forEach(btn=>{
+    btn.onclick=()=>{
+      if(!state.gestantesMeses) state.gestantesMeses=new Set();
+      if(state.gestantesMeses.has(btn.dataset.mes)) state.gestantesMeses.delete(btn.dataset.mes);
+      else state.gestantesMeses.add(btn.dataset.mes);
+      render();
+    };
+  });
+  const inputBusca=wrap.querySelector('#busca-gestantes');
+  if(inputBusca){
+    inputBusca.oninput=e=>{
+      state.buscaGestantes=e.target.value;
+      const q=e.target.value.toLowerCase().trim();
+      wrap.querySelectorAll('tr[data-id]').forEach(r=>{
+        const nome=(r.querySelector('strong')||{textContent:''}).textContent.toLowerCase();
+        r.style.display=!q||nome.includes(q)?'':'none';
+      });
+    };
+    inputBusca.onclick=e=>e.stopPropagation();
+  }
+  const btnFiltroGineco=wrap.querySelector('#btn-filtro-degineco');
+  if(btnFiltroGineco) btnFiltroGineco.onclick=()=>{state.filtroDeGineco=!state.filtroDeGineco;render();};
+  const btnFiltroDesist=wrap.querySelector('#btn-filtro-desist');
+  if(btnFiltroDesist) btnFiltroDesist.onclick=()=>{state.filtroDesistencias=!state.filtroDesistencias;if(state.filtroDesistencias)state.filtroDeGineco=false;render();};
+  const btnClear=wrap.querySelector('#clear-filter');
+  if(btnClear) btnClear.onclick=()=>{state.gestantesMeses=new Set();render();};
+
+  // F-Up badge count
+  const fupPendCount = state.obstetric.filter(p=>{
+    if(!p.parto.realizado||!p.parto.data) return false;
+    const dias = diffDays(today(), parseDate(p.parto.data));
+    return (dias>=0&&!p.posParto.duasSemanas.feita)||
+           (dias>=10&&!p.posParto.quarentaDias.feita)||
+           (dias>=150&&!p.posParto.seisMeses.feita);
+  }).length;
+  const badge = wrap.querySelector('#fup-badge');
+  if(fupPendCount>0){
+    badge.textContent = fupPendCount;
+    badge.style.cssText='display:inline-flex;align-items:center;justify-content:center;background:var(--alert);color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;';
+  }
+  // Alert badges
+  const t_g=today();
+  const alertsC=state.obstetric.filter(p=>{if(p.parto.realizado)return false;const{semanas}=calcSemanasNaData(p.dum,t_g,p.dppManual);return !p.contratoAssinado&&semanas>=20;}).length;
+  const alertsP=state.obstetric.filter(p=>{if(p.parto.realizado)return false;const{semanas}=calcSemanasNaData(p.dum,t_g,p.dppManual);return !p.apresentadoParceiro&&semanas>=24;}).length;
+  const setBadge=(id,n,color)=>{const b=wrap.querySelector(id);if(b&&n>0){b.textContent=n;b.style.cssText=`display:inline-flex;align-items:center;justify-content:center;background:${color};color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;`;}};
+  setBadge('#badge-contrato',alertsC,'var(--alert)');
+  setBadge('#badge-parceiro',alertsP,'var(--warn)');
+  wrap.querySelector('#btn-alerta-contrato').onclick=()=>{state.modal={type:'alertaContratos'};render();};
+  wrap.querySelector('#btn-alerta-parceiro').onclick=()=>{state.modal={type:'alertaParceiro'};render();};
+  wrap.querySelector('#btn-fup').onclick=()=>{state.modal={type:'fupPosParto'};render();};
+  const tblWrap=wrap.querySelector('#tbl');
+  if(lista.length===0){
+    tblWrap.innerHTML=`<div class="empty"><h3>Nenhuma gestante cadastrada</h3><p>Cadastre a primeira consulta de pré-natal.</p></div>`;
+  } else {
+    const rows=lista.map(p=>{
+      const dpp=calcDPP(p.dum,p.dppManual);
+      const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+      const alerts=alertasObstetrica(p);
+      const alertTag=alerts.some(a=>a.level==='alert')?tag('atenção','alert'):(alerts.length?tag('lembrete','warn'):tag('ok','ok'));
+      const contratoTag=p.contratoAssinado?tag('ok','ok'):!p.contratoAssinado&&semanas>=24?tag('em atraso','alert'):(semanas>=20?tag('urgente','warn'):tag('pendente','muted'));
+      const migradaTag=p.migradaDeGineco?`<span class="tag tag-muted" style="font-size:10px;">⟳ de gineco</span>`:(p.desistiu?`<span class="tag tag-warn" style="font-size:10px;">⚠️ desistência</span>`:'')
+      const parcTag=p.apresentadoParceiro?tag('ok','ok'):!p.apresentadoParceiro&&semanas>=28?tag('em atraso','alert'):(semanas>=24?tag('urgente','warn'):tag('pendente','muted'));
+      return `<tr data-id="${p.id}" style="cursor:pointer;">
+        <td><strong>${p.nome}</strong>${p.numeroContrato?` <span class="muted-x">${p.numeroContrato}</span>`:''} ${migradaTag} ${p.parto.realizado?`<span class="muted-x">(parto ${fmtDate(p.parto.data)})</span>`:''}</td>
+        <td>${p.parto.realizado?'—':semanas+' sem.'}</td>
+        <td class="mono">${fmtDate(dpp)}</td>
+        <td>${contratoTag}</td>
+        <td>${parcTag}</td>
+        <td>${alertTag}</td>
+      </tr>`;
+    }).join('');
+    tblWrap.innerHTML=`<table><thead><tr><th>Nome</th><th>IG atual</th><th>DPP</th><th>Contrato</th><th>Parceiro</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
+    tblWrap.querySelectorAll('tr[data-id]').forEach(r=>r.onclick=()=>openObstetricModal(r.dataset.id));
+  }
+  return wrap;
+}
+
+
+
+function viewParceiro(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+
+  // Obstetric patients with partner doctor
+  const allPartos=state.obstetric.filter(p=>p.parto.nomeMedicoParceiro)
+    .map(migrateObst)
+    .sort((a,b)=>{
+      const da=parseDate(a.parto.data)||calcDPP(a.dum,a.dppManual)||new Date(0);
+      const db=parseDate(b.parto.data)||calcDPP(b.dum,b.dppManual)||new Date(0);
+      return db-da;
+    });
+
+  // Gyneco patients where doctor confirmed Pap
+  const allPapGineco=state.gyneco.filter(g=>g.papMedicoResponsavel&&g.papNomeMedico).map(migrateGin);
+
+  // Unique doctor names
+  const nomesUnicos=[...new Set([
+    ...allPartos.map(p=>p.parto.nomeMedicoParceiro),
+    ...allPapGineco.map(g=>g.papNomeMedico)
+  ].filter(Boolean))].sort();
+
+  if(!state.parceiroMeses) state.parceiroMeses=new Set();
+  if(state.parceiroNomeFiltro===undefined) state.parceiroNomeFiltro='';
+  const nf=state.parceiroNomeFiltro;
+
+  // Month pills from all dates
+  const allMeses=new Set();
+  allPartos.forEach(p=>{
+    const ref=p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual);
+    if(ref) allMeses.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  allPapGineco.forEach(g=>{
+    const ref=g.dataChecagem?parseDate(g.dataChecagem):null;
+    if(ref) allMeses.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  const mesesOrd=[...allMeses].sort();
+  const pillsHtml=mesesOrd.map(m=>{
+    const [y,mo]=m.split('-');
+    const d=new Date(Number(y),Number(mo)-1,1);
+    const label=d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});
+    return `<button class="btn btn-sm ${state.parceiroMeses.has(m)?'btn-primary':'btn-secondary'}" data-mes-parc="${m}">${label}</button>`;
+  }).join('');
+
+  const inMes=(date)=>{
+    if(!state.parceiroMeses.size) return true;
+    if(!date) return false;
+    const key=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}`;
+    return state.parceiroMeses.has(key);
+  };
+
+  let listaPartos=allPartos
+    .filter(p=>!nf||p.parto.nomeMedicoParceiro===nf)
+    .filter(p=>inMes(p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual)));
+  let listaPap=allPapGineco
+    .filter(g=>!nf||g.papNomeMedico===nf)
+    .filter(g=>inMes(g.dataChecagem?parseDate(g.dataChecagem):null));
+
+  // Summary
+  const fp=p=>p.parto.funcoesParceiro||{};
+  const resumo={
+    total:        listaPartos.length,
+    apresentacao: listaPartos.filter(p=>fp(p).apresentacao).length,
+    inducao:      listaPartos.filter(p=>fp(p).inducao).length,
+    conducao:     listaPartos.filter(p=>fp(p).conducao).length,
+    auxiliar:     listaPartos.filter(p=>fp(p).auxiliar).length,
+    titular:      listaPartos.filter(p=>fp(p).titular).length,
+    visita1:      listaPartos.filter(p=>fp(p).visita1).length,
+    visita2:      listaPartos.filter(p=>fp(p).visita2).length,
+    confPap:      listaPap.length,
+  };
+
+  // Weekly breakdown
+  const getWeekLabel=(d,wk)=>{
+    const d1=new Date(d.getFullYear(),d.getMonth(),1+wk*7);
+    const d2=new Date(Math.min(new Date(d.getFullYear(),d.getMonth()+1,0).getTime(),new Date(d.getFullYear(),d.getMonth(),7+wk*7).getTime()));
+    return `${d1.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})}–${d2.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'})}`;
+  };
+  const semanas={};
+  listaPartos.forEach(p=>{
+    const d=parseDate(p.parto.data)||calcDPP(p.dum,p.dppManual); if(!d) return;
+    const wk=Math.floor((d.getTime()-new Date(d.getFullYear(),d.getMonth(),1).getTime())/(7*86400000));
+    const key=`${d.getFullYear()}-${d.getMonth()}-${wk}`;
+    if(!semanas[key]) semanas[key]={label:getWeekLabel(d,wk),sort:d.getTime(),apresentacao:0,inducao:0,conducao:0,auxiliar:0,titular:0,visita1:0,visita2:0,confPap:0,total:0};
+    const f=fp(p);
+    if(f.apresentacao)semanas[key].apresentacao++;if(f.inducao)semanas[key].inducao++;
+    if(f.conducao)semanas[key].conducao++;if(f.auxiliar)semanas[key].auxiliar++;
+    if(f.titular)semanas[key].titular++;if(f.visita1)semanas[key].visita1++;
+    if(f.visita2)semanas[key].visita2++;semanas[key].total++;
+  });
+  listaPap.forEach(g=>{
+    const d=g.dataChecagem?parseDate(g.dataChecagem):null; if(!d) return;
+    const wk=Math.floor((d.getTime()-new Date(d.getFullYear(),d.getMonth(),1).getTime())/(7*86400000));
+    const key=`${d.getFullYear()}-${d.getMonth()}-${wk}`;
+    if(!semanas[key]) semanas[key]={label:getWeekLabel(d,wk),sort:d.getTime(),apresentacao:0,inducao:0,conducao:0,auxiliar:0,titular:0,visita1:0,visita2:0,confPap:0,total:0};
+    semanas[key].confPap++;
+  });
+  const semanasOrdenadas=Object.values(semanas).sort((a,b)=>b.sort-a.sort);
+
+  const hasFilters=nf||state.parceiroMeses.size>0;
+  const funcLabel=f=>{if(!f)return'—';const l=[];if(f.apresentacao)l.push('Apres.');if(f.inducao)l.push('Ind.');if(f.conducao)l.push('Cond.');if(f.auxiliar)l.push('Aux.');if(f.titular)l.push('Tit.');if(f.visita1)l.push('1ªV');if(f.visita2)l.push('2ªV');if(f.outros)l.push(f.outros);return l.join(', ')||'—';};
+
+  const rowsPartos=listaPartos.map(p=>`<tr data-open="${p.id}" style="cursor:pointer;">
+    <td><strong>${p.nome}</strong></td>
+    <td>${p.parto.nomeMedicoParceiro||'—'}</td>
+    <td class="mono">${p.parto.realizado?fmtDate(p.parto.data):(fmtDate(calcDPP(p.dum,p.dppManual))+' <span style="color:var(--ink-muted);font-size:11px;">(prev.)</span>')}</td>
+    <td style="font-size:12px;">${funcLabel(fp(p))}</td>
+    <td>${p.parto.viaParto||'—'}</td>
+  </tr>`).join('');
+
+  const rowsPap=listaPap.map(g=>`<tr data-gopen="${g.id}" style="cursor:pointer;">
+    <td><strong>${g.nome}</strong></td>
+    <td>${g.papNomeMedico||'—'}</td>
+    <td class="mono">${fmtDate(g.dataChecagem)||'—'}</td>
+    <td>${g.papResultado==='normal'?tag('Normal','ok'):g.papResultado==='alterado'?tag('Alterado','alert'):tag('—','muted')}</td>
+  </tr>`).join('');
+
+  wrap.innerHTML=`
+    <div class="page-head">
+      <div><h1>Médico Parceiro</h1>
+        <p>${allPartos.length} gestante${allPartos.length!==1?'s':''} · ${allPapGineco.length} conf. Pap${listaPartos.length+listaPap.length!==(allPartos.length+allPapGineco.length)?' · '+(listaPartos.length+listaPap.length)+' exibidas':''}</p>
+      </div>
+      <button class="btn btn-secondary" id="btn-export-pdf">📄 Exportar PDF</button>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:16px;">
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:6px;">Médico parceiro</div>
+        <select id="filtro-nome" style="padding:7px 12px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;min-width:200px;">
+          <option value="">Todos</option>
+          ${nomesUnicos.map(n=>`<option value="${n}" ${nf===n?'selected':''}>${n}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:6px;">Mês</div>
+        <div style="display:flex;gap:4px;flex-wrap:wrap;">
+          ${pillsHtml||'<span class="muted-x" style="font-size:12px;">Sem atividades cadastradas</span>'}
+          ${state.parceiroMeses.size>0?`<button class="btn btn-secondary btn-sm" id="clear-parc">✕</button>`:''}
+        </div>
+      </div>
+      ${hasFilters?`<div style="align-self:flex-end;"><button class="btn btn-secondary btn-sm" id="clear-all-parc">Limpar filtros</button></div>`:''}
+    </div>
+
+    ${hasFilters&&(listaPartos.length>0||listaPap.length>0)?`
+    <div class="card" style="margin-bottom:16px;background:var(--teal-light);">
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--teal-dark);margin-bottom:12px;">
+        Resumo${nf?' — '+nf:''}
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid rgba(42,136,128,.2);">
+        ${[['total','partos'],['apresentacao','apres.'],['inducao','induções'],['conducao','conduções'],['auxiliar','auxiliar'],['titular','titular'],['visita1','1ª visita'],['visita2','2ª visita'],['confPap','conf. Pap']].filter(([k])=>resumo[k]>0).map(([k,label])=>
+          `<div style="text-align:center;"><div style="font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal-dark);">${resumo[k]}</div><div style="font-size:11px;color:var(--teal-dark);">${label}</div></div>`
+        ).join('')}
+      </div>
+      ${semanasOrdenadas.map(s=>{
+        const parts=[];
+        if(s.apresentacao) parts.push('apres. '+s.apresentacao);
+        if(s.inducao) parts.push('ind. '+s.inducao);
+        if(s.conducao) parts.push('cond. '+s.conducao);
+        if(s.auxiliar) parts.push('aux. '+s.auxiliar);
+        if(s.titular) parts.push('tit. '+s.titular);
+        if(s.visita1) parts.push('1ªv. '+s.visita1);
+        if(s.visita2) parts.push('2ªv. '+s.visita2);
+        if(s.confPap) parts.push('Pap '+s.confPap);
+        return `<div style="display:flex;align-items:baseline;gap:12px;padding:4px 0;border-bottom:1px solid rgba(42,136,128,.1);">
+          <span style="font-size:11px;color:var(--teal-dark);font-weight:600;min-width:120px;">${s.label}</span>
+          
+          <span style="font-size:12px;color:var(--teal-dark);">${parts.join(' · ')||'—'}</span>
+        </div>`;
+      }).join('')}
+    </div>`:''}
+
+    ${listaPap.length>0?`
+    <h3 class="section-title">Pacientes Gineco</h3>
+    <div class="table-wrap" style="margin-bottom:20px;">
+      <table>
+        <thead><tr><th>Paciente</th><th>Médico</th><th>Data conferência</th><th>Resultado</th></tr></thead>
+        <tbody>${rowsPap}</tbody>
+      </table>
+    </div>`:''}
+
+    ${listaPartos.length>0?`
+    <h3 class="section-title">Gestantes</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>Médico Parceiro</th><th>Data / DPP</th><th>Funções</th><th>Via</th></tr></thead>
+        <tbody>${rowsPartos}</tbody>
+      </table>
+    </div>`:''}
+
+    ${listaPartos.length===0&&listaPap.length===0?`<div class="empty"><h3>Nenhum registro encontrado</h3><p>${allPartos.length===0&&allPapGineco.length===0?'Cadastre o médico parceiro na ficha da paciente para que apareça aqui.':'Tente ajustar os filtros.'}</p></div>`:''}
+  `;
+
+  wrap.querySelector('#filtro-nome').onchange=e=>{state.parceiroNomeFiltro=e.target.value;render();};
+  wrap.querySelectorAll('[data-mes-parc]').forEach(btn=>{
+    btn.onclick=()=>{
+      const mv=btn.dataset.mesParc;
+      if(state.parceiroMeses.has(mv)) state.parceiroMeses.delete(mv); else state.parceiroMeses.add(mv);
+      render();
+    };
+  });
+  const btnClearParc=wrap.querySelector('#clear-parc');
+  if(btnClearParc) btnClearParc.onclick=()=>{state.parceiroMeses=new Set();render();};
+  const btnClearAll=wrap.querySelector('#clear-all-parc');
+  if(btnClearAll) btnClearAll.onclick=()=>{state.parceiroMeses=new Set();state.parceiroNomeFiltro='';render();};
+  wrap.querySelectorAll('[data-open]').forEach(r=>r.onclick=()=>openObstetricModal(r.dataset.open));
+  wrap.querySelectorAll('[data-gopen]').forEach(r=>r.onclick=()=>openGinecoModal(r.dataset.gopen));
+  const btnPdf=wrap.querySelector('#btn-export-pdf');
+  if(btnPdf) btnPdf.onclick=()=>{
+    state.modal={type:'pdfParceiroFiltro',allPartos,allPapGineco};render();
+  };
+  return wrap;
+}
+
+function viewGineco(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+
+  // Month/year filter (same logic as gestantes)
+  const mesFilter = state.ginecoMesFilter || '';
+  const anoFilter = state.ginecoAnoFilter || t.getFullYear();
+  const yearsAvail = [];
+  for(let y=2026;y<=t.getFullYear()+1;y++) yearsAvail.push(y);
+
+  // Build month pills from gyneco data
+  if(!state.ginecoMeses) state.ginecoMeses = new Set();
+  if(state.buscaGineco===undefined) state.buscaGineco='';
+  const allMesesGin = new Set();
+  state.gyneco.forEach(p=>{
+    const ref = p.ultimaConsulta ? parseDate(p.ultimaConsulta) : (p.cadastradoEm ? parseDate(p.cadastradoEm) : null);
+    if(ref) allMesesGin.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  const mesesOrdGin = [...allMesesGin].sort();
+  const mesesPillsGinHtml = mesesOrdGin.map(m=>{
+    const [y,mo]=m.split('-');
+    const d=new Date(Number(y),Number(mo)-1,1);
+    const label=d.toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});
+    const sel=state.ginecoMeses.has(m);
+    return `<button class="btn btn-sm ${sel?'btn-primary':'btn-secondary'}" data-mes-gin="${m}">${label}</button>`;
+  }).join('');
+
+  let lista=[...state.gyneco].map(migrateGin).sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
+  if(state.buscaGineco) lista=lista.filter(p=>(p.nome||'').toLowerCase().includes(state.buscaGineco.toLowerCase()));
+  if(state.ginecoMeses.size>0){
+    lista=lista.filter(p=>{
+      const ref=p.ultimaConsulta?parseDate(p.ultimaConsulta):(p.cadastradoEm?parseDate(p.cadastradoEm):null);
+      if(!ref) return false;
+      const key=`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`;
+      return state.ginecoMeses.has(key);
+    });
+  }
+  if(state.filtroDeObstetrica) lista=lista.filter(p=>p.migradaDeObstetrica);
+
+  // Panels
+  const papPendentes = state.gyneco.map(migrateGin).filter(p=>p.papColetado&&!p.papChecado);
+  const acaoNecessaria = state.gyneco.map(migrateGin).filter(p=>p.papColetado&&p.papChecado&&(
+    (p.papResultado==='alterado'&&!p.retornoMarcado)||(p.papResultado==='normal'&&!p.pacienteNotificada)
+  ));
+  const retornoPendente = state.gyneco.map(migrateGin).filter(p=>{
+    const prox=proximoRetornoGineco(p); return prox&&diffDays(prox,t)<0;
+  }).length;
+
+  wrap.innerHTML=`
+    <div class="page-head">
+      <div><h1>Ginecológicas</h1><p>${state.ginecoMeses&&state.ginecoMeses.size>0?lista.length+' selecionadas · ':''} ${state.gyneco.length} total</p></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+        <input id="busca-gineco" type="text" placeholder="🔍 Buscar paciente..." value="${state.buscaGineco||''}"
+          style="padding:8px 12px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;min-width:200px;">
+        <button class="btn btn-secondary" id="btn-fup-gineco" style="position:relative;">
+          📋 F-Up Retorno
+          <span id="fup-gin-badge"></span>
+        </button>
+        <button class="btn btn-secondary" id="btn-fup-diu" style="position:relative;">
+          🔵 F-Up DIU
+          <span id="fup-diu-badge"></span>
+        </button>
+        <button class="btn btn-primary" id="btn-nova">+ Nova paciente</button>
+      </div>
+    </div>
+
+    <!-- Filtros -->
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:12px;flex-wrap:wrap;">
+      <span style="font-size:11.5px;color:var(--ink-muted);font-weight:600;">Mês:</span>
+      <div id="mes-pills-gin" style="display:flex;gap:4px;flex-wrap:wrap;">${mesesPillsGinHtml}</div>
+      ${state.ginecoMeses&&state.ginecoMeses.size>0?`<button class="btn btn-secondary btn-sm" id="clear-filter-gin">✕</button>`:''}
+      <button class="btn btn-sm ${state.filtroDeObstetrica?'btn-primary':'btn-secondary'}" id="btn-filtro-deobst" style="margin-left:4px;">⟳ de obstetrícia${state.filtroDeObstetrica?' ✓':''}</button>
+    </div>
+
+    ${papPendentes.length||acaoNecessaria.length?`<h3 class="section-title" style="margin-top:0;">Controle Exame Papanicolau</h3>`:''}
+
+    ${papPendentes.length?`
+    <div class="card" style="margin-bottom:12px;border-left:4px solid var(--warn);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <strong style="color:var(--warn);">⏰ Papanicolau aguardando checagem (${papPendentes.length})</strong>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        ${papPendentes.map(p=>{
+          const dc=parseDate(p.dataColeta); const dias=dc?diffDays(t,dc):0;
+          return `<div style="background:var(--warn-light);border-radius:6px;padding:6px 10px;font-size:12.5px;cursor:pointer;" data-ginid="${p.id}">
+            <strong>${p.nome.split(' ').slice(0,2).join(' ')}</strong><br>
+            <span style="color:var(--ink-muted);">Há ${dias} dias</span></div>`;
+        }).join('')}
+      </div>
+    </div>`:''}
+
+    ${acaoNecessaria.length?`
+    <div class="card" style="margin-bottom:12px;border-left:4px solid var(--alert);">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <strong style="color:var(--alert);">⚠️ Ação necessária — resultado checado (${acaoNecessaria.length})</strong>
+      </div>
+      ${acaoNecessaria.map(p=>{
+        const isAlt=p.papResultado==='alterado';
+        return `<div style="display:flex;justify-content:space-between;align-items:center;background:${isAlt?'var(--alert-light)':'var(--warn-light)'};border-radius:6px;padding:8px 12px;margin-bottom:6px;cursor:pointer;" data-ginid="${p.id}">
+          <strong>${p.nome.split(' ').slice(0,2).join(' ')}</strong>
+          <span style="font-size:12px;color:${isAlt?'var(--alert)':'var(--warn)'};">${isAlt?'🔴 Agendar retorno urgente':'🟡 Enviar devolutiva positiva'}</span>
+        </div>`;
+      }).join('')}
+    </div>`:''}
+
+    <h3 class="section-title" style="margin-top:${papPendentes.length||acaoNecessaria.length?'8px':'0'};">Todas as pacientes</h3>
+    <div class="table-wrap" id="tbl"></div>
+  `;
+
+  // F-up badge
+  const pendGin = state.gyneco.map(migrateGin).filter(p=>{
+    if(p.retornoMarcado) return false;
+    const prox=proximoRetornoGineco(p); return prox&&diffDays(prox,t)<0;
+  }).length;
+  const badge=wrap.querySelector('#fup-gin-badge');
+  if(pendGin>0){badge.textContent=pendGin;badge.style.cssText='display:inline-flex;align-items:center;justify-content:center;background:var(--alert);color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;';}
+
+  const inputBuscaGin=wrap.querySelector('#busca-gineco');
+  if(inputBuscaGin){
+    inputBuscaGin.oninput=e=>{
+      state.buscaGineco=e.target.value;
+      const q=e.target.value.toLowerCase().trim();
+      wrap.querySelectorAll('tr[data-id]').forEach(r=>{
+        const nome=(r.querySelector('strong')||{textContent:''}).textContent.toLowerCase();
+        r.style.display=!q||nome.includes(q)?'':'none';
+      });
+    };
+    inputBuscaGin.onclick=e=>e.stopPropagation();
+  }
+  wrap.querySelector('#btn-nova').onclick=()=>{state.modal={type:'novaPaciente'};state.novaPacienteTipo='ginecologica';state._lockPacienteTipo=true;render();};
+  wrap.querySelector('#btn-fup-gineco').onclick=()=>{state.modal={type:'fupRetornoGineco'};render();};
+  wrap.querySelectorAll('[data-mes-gin]').forEach(btn=>{
+    btn.onclick=()=>{
+      if(!state.ginecoMeses) state.ginecoMeses=new Set();
+      if(state.ginecoMeses.has(btn.dataset.mesGin)) state.ginecoMeses.delete(btn.dataset.mesGin);
+      else state.ginecoMeses.add(btn.dataset.mesGin);
+      render();
+    };
+  });
+  const diuPend=state.gyneco.map(migrateGin).filter(p=>{const s=statusDIU(p);return s&&s.level!=='ok';}).length;
+  const diuBadge=wrap.querySelector('#fup-diu-badge');
+  if(diuBadge&&diuPend>0){diuBadge.textContent=diuPend;diuBadge.style.cssText='display:inline-flex;align-items:center;justify-content:center;background:var(--warn);color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;';}
+  wrap.querySelector('#btn-fup-diu').onclick=()=>{state.modal={type:'fupDIU'};render();};
+  const btnFiltroObst=wrap.querySelector('#btn-filtro-deobst');
+  if(btnFiltroObst) btnFiltroObst.onclick=()=>{state.filtroDeObstetrica=!state.filtroDeObstetrica;render();};
+  const btnClearGin=wrap.querySelector('#clear-filter-gin');
+  if(btnClearGin) btnClearGin.onclick=()=>{state.ginecoMeses=new Set();render();};
+  wrap.querySelectorAll('[data-ginid]').forEach(el=>el.onclick=()=>openGinecoModal(el.dataset.ginid));
+
+  const tblWrap=wrap.querySelector('#tbl');
+  if(lista.length===0){
+    tblWrap.innerHTML=`<div class="empty"><h3>Nenhuma paciente ginecológica</h3></div>`;
+  } else {
+    const rows=lista.map(p=>{
+      const alerts=alertasGineco(p);
+      const alertTag=alerts.some(a=>a.level==='alert')?tag('atenção','alert'):(alerts.length?tag('lembrete','warn'):tag('em dia','ok'));
+      const prox=proximoRetornoGineco(p);
+      const papTag=p.papColetado?(p.papChecado?(p.papResultado==='alterado'?tag('alterado','alert'):(p.papResultado==='normal'?tag('normal ✓','ok'):tag('checado','ok'))):tag('aguardando','warn')):tag('não coletado','muted');
+      const gmigTag=p.migradaDeObstetrica?`<span class="tag tag-muted" style="font-size:10px;">⟳ de obstetrícia</span>`:'';
+      const diuStatus=statusDIU(p);
+      const diuTag=diuStatus?(diuStatus.level==='ok'?tag('DIU ✓','ok'):tag('DIU','warn')):(p.diu&&p.diu.interesse?tag('DIU','muted'):tag('—','muted'));
+      return `<tr data-id="${p.id}" style="cursor:pointer;">
+        <td><strong>${p.nome}</strong> ${gmigTag}</td>
+        <td>${papTag}</td>
+        <td>${diuTag}</td>
+        <td>${({'30dias':'30 dias','3meses':'3 meses','6meses':'6 meses','1ano':'1 ano'}[p.seguimento]||'1 ano')}</td>
+        <td class="mono">${prox?fmtDate(prox):'—'}</td>
+        <td>${alertTag}</td>
+      </tr>`;
+    }).join('');
+    tblWrap.innerHTML=`<table><thead><tr><th>Nome</th><th>Papanicolau</th><th>DIU</th><th>Seguimento</th><th>Próximo retorno</th><th>Status</th></tr></thead><tbody>${rows}</tbody></table>`;
+    tblWrap.querySelectorAll('tr[data-id]').forEach(r=>r.onclick=()=>openGinecoModal(r.dataset.id));
+  }
+  return wrap;
+}
+
+
+function viewConfig(){
+  const wrap=el(`<div style="max-width:520px;"></div>`);
+  wrap.innerHTML=`
+    <div class="page-head"><div><h1>Configurações</h1></div></div>
+    <h3 class="section-title" style="margin-top:0;">Integração Google Sheets</h3>
+    <div class="card">
+      <div class="banner banner-note" style="margin-bottom:14px;">
+        Quando o Apps Script da planilha estiver configurado, cole a URL aqui. Todos os dados passarão a ser salvos diretamente no Google Sheets em tempo real.
+      </div>
+      <div class="field"><label>URL do Apps Script (Web App)</label><input type="url" id="cfg-script" placeholder="https://script.google.com/..." value="${state.settings.appsScriptUrl||''}"></div>
+      <div style="display:flex;gap:8px;margin-top:0;">
+        <button class="btn btn-primary" id="cfg-script-save">Salvar URL</button>
+        <button class="btn btn-secondary" id="cfg-sync-all" ${!state.settings.appsScriptUrl?'disabled':''}>⬆ Sync inicial → Sheets</button>
+      </div>
+      <p class="muted-x" style="margin-top:10px;">Status atual: <strong>${state.syncStatus==='ok'?'🟢 Sync ativo':state.syncStatus==='err'?'🔴 Erro de conexão':state.syncStatus==='syncing'?'🔄 Sincronizando…':'⚪ Sem sync configurado'}</strong></p>
+    </div>
+
+    <div class="card">
+      <div class="field"><label>PIN de acesso (deixe em branco para desativar)</label><input type="text" inputmode="numeric" id="cfg-pin" value="${state.settings.pin||''}"></div>
+      <button class="btn btn-secondary" id="cfg-pin-save">Salvar PIN</button>
+    </div>
+  `;
+
+  wrap.querySelector('#cfg-script-save').onclick=async()=>{
+    state.settings.appsScriptUrl=wrap.querySelector('#cfg-script').value.trim();
+    state.syncStatus=state.settings.appsScriptUrl?'ok':'off';
+    await saveSet(); showToast(state.settings.appsScriptUrl?'URL salva. Sync ativo.':'URL removida.'); render();
+  };
+  const btnClear=wrap.querySelector('#cfg-clear-local');
+  if(btnClear) btnClear.onclick=()=>{
+    try{
+      localStorage.removeItem(KEY_OBST);
+      localStorage.removeItem(KEY_GIN);
+      localStorage.removeItem(KEY_SET);
+      showToast('Cache limpo. Recarregue a página para buscar dados do Sheets.');
+    }catch(e){ showToast('Erro ao limpar cache.'); }
+  };
+
+  const btnNumerar=wrap.querySelector('#cfg-numerar-contratos');
+  if(btnNumerar) btnNumerar.onclick=async()=>{
+    // Assign sequential numbers to signed contracts that don't have one yet
+    // Sort by data do parto (realized first) then by DPP
+    const semNúmero=state.obstetric.filter(p=>p.contratoAssinado&&!p.numeroContrato)
+      .sort((a,b)=>{
+        const da=parseDate(a.parto.data)||calcDPP(a.dum,a.dppManual)||new Date(9999,0,1);
+        const db=parseDate(b.parto.data)||calcDPP(b.dum,b.dppManual)||new Date(9999,0,1);
+        return da-db;
+      });
+    if(!semNúmero.length){showToast('Todos os contratos assinados já têm número.');return;}
+    // Find next available number
+    const existing=state.obstetric.filter(p=>p.numeroContrato).map(p=>parseInt(p.numeroContrato.replace('AD-',''))||0);
+    let next=(existing.length?Math.max(...existing):0)+1;
+    for(const p of semNúmero){
+      p.numeroContrato='AD-'+String(next).padStart(3,'0');
+      next++;
+      await commitObstEdit(p);
+    }
+    showToast(`${semNúmero.length} contratos numerados (AD-${String(next-semNúmero.length).padStart(3,'0')} a AD-${String(next-1).padStart(3,'0')}).`);
+    render();
+  };
+  wrap.querySelector('#cfg-pin-save').onclick=async()=>{
+    state.settings.pin=wrap.querySelector('#cfg-pin').value.trim();
+    await saveSet(); showToast(state.settings.pin?'PIN salvo.':'PIN removido.');
+  };
+  const btnSyncAll=wrap.querySelector('#cfg-sync-all');
+  if(btnSyncAll) btnSyncAll.onclick=async()=>{
+    if(!state.settings.appsScriptUrl){showToast('Configure a URL primeiro.');return;}
+    btnSyncAll.disabled=true; btnSyncAll.textContent='Enviando…';
+    await syncToSheets('syncAll',{patients:state.obstetric});
+    await syncToSheets('syncAllGin',{patients:state.gyneco});
+    btnSyncAll.textContent='✓ Enviado!';
+    showToast('Sync concluído: '+state.obstetric.length+' gestantes e '+state.gyneco.length+' ginecológicas.');
+    setTimeout(()=>{btnSyncAll.disabled=false;btnSyncAll.textContent='⬆ Sync inicial → Sheets';},3000);
+  };
+  return wrap;
+}
+
+
+function renderModal(){
+  const overlay=el(`<div class="overlay"></div>`);
+  overlay.onclick=(e)=>{if(e.target===overlay){state.modal=null;render();}};
+  const modal=el(`<div class="modal"></div>`);
+  overlay.appendChild(modal);
+  if(state.modal.type==='novaPaciente') modal.appendChild(modalNovaPaciente());
+  else if(state.modal.type==='detalheObstetrica'){
+    try{ modal.appendChild(modalDetalheObstetrica(state.modal.id)); }
+    catch(e){ console.error('Modal error:',e); modal.innerHTML=`<div style="padding:20px;"><h3>Erro ao abrir ficha</h3><p style="color:var(--alert);">${e.message}</p><button class="btn btn-secondary" onclick="state.modal=null;render()">Fechar</button></div>`; }
+  }
+  else if(state.modal.type==='detalheGineco'){
+    try{ modal.appendChild(modalDetalheGineco(state.modal.id)); }
+    catch(e){ console.error('Gineco modal error:',e); modal.innerHTML=`<div style="padding:20px;"><h3>Erro</h3><p style="color:var(--alert);">${e.message}</p><pre style="font-size:11px;">${(e.stack||'').slice(0,300)}</pre><button class="btn btn-secondary" onclick="state.modal=null;render()">Fechar</button></div>`; }
+  }
+  else if(state.modal.type==='editarObst'){
+    try{ modal.appendChild(modalEditarObst(state.modal.id)); }
+    catch(e){ modal.innerHTML=`<div style="padding:20px;"><h3>Erro ao abrir edição</h3><p style="color:var(--alert);">${e.message}</p><button class="btn btn-secondary" onclick="state.modal=null;render()">Fechar</button></div>`; }
+  }
+  else if(state.modal.type==='editarGin') modal.appendChild(modalEditarGin(state.modal.id));
+  else if(state.modal.type==='fupPosParto') modal.appendChild(modalFupPosParto());
+  else if(state.modal.type==='alertaContratos') modal.appendChild(modalAlertaContratos());
+  else if(state.modal.type==='alertaParceiro') modal.appendChild(modalAlertaParceiro());
+  else if(state.modal.type==='fupRetornoGineco') modal.appendChild(modalFupRetornoGineco());
+  else if(state.modal.type==='fupDIU') modal.appendChild(modalFupDIU());
+  else if(state.modal.type==='assinarParceiro') modal.appendChild(modalAssinarParceiro(state.modal.patientId));
+  else if(state.modal.type==='pdfParceiroFiltro'){
+    try{ modal.appendChild(modalPdfParceiroFiltro(state.modal.allPartos||[],state.modal.allPapGineco||[])); }
+    catch(e){ modal.innerHTML=`<div style="padding:20px;"><h3>Erro no PDF</h3><p style="color:var(--alert);">${e.message}</p><pre style="font-size:11px;">${(e.stack||'').slice(0,300)}</pre><button class="btn btn-secondary" onclick="state.modal=null;render()">Fechar</button></div>`; }
+  }
+  return overlay;
+}
+
+
+function modalNovaPaciente(){
+  const wrap=el(`<div></div>`);
+  const tipo=state.novaPacienteTipo;
+  wrap.innerHTML=`
+    <div class="modal-head"><h2>${state._lockPacienteTipo?'Nova paciente ginecológica':'Nova paciente'}</h2><button class="close-x">✕</button></div>
+    ${!state._lockPacienteTipo?`<div class="type-switch">
+      <button data-t="obstetrica" class="${tipo==='obstetrica'?'sel':''}">Obstétrica<small>gestante — pré-natal</small></button>
+      <button data-t="ginecologica" class="${tipo==='ginecologica'?'sel':''}">Ginecológica<small>não gestante</small></button>
+    </div>`:''}
+    <div id="form-area"></div>
+  `;
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;state._lockPacienteTipo=false;render();};
+  wrap.querySelectorAll('.type-switch button').forEach(b=>b.onclick=()=>{state.novaPacienteTipo=b.dataset.t;render();});
+  const fa=wrap.querySelector('#form-area');
+  if(tipo==='obstetrica'){
+    fa.innerHTML=`
+      <div class="field-row">
+        <div class="field"><label>Nome da paciente</label><input id="f-nome" placeholder="Nome completo"></div>
+        <div class="field"><label>Telefone</label><input id="f-tel" placeholder="(99) 99999-9999" maxlength="15" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').slice(0,15)"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Data da 1ª consulta</label><input type="date" id="f-cadastro" value="${isoDate(today())}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>DUM — Data da última menstruação</label><input type="date" id="f-dum"></div>
+        <div class="field">
+          <label>DPP <span id="dpp-hint" style="font-size:11px;color:var(--ink-muted);"></span></label>
+          <input type="date" id="f-dpp">
+        </div>
+      </div>
+      <button class="btn btn-primary" id="f-save">Cadastrar gestante</button>
+    `;
+    // Auto-calc DPP from DUM
+    const dumInput=fa.querySelector('#f-dum');
+    const dppInput=fa.querySelector('#f-dpp');
+    const dppHint=fa.querySelector('#dpp-hint');
+    if(dumInput&&dppInput){
+      dumInput.oninput=()=>{
+        if(dumInput.value){
+          const dum=parseDate(dumInput.value);
+          if(dum){
+            const dpp=addDays(dum,280);
+            dppInput.value=isoDate(dpp);
+            dppInput.style.opacity='0.6';
+            dppInput.readOnly=true;
+            if(dppHint) dppHint.textContent='(calculada da DUM)';
+          }
+        } else {
+          dppInput.value='';
+          dppInput.style.opacity='1';
+          dppInput.readOnly=false;
+          if(dppHint) dppHint.textContent='(preencha a DUM ou insira manualmente)';
+        }
+      };
+      dppInput.oninput=()=>{
+        if(!dumInput.value&&dppInput.value){
+          if(dppHint) dppHint.textContent='(DPP manual)';
+        }
+      };
+    }
+
+    fa.querySelector('#f-save').onclick=async()=>{
+      const nome=fa.querySelector('#f-nome').value.trim();
+      const dum=fa.querySelector('#f-dum').value;
+      const cadastro=fa.querySelector('#f-cadastro').value||isoDate(today());
+      const dppManualVal=(fa.querySelector('#f-dpp')||{}).value||'';
+      if(!nome||(!dum&&!dppManualVal)){showToast('Informe nome e DUM ou DPP.');return;}
+      const p=newObstPatient();
+      p.nome=nome; p.telefone=fa.querySelector('#f-tel').value.trim();
+      p.dum=dum; p.cadastradoEm=cadastro;
+      // Save DPP manual if no DUM
+      if(!dum){
+        const dppVal=(fa.querySelector('#f-dpp')||{}).value||'';
+        p.dppManual=dppVal;
+      }
+      const apres=calcDataApresParc(dum);
+      p.dataApresParc=apres?isoDate(apres):'';
+      state.obstetric=await addPatient(KEY_OBST,p);
+      openObstetricModal(p.id);
+    };
+  } else if(tipo==='ginecologica'){
+    fa.innerHTML=`
+      <div class="field-row">
+        <div class="field"><label>Nome da paciente</label><input id="f-nome" placeholder="Nome completo"></div>
+        <div class="field"><label>Telefone</label><input id="f-tel"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Data da consulta</label><input type="date" id="f-data" value="${isoDate(today())}"></div>
+        <div class="field"><label>Seguimento</label>
+          <select id="f-seg">
+            <option value="30dias">30 dias</option>
+            <option value="3meses">3 meses</option>
+            <option value="6meses">6 meses</option>
+            <option value="1ano" selected>1 ano</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Papanicolau coletado?</label>
+          <select id="f-pap"><option value="nao">Não</option><option value="sim">Sim</option></select>
+        </div>
+        <div class="field"><label>Interesse em DIU?</label>
+          <select id="f-diu"><option value="nao">Não</option><option value="sim">Sim</option></select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="f-save">Cadastrar paciente</button>
+    `;
+    fa.querySelector('#f-save').onclick=async()=>{
+      const nome=fa.querySelector('#f-nome').value.trim();
+      const data=fa.querySelector('#f-data').value;
+      if(!nome||!data){showToast('Informe nome e data.');return;}
+      const papSim=fa.querySelector('#f-pap').value==='sim';
+      const diuSim=fa.querySelector('#f-diu').value==='sim';
+      const p={id:crypto.randomUUID(),nome,telefone:fa.querySelector('#f-tel').value.trim(),
+        cadastradoEm:data,ultimaConsulta:data,
+        papColetado:papSim,dataColeta:papSim?data:null,
+        papChecado:false,dataChecagem:null,retornoMarcado:false,dataRetorno:null,
+        seguimento:fa.querySelector('#f-seg').value,observacoes:'',
+        diu:{interesse:diuSim,disponivel:false,agendamento:false,insercao:false,pagamento:false,nf:false},
+        consultas:[{id:crypto.randomUUID(),data,valor:state.settings.valorConsultaGineco||0,statusPagamento:'pendente'}]};
+      state.gyneco=await addPatient(KEY_GIN,p);
+      openGinecoModal(p.id);
+    };
+  } else {
+    fa.innerHTML=`<p class="muted-x">Selecione o tipo de paciente acima.</p>`;
+  }
+  return wrap;
+}
+
+
+function modalEditarObst(id){
+  const p=state.obstetric.find(x=>x.id===id);
+  const t=today();
+  const wrap=el(`<div></div>`);
+  if(!p){wrap.innerHTML='<p>Não encontrado.</p>';return wrap;}
+  wrap.innerHTML=`
+    <div class="modal-head"><h2>Editar cadastro</h2><button class="close-x">✕</button></div>
+    <div class="field-row">
+      <div class="field"><label>Nome</label><input id="e-nome" value="${p.nome||''}"></div>
+      <div class="field"><label>Telefone</label><input id="e-tel" value="${p.telefone||''}" maxlength="15" placeholder="(99) 99999-9999" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').slice(0,15)"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Data da 1ª consulta</label><input type="date" id="e-cadastro" value="${p.cadastradoEm||''}"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>DUM</label><input type="date" id="e-dum" value="${p.dum||''}"></div>
+      <div class="field">
+        <label>DPP <span id="e-dpp-hint" style="font-size:11px;color:var(--ink-muted);">${p.dum?'(calculada da DUM)':p.dppManual?'(manual)':'(preencha DUM ou insira manualmente)'}</span></label>
+        <input type="date" id="e-dpp" value="${p.dum?isoDate(calcDPP(p.dum)):p.dppManual||''}" ${p.dum?'style="opacity:.6;" readonly':''}>
+      </div>
+    </div>
+    ${p.parto.realizado?`
+    <div class="field-row">
+      <div class="field"><label>Data real do parto</label><input type="date" id="e-data-parto" value="${p.parto.data||''}" max="${isoDate(t)}"></div>
+    </div>`:''}
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" id="e-save">Salvar alterações</button>
+      <button class="btn btn-secondary" id="e-cancel">Cancelar</button>
+    </div>
+  `;
+  wrap.querySelector('.close-x').onclick=wrap.querySelector('#e-cancel').onclick=()=>{state.modal={type:'detalheObstetrica',id};render();};
+
+  // DUM → DPP auto-calc
+  const eDum=wrap.querySelector('#e-dum');
+  const eDpp=wrap.querySelector('#e-dpp');
+  const eDppHint=wrap.querySelector('#e-dpp-hint');
+  if(eDum&&eDpp){
+    eDum.oninput=()=>{
+      if(eDum.value){
+        const d=parseDate(eDum.value);
+        if(d){ eDpp.value=isoDate(addDays(d,280)); eDpp.readOnly=true; eDpp.style.opacity='.6'; if(eDppHint) eDppHint.textContent='(calculada da DUM)'; }
+      } else {
+        eDpp.value=''; eDpp.readOnly=false; eDpp.style.opacity='1'; if(eDppHint) eDppHint.textContent='(preencha DUM ou insira manualmente)';
+      }
+    };
+    eDpp.oninput=()=>{ if(!eDum.value&&eDppHint) eDppHint.textContent='(manual)'; };
+  }
+
+  wrap.querySelector('#e-save').onclick=async()=>{
+    p.nome=wrap.querySelector('#e-nome').value.trim();
+    p.telefone=wrap.querySelector('#e-tel').value.trim();
+    p.cadastradoEm=wrap.querySelector('#e-cadastro').value;
+    const novaDum=wrap.querySelector('#e-dum').value;
+    const novaDpp=(wrap.querySelector('#e-dpp')||{value:''}).value||'';
+    if(novaDum!==p.dum){
+      p.dum=novaDum;
+      p.dppManual='';
+      const apres=calcDataApresParc(novaDum);
+      p.dataApresParc=apres?isoDate(apres):'';
+    } else if(!novaDum&&novaDpp!==p.dppManual){
+      p.dppManual=novaDpp;
+    }
+    if(p.parto.realizado){
+      const novaDataParto=(wrap.querySelector('#e-data-parto')||{value:''}).value||'';
+      if(novaDataParto) p.parto.data=novaDataParto;
+    }
+    await commitObstEdit(p);
+    showToast('Cadastro atualizado.');
+    state.modal={type:'detalheObstetrica',id};
+    render();
+  };
+  return wrap;
+}
+
+
+function modalDetalheObstetrica(id){
+  let p=state.obstetric.find(x=>x.id===id);
+  if(!p){return el('<div><p>Não encontrada.</p></div>');}
+  p=migrateObst(p);
+  const wrap=el(`<div></div>`);
+  const t=today();
+  const dpp=calcDPP(p.dum,p.dppManual);
+  const {semanas,dias}=calcSemanasNaData(p.dum,t,p.dppManual);
+  const alerts=alertasObstetrica(p);
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div>
+        <h2>${p.nome}</h2>
+        <p class="muted-x">1ª consulta: ${fmtDate(p.cadastradoEm)} · Tel: ${p.telefone||'—'}</p>
+        ${p.numeroContrato?`<p style="font-size:13px;font-weight:700;color:var(--teal-dark);margin-top:2px;">📄 Contrato ${p.numeroContrato}</p>`:''}
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="btn btn-secondary btn-sm" id="btn-edit">✏️ Editar</button>
+        <button class="close-x">✕</button>
+      </div>
+    </div>
+
+    ${alerts.map(alertBanner).join('')}
+
+    <!-- Info gestacional -->
+    <div class="card" style="margin-bottom:14px;">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;">
+        <div><div class="muted-x" style="font-size:11px;">IG hoje</div><div style="font-size:20px;font-weight:600;" class="mono">${p.parto.realizado?'—':semanas+'s'+dias+'d'}</div></div>
+        <div><div class="muted-x" style="font-size:11px;">DPP</div><div style="font-size:20px;font-weight:600;" class="mono">${fmtDate(dpp)}</div></div>
+
+      </div>
+      ${!p.parto.realizado?'':''}
+    </div>
+
+    <!-- Checklist -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Acompanhamento clínico</div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-interesse" ${p.interesseConfirmado?'checked':''}>
+        <div class="ct"><div class="t">Interesse confirmado no parto</div><div class="d">Paciente confirmou desejo de realizar o parto na clínica</div></div>
+      </div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-contrato" ${p.contratoAssinado?'checked':''}>
+        <div class="ct">
+          <div class="t">Contrato de parto assinado ${!p.contratoAssinado&&semanas>=24?'<span style="color:var(--alert);font-size:11px;">⚠️ ATRASADO</span>':(!p.contratoAssinado&&semanas>=20?'<span style="color:var(--warn);font-size:11px;">⏰ urgente</span>':'')}</div>
+          <div class="d">Prazo: até 24 semanas</div>
+        </div>
+        <div class="dt"><input type="date" id="d-contrato" value="${p.dataContrato||''}" ${!p.contratoAssinado?'disabled':''}></div>
+      </div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-parceiro" ${p.apresentadoParceiro?'checked':''}>
+        <div class="ct">
+          <div class="t">Apresentada ao médico parceiro ${!p.apresentadoParceiro&&semanas>=28?'<span style="color:var(--alert);font-size:11px;">⚠️ ATRASADO</span>':(!p.apresentadoParceiro&&semanas>=24?'<span style="color:var(--warn);font-size:11px;">⏰ urgente</span>':'')}</div>
+          <div class="d">Janela ideal: 24–28 semanas · Sugerido: ${fmtDate(p.dataApresParc)||'—'}</div>
+        </div>
+        <div class="dt"><input type="date" id="d-parceiro" value="${p.dataApresentacao||''}" ${!p.apresentadoParceiro?'disabled':''}></div>
+      </div>
+    </div>
+
+    <!-- Financeiro -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Contrato e financeiro</div>
+      <div class="field-row">
+        <div class="field"><label>Valor do contrato (R$)</label>
+          <input type="number" id="f-valor" value="${p.valorContrato||0}">
+        </div>
+        <div class="field"><label>Negociação</label>
+          <select id="f-neg">
+            <option value="">—</option>
+            <option value="Em negociação" ${p.negociacao==='Em negociação'?'selected':''}>Em negociação</option>
+            <option value="Aceito" ${p.negociacao==='Aceito'?'selected':''}>Aceito</option>
+            <option value="Recusado" ${p.negociacao==='Recusado'?'selected':''}>Recusado</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Forma de pagamento</label>
+        <select id="f-forma">
+          <option value="">—</option>
+          <option value="À vista PIX" ${p.formaPagamento==='À vista PIX'?'selected':''}>À vista PIX</option>
+          <option value="À vista Cartão" ${p.formaPagamento==='À vista Cartão'?'selected':''}>À vista Cartão</option>
+          <option value="Parcelado 3x" ${p.formaPagamento==='Parcelado 3x'?'selected':''}>Parcelado 3x</option>
+          <option value="Parcelado 6x" ${p.formaPagamento==='Parcelado 6x'?'selected':''}>Parcelado 6x</option>
+          <option value="Outro" ${p.formaPagamento==='Outro'?'selected':''}>Outro</option>
+        </select>
+      </div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-pgto" ${p.pgtoFinalizado?'checked':''}>
+        <div class="ct"><div class="t">Pagamento finalizado</div><div class="d">Valor total do contrato recebido</div></div>
+      </div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-nf" ${p.notaFiscalEnviada?'checked':''}>
+        <div class="ct"><div class="t">Nota fiscal enviada</div><div class="d">NF emitida e enviada à paciente</div></div>
+      </div>
+
+
+    </div>
+
+    <!-- Parto -->
+    <div class="card" style="margin-bottom:14px;" id="card-parto"></div>
+
+    <!-- Pós-parto (se realizado) -->
+    ${p.parto.realizado?`
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Retornos pós-parto</div>
+      ${['duasSemanas','quarentaDias','seisMeses'].map(k=>{
+        const labels={duasSemanas:'2 semanas pós-parto',quarentaDias:'40 dias pós-parto',seisMeses:'6 meses pós-parto'};
+        const pp=p.posParto[k];
+        return `<div class="checkrow">
+          <input type="checkbox" data-pp="${k}" ${pp.feita?'checked':''}>
+          <div class="ct"><div class="t">${labels[k]}</div></div>
+          <div class="dt"><input type="date" data-pp-date="${k}" value="${pp.data||''}" ${!pp.feita?'disabled':''}></div>
+        </div>`;
+      }).join('')}
+    </div>`:''}
+
+
+
+    <!-- Médico Parceiro card -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Médico Parceiro</div>
+      <div class="field" style="margin-bottom:8px;">
+        <label>Nome do médico parceiro</label>
+        <input id="parc-nome" value="${p.parto.nomeMedicoParceiro||''}" placeholder="Deixe em branco se não houver parceiro" ${p.parto.parceiroAssinou?'disabled':''}
+          oninput="document.getElementById('parc-funcs').style.display=this.value?'block':'none'">
+      </div>
+      <div id="parc-funcs" style="${p.parto.nomeMedicoParceiro?'':'display:none;'}">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:6px;padding:4px 0 10px;">
+          ${[['fp-apresentacao','apresentacao','Consulta de apresentação'],['fp-inducao','inducao','Indução'],['fp-conducao','conducao','Condução'],['fp-auxiliar','auxiliar','Auxiliar'],['fp-titular','titular','Médico Titular'],['fp-visita1','visita1','1ª visita pós-parto'],['fp-visita2','visita2','2ª visita pós-parto']].map(([id,key,label])=>
+            `<label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+              <input type="checkbox" id="${id}" ${(p.parto.funcoesParceiro||{})[key]?'checked':''} ${p.parto.parceiroAssinou?'disabled':''} style="accent-color:var(--teal);"> ${label}
+            </label>`).join('')}
+        </div>
+        <div class="field">
+          <label>Outros</label>
+          <input id="fp-outros" value="${p.parto.funcoesParceiro?.outros||''}" placeholder="Especificar..." ${p.parto.parceiroAssinou?'disabled':''}>
+        </div>
+        ${p.parto.parceiroAssinou?
+          `<div style="background:var(--ok-light);color:var(--ok);padding:8px 12px;border-radius:8px;font-size:13px;font-weight:600;margin-top:8px;">✓ Assinado pelo parceiro em ${fmtDate(p.parto.dataAssinaturaParceiro)}</div>`
+          :`<button class="btn btn-secondary btn-sm" id="btn-save-parceiro" style="margin-top:4px;">Salvar dados do parceiro</button>`}
+      </div>
+    </div>
+
+    <!-- Desistência -->
+    ${!p.parto.realizado&&!p.desistiu?`
+    <div class="card" style="margin-bottom:14px;border-left:3px solid var(--warn);">
+      <div class="card-section-title">Desistência</div>
+      <p style="font-size:13px;color:var(--ink-muted);margin-bottom:10px;">Paciente desistiu de realizar o parto na Clínica AD.</p>
+      <div class="field" style="margin-bottom:8px;">
+        <label>Motivo (opcional)</label>
+        <input id="motivo-desistencia" placeholder="Ex: mudou de médico, plano de saúde...">
+      </div>
+      <button class="btn btn-secondary btn-sm" id="btn-desistir" style="border-color:var(--warn);color:var(--warn);">Marcar como desistência</button>
+    </div>`:
+    p.desistiu?`
+    <div class="card" style="margin-bottom:14px;border-left:3px solid var(--warn);">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div style="font-weight:600;color:var(--warn);">⚠️ Desistência registrada em ${fmtDate(p.dataDesistencia)}</div>
+          ${p.motivoDesistencia?`<div style="font-size:12px;color:var(--ink-muted);margin-top:4px;">${p.motivoDesistencia}</div>`:''}
+        </div>
+        <button class="btn btn-secondary btn-sm" id="btn-reativar">Reativar cadastro</button>
+      </div>
+    </div>`:''}
+
+    ${p.parto.realizado&&!p.migradaParaGineco?`
+    <div class="card" style="margin-bottom:14px;border-left:3px solid var(--teal);">
+      <div class="card-section-title">Migração de acompanhamento</div>
+      <p style="font-size:13px;color:var(--ink-muted);margin-bottom:10px;">Após concluir o acompanhamento pós-parto, migrar esta paciente para a aba Ginecológicas.</p>
+      <button class="btn btn-secondary btn-sm" id="btn-migrar">Migrar para Ginecológicas →</button>
+    </div>`:''}    
+    ${p.migradaParaGineco?`<div class="banner banner-note" style="margin-bottom:14px;">✓ Paciente migrada para a aba Ginecológicas.</div>`:''}
+
+    <div style="text-align:right;margin-top:8px;">
+      <button class="btn btn-danger btn-sm" id="btn-del">Excluir cadastro</button>
+    </div>
+  `;
+
+  
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelector('#btn-edit').onclick=()=>{state.modal={type:'editarObst',id};render();};
+
+  wrap.querySelector('#c-interesse').onchange=async(e)=>{p.interesseConfirmado=e.target.checked;await commitObstEdit(p);};
+  wrap.querySelector('#c-contrato').onchange=async(e)=>{
+    p.contratoAssinado=e.target.checked;
+    p.dataContrato=e.target.checked?isoDate(t):'';
+    if(e.target.checked&&!p.numeroContrato){
+      // Auto-number: count existing contracts + 1
+      const num=state.obstetric.filter(x=>x.contratoAssinado&&x.numeroContrato).length+1;
+      p.numeroContrato='AD-'+String(num).padStart(3,'0');
+    }
+    await commitObstEdit(p);render();
+  };
+  wrap.querySelector('#d-contrato').onchange=async(e)=>{p.dataContrato=e.target.value;await commitObstEdit(p);};
+  wrap.querySelector('#c-parceiro').onchange=async(e)=>{
+    p.apresentadoParceiro=e.target.checked;
+    p.dataApresentacao=e.target.checked?isoDate(t):'';
+    await commitObstEdit(p);render();
+  };
+  wrap.querySelector('#d-parceiro').onchange=async(e)=>{p.dataApresentacao=e.target.value;await commitObstEdit(p);};
+
+  // Financeiro — auto-save on blur/change
+  const saveFinanceiro=async()=>{
+    p.valorContrato=Number(wrap.querySelector('#f-valor').value)||0;
+    p.negociacao=wrap.querySelector('#f-neg').value;
+    p.formaPagamento=wrap.querySelector('#f-forma').value;
+    await commitObstEdit(p);
+  };
+  const fValor=wrap.querySelector('#f-valor');
+  const fNeg=wrap.querySelector('#f-neg');
+  const fForma=wrap.querySelector('#f-forma');
+  if(fValor) fValor.onblur=saveFinanceiro;
+  if(fNeg) fNeg.onblur=saveFinanceiro;
+  if(fForma) fForma.onchange=saveFinanceiro;
+  // Pagamentos toggle (null-safe)
+  const btnTogglePgtos=wrap.querySelector('#btn-toggle-pgtos');
+  const pagList=wrap.querySelector('#pagamentos-list');
+  const pgAdd=wrap.querySelector('#pg-add');
+  const renderPagList=()=>{
+    if(!pagList) return;
+    const pgs=p.pagamentos||[];
+    if(!pgs.length){pagList.innerHTML=`<div class="muted-x" style="font-size:12px;padding:4px 0;">Nenhum pagamento registrado.</div>`;return;}
+    pagList.innerHTML=pgs.map((pg,i)=>`<div class="hist-item">
+      <span class="mono">${fmtDate(pg.data)}</span>
+      <span style="display:flex;gap:6px;align-items:center;">
+        <span class="mono">R$ ${Number(pg.valor).toLocaleString('pt-BR')}</span>
+        <button class="btn btn-secondary btn-sm" data-del-pg="${i}">✕</button>
+      </span>
+    </div>`).join('');
+    pagList.querySelectorAll('[data-del-pg]').forEach(btn=>btn.onclick=async()=>{
+      p.pagamentos.splice(Number(btn.dataset.delPg),1);await commitObstEdit(p);renderPagList();
+    });
+  };
+  if(btnTogglePgtos) btnTogglePgtos.onclick=()=>{
+    const sec=wrap.querySelector('#pgtos-section');
+    if(sec) sec.style.display=sec.style.display==='none'?'block':'none';
+  };
+  renderPagList();
+  if(pgAdd) pgAdd.onclick=async()=>{
+    const d=wrap.querySelector('#pg-data').value,v=wrap.querySelector('#pg-valor').value;
+    if(!d||!v){showToast('Informe data e valor.');return;}
+    if(!p.pagamentos) p.pagamentos=[];
+    p.pagamentos.push({data:d,valor:Number(v)});
+    await commitObstEdit(p);renderPagList();showToast('Pagamento registrado.');
+  };
+  wrap.querySelector('#c-pgto').onchange=async(e)=>{p.pgtoFinalizado=e.target.checked;await commitObstEdit(p);};
+  wrap.querySelector('#c-nf').onchange=async(e)=>{p.notaFiscalEnviada=e.target.checked;await commitObstEdit(p);};
+
+
+
+  // Card parto
+  const cardParto=wrap.querySelector('#card-parto');
+  if(p.parto.realizado){
+    cardParto.innerHTML=`
+      <div class="parto-badge">🏥 Parto realizado em ${fmtDate(p.parto.data)}</div>
+      <div class="card-section-title">Dados do parto</div>
+      <div class="field-row">
+        <div class="field"><label>Hospital</label><input id="pt-hosp" value="${p.parto.hospital||''}"></div>
+        <div class="field"><label>Médico Titular</label><input id="pt-titular" placeholder="Nome do médico titular" value="${p.parto.medicoTitular||''}"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Equipe Obstétrica (parceiro)</label><input id="pt-eo" value="${p.parto.equipObstetrica||''}"></div>
+        <div class="field"><label>Via de parto</label>
+          <select id="pt-via">
+            <option value="">—</option>
+            <option value="PCST" ${p.parto.viaParto==='PCST'?'selected':''}>PCST</option>
+            <option value="PCST pélvico" ${p.parto.viaParto==='PCST pélvico'?'selected':''}>PCST pélvico</option>
+            <option value="PN" ${p.parto.viaParto==='PN'?'selected':''}>PN</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Auxílio (médico auxiliar)</label>
+        <input id="pt-aux" placeholder="Nome do auxiliar (se houver)" value="${p.parto.auxilioNome||''}">
+      </div>
+      <div class="field"><label>Observações</label><textarea id="pt-obs" rows="2">${p.parto.observacao||''}</textarea></div>
+
+      <button class="btn btn-primary btn-sm" id="btn-save-parto">Salvar dados do parto</button>
+    `;
+  } else {
+    cardParto.innerHTML=`
+      <div class="card-section-title">Registrar parto</div>
+      <div class="field-row">
+        <div class="field"><label>Data real do parto</label><input type="date" id="pt-data" placeholder="dd/mm/aaaa" max="${isoDate(t)}"></div>
+        <div class="field"><label>Hospital</label><input id="pt-hosp" value="${p.parto.hospital||''}"></div>
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label>Médico Titular</label><input id="pt-titular" placeholder="Nome do titular" value="${p.parto.medicoTitular||''}"></div>
+        <div class="field"><label>Equipe Obstétrica (parceiro)</label><input id="pt-eo" value="${p.parto.equipObstetrica||''}"></div>
+        <div class="field"><label>Via de parto</label>
+          <select id="pt-via">
+            <option value="">—</option>
+            <option value="PCST">PCST</option>
+            <option value="PCST pélvico">PCST pélvico</option>
+            <option value="PN">PN</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Auxílio (nome do auxiliar)</label><input id="pt-aux" placeholder="Se houver"></div>
+        <div class="field" style="align-self:end;">
+          <label>&nbsp;</label>
+          <button class="btn btn-brick" style="width:100%;" id="btn-marcar-parto">🏥 Marcar como Realizado</button>
+        </div>
+      </div>
+      <div class="field"><label>Observações</label><textarea id="pt-obs" rows="2">${p.parto.observacao||''}</textarea></div>
+    `;
+  }
+
+  // Eventos parto
+  const saveParto=async()=>{
+    p.parto.hospital=(cardParto.querySelector('#pt-hosp')||{}).value||'';
+    p.parto.medicoTitular=(cardParto.querySelector('#pt-titular')||{}).value||'';
+    p.parto.equipObstetrica=(cardParto.querySelector('#pt-eo')||{}).value||'';
+    p.parto.viaParto=(cardParto.querySelector('#pt-via')||{}).value||'';
+    p.parto.auxilioNome=(cardParto.querySelector('#pt-aux')||{}).value||'';
+    p.parto.auxilio=!!p.parto.auxilioNome;
+    p.parto.observacao=(cardParto.querySelector('#pt-obs')||{}).value||'';
+    if(!p.parto.parceiroAssinou){
+      p.parto.funcoesParceiro={
+        inducao:!!(cardParto.querySelector('#fp-inducao')||{}).checked,
+        conducao:!!(cardParto.querySelector('#fp-conducao')||{}).checked,
+        auxiliar:!!(cardParto.querySelector('#fp-auxiliar')||{}).checked,
+        titular:!!(cardParto.querySelector('#fp-titular')||{}).checked,
+        outros:(cardParto.querySelector('#fp-outros')||{}).value||''
+      };
+    }
+  };
+  if(p.parto.realizado){
+    cardParto.querySelector('#btn-save-parto').onclick=async()=>{await saveParto();await commitObstEdit(p);showToast('Dados do parto salvos.');};
+  } else {
+    cardParto.querySelector('#btn-marcar-parto').onclick=async()=>{
+      const dataEl=cardParto.querySelector('#pt-data');
+      if(!dataEl.value){showToast('Informe a data do parto.');return;}
+      await saveParto();
+      p.parto.realizado=true;
+      p.parto.data=dataEl.value;
+      await commitObstEdit(p);showToast('Parto registrado!');render();
+    };
+  }
+
+  // Pós-parto
+  if(p.parto.realizado){
+    wrap.querySelectorAll('[data-pp]').forEach(cb=>cb.onchange=async()=>{
+      const k=cb.dataset.pp;
+      p.posParto[k].feita=cb.checked;
+      p.posParto[k].data=cb.checked?isoDate(t):'';
+      await commitObstEdit(p);render();
+    });
+    wrap.querySelectorAll('[data-pp-date]').forEach(inp=>inp.onchange=async()=>{
+      p.posParto[inp.dataset.ppDate].data=inp.value;await commitObstEdit(p);
+    });
+  }
+
+  // Consultas pré-natal
+
+
+  // Salvar dados do parceiro
+  const btnSaveParceiro=wrap.querySelector('#btn-save-parceiro');
+  if(btnSaveParceiro) btnSaveParceiro.onclick=async()=>{
+    if(!p.parto.parceiroAssinou){
+      p.parto.nomeMedicoParceiro=(wrap.querySelector('#parc-nome')||{value:''}).value||'';
+      p.parto.funcoesParceiro={
+        apresentacao:!!(wrap.querySelector('#fp-apresentacao')||{}).checked,
+        inducao:!!(wrap.querySelector('#fp-inducao')||{}).checked,
+        conducao:!!(wrap.querySelector('#fp-conducao')||{}).checked,
+        auxiliar:!!(wrap.querySelector('#fp-auxiliar')||{}).checked,
+        titular:!!(wrap.querySelector('#fp-titular')||{}).checked,
+        visita1:!!(wrap.querySelector('#fp-visita1')||{}).checked,
+        visita2:!!(wrap.querySelector('#fp-visita2')||{}).checked,
+        outros:(wrap.querySelector('#fp-outros')||{value:''}).value||''
+      };
+      await commitObstEdit(p);
+      showToast('Dados do médico parceiro salvos.');
+    }
+  };
+
+  // Desistência
+  const btnDesistir=wrap.querySelector('#btn-desistir');
+  if(btnDesistir) btnDesistir.onclick=async()=>{
+    if(!confirm('Marcar '+p.nome+' como desistência? O cadastro será mantido com status de desistência.')) return;
+    p.desistiu=true;
+    p.dataDesistencia=isoDate(today());
+    p.motivoDesistencia=(wrap.querySelector('#motivo-desistencia')||{value:''}).value.trim();
+    await commitObstEdit(p); showToast('Desistência registrada.'); render();
+  };
+  const btnReativar=wrap.querySelector('#btn-reativar');
+  if(btnReativar) btnReativar.onclick=async()=>{
+    if(!confirm('Reativar o cadastro de '+p.nome+'?')) return;
+    p.desistiu=false; p.dataDesistencia=''; p.motivoDesistencia='';
+    await commitObstEdit(p); showToast('Cadastro reativado.'); render();
+  };
+
+  // Migration to gyneco
+  const btnMigrar=wrap.querySelector('#btn-migrar');
+  if(btnMigrar) btnMigrar.onclick=async()=>{
+    if(!confirm('Migrar '+p.nome+' para a aba Ginecológicas? As datas de consulta serão preenchidas lá.')) return;
+    // Create gyneco patient with no auto dates
+    const gp={id:crypto.randomUUID(),nome:p.nome,telefone:p.telefone||'',
+      cadastradoEm:'',ultimaConsulta:'',
+      papColetado:false,dataColeta:null,papChecado:false,dataChecagem:null,
+      papResultado:'',pacienteNotificada:false,
+      retornoMarcado:false,dataRetorno:null,
+      seguimento:'1ano',observacoes:'',consultas:[],migradaDeObstetrica:true};
+    state.gyneco=await addPatient(KEY_GIN,gp);
+    p.migradaParaGineco=true;
+    await commitObstEdit(p);
+    showToast(p.nome+' migrada para Ginecológicas.');render();
+  };
+
+  wrap.querySelector('#btn-del').onclick=async()=>{
+    if(confirm('Excluir este cadastro definitivamente?')){
+      const delId=p.id;
+      state.obstetric=state.obstetric.filter(x=>x.id!==delId);
+      await saveLocal(KEY_OBST,state.obstetric);
+      await syncToSheets('delete',{id:delId});
+      state.modal=null;render();
+    }
+  };
+
+  return wrap;
+}
+
+
+function modalEditarGin(id){
+  const p=state.gyneco.find(x=>x.id===id);
+  const wrap=el(`<div></div>`);
+  if(!p){wrap.innerHTML='<p>Não encontrada.</p>';return wrap;}
+  wrap.innerHTML=`
+    <div class="modal-head"><h2>Editar cadastro</h2><button class="close-x">✕</button></div>
+    <div class="field-row">
+      <div class="field"><label>Nome</label><input id="e-nome" value="${p.nome||''}"></div>
+      <div class="field"><label>Telefone</label><input id="e-tel" value="${p.telefone||''}" maxlength="15" placeholder="(99) 99999-9999" oninput="this.value=this.value.replace(/\D/g,'').replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2').slice(0,15)"></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Data 1ª consulta</label><input type="date" id="e-cad" value="${p.cadastradoEm||''}"></div>
+      <div class="field"><label>Última consulta</label><input type="date" id="e-ult" value="${p.ultimaConsulta||''}"></div>
+    </div>
+    <div class="field"><label>Seguimento</label>
+      <select id="e-seg">
+        <option value="30dias" ${p.seguimento==='30dias'?'selected':''}>30 dias</option>
+        <option value="3meses" ${p.seguimento==='3meses'?'selected':''}>3 meses</option>
+        <option value="6meses" ${p.seguimento==='6meses'?'selected':''}>6 meses</option>
+        <option value="1ano" ${p.seguimento==='1ano'?'selected':''}>1 ano</option>
+      </select>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:8px;">
+      <button class="btn btn-primary" id="e-save">Salvar</button>
+      <button class="btn btn-secondary" id="e-cancel">Cancelar</button>
+    </div>
+  `;
+  wrap.querySelector('.close-x').onclick=wrap.querySelector('#e-cancel').onclick=()=>{state.modal={type:'detalheGineco',id};render();};
+  wrap.querySelector('#e-save').onclick=async()=>{
+    p.nome=wrap.querySelector('#e-nome').value.trim();
+    p.telefone=wrap.querySelector('#e-tel').value.trim();
+    p.cadastradoEm=wrap.querySelector('#e-cad').value;
+    p.ultimaConsulta=wrap.querySelector('#e-ult').value;
+    p.seguimento=wrap.querySelector('#e-seg').value;
+    await commitGinEdit(p);showToast('Cadastro atualizado.');
+    state.modal={type:'detalheGineco',id};render();
+  };
+  return wrap;
+}
+
+function modalDetalheGineco(id){
+  const p=state.gyneco.find(x=>x.id===id);
+  const wrap=el(`<div></div>`);
+  if(!p){wrap.innerHTML='<p>Não encontrada.</p>';return wrap;}
+  const gp=migrateGin({...p});
+  const alerts=alertasGineco(gp);
+  const prox=proximoRetornoGineco(gp);
+  const t=today();
+
+  // Determine flow state
+  const flow = !gp.papColetado ? 'nao_coletado'
+    : !gp.papChecado ? 'aguardando'
+    : gp.papResultado === 'normal' ? 'normal'
+    : gp.papResultado === 'alterado' ? 'alterado'
+    : 'checado_sem_resultado';
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>${gp.nome}</h2>
+        <p class="muted-x">Tel: ${gp.telefone||'—'} · Seguimento: ${({'30dias':'30 dias','3meses':'3 meses','6meses':'6 meses','1ano':'1 ano'}[gp.seguimento]||'1 ano')} · Próximo retorno: ${prox?fmtDate(prox):'—'}</p>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="btn btn-secondary btn-sm" id="btn-edit-gin">✏️ Editar</button>
+        <button class="close-x">✕</button>
+      </div>
+    </div>
+
+    ${alerts.map(alertBanner).join('')}
+
+    <!-- Papanicolau -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Papanicolau</div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-pap" ${gp.papColetado?'checked':''}>
+        <div class="ct"><div class="t">Coletado</div><div class="d">${gp.papColetado?`Data: ${fmtDate(gp.dataColeta)}`:'Marcar quando coletado'}</div></div>
+        <div class="dt"><input type="date" id="d-pap" value="${gp.dataColeta||''}" ${!gp.papColetado?'disabled':''}></div>
+      </div>
+      ${gp.papColetado?`
+      <div class="checkrow">
+        <input type="checkbox" id="c-check" ${gp.papChecado?'checked':''}>
+        <div class="ct"><div class="t">Resultado conferido</div><div class="d">${gp.papChecado?`Conferido em ${fmtDate(gp.dataChecagem)}`:'Aguardando conferência do resultado'}</div></div>
+        <div class="dt"><input type="date" id="d-check" value="${gp.dataChecagem||''}" ${!gp.papChecado?'disabled':''}></div>
+      </div>
+      ${gp.papChecado?`
+      <div style="padding:12px 0 4px;">
+        <label style="font-size:12px;font-weight:600;color:var(--ink-muted);display:block;margin-bottom:8px;">Resultado</label>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-sm ${gp.papResultado==='normal'?'btn-ok':'btn-secondary'}" id="res-normal">✓ Normal</button>
+          <button class="btn btn-sm ${gp.papResultado==='alterado'?'btn-danger':'btn-secondary'}" id="res-alterado">⚠ Alterado</button>
+          <button class="btn btn-sm ${!gp.papResultado?'btn-primary':'btn-secondary'}" id="res-limpar">— Não informado</button>
+        </div>
+      </div>
+      ${gp.papResultado==='normal'?`
+      <div class="checkrow">
+        <input type="checkbox" id="c-notif" ${gp.pacienteNotificada?'checked':''}>
+        <div class="ct"><div class="t">Paciente notificada</div><div class="d">Devolutiva positiva enviada à paciente</div></div>
+      </div>`:''}
+      ${gp.papChecado?`
+      <div class="checkrow" style="padding-top:8px;">
+        <input type="checkbox" id="c-pap-medico" ${gp.papMedicoResponsavel?'checked':''} style="accent-color:var(--teal);width:14px;height:14px;">
+        <div class="ct"><div class="t">Resultado conferido pelo médico parceiro</div>
+          <div id="pap-medico-field" style="${gp.papMedicoResponsavel?'':'display:none;'}margin-top:6px;">
+            <input id="pap-medico-nome" value="${gp.papNomeMedico||''}" placeholder="Nome do médico responsável" style="width:100%;padding:7px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13px;">
+          </div>
+        </div>
+      </div>`:''}
+      `:''}
+      `:''}
+    </div>
+
+    <!-- DIU -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">DIU</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;padding:4px 0 8px;">
+        ${[['diu-interesse','interesse','Interesse por DIU'],['diu-disponivel','disponivel','DIU disponível'],['diu-agenda','agendamento','Agendamento realizado'],['diu-insercao','insercao','Inserção realizada'],['diu-pagto','pagamento','Pagamento realizado'],['diu-nf','nf','Nota fiscal enviada']].map(([id,key,label])=>`
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+            <input type="checkbox" id="${id}" ${(gp.diu||{})[key]?'checked':''} style="accent-color:var(--teal);width:14px;height:14px;"> ${label}
+          </label>`).join('')}
+      </div>
+      ${statusDIU(gp)?`<div class="banner banner-${statusDIU(gp).level==='ok'?'note':'warn'}" style="margin-top:6px;">${statusDIU(gp).label}</div>`:''}
+    </div>
+
+    <!-- Retorno e acompanhamento -->
+    <div class="card" style="margin-bottom:14px;">
+      <div class="card-section-title">Retorno periódico</div>
+      ${!gp.papColetado?`
+      <div style="font-size:13px;color:var(--ink-muted);margin-bottom:10px;">
+        Sem Papanicolau coletado. Controle o retorno periódico abaixo.
+      </div>`:''}
+      ${gp.papResultado==='alterado'?`
+      <div class="banner banner-alert" style="margin-bottom:10px;">⚠️ Resultado alterado — agendar retorno urgente.</div>`:''}
+      <div class="checkrow">
+        <input type="checkbox" id="c-retorno" ${gp.retornoMarcado?'checked':''}>
+        <div class="ct"><div class="t">Retorno marcado${gp.papResultado==='alterado'?' <span style="color:var(--alert);font-size:11px;">— urgente</span>':''}</div>
+          <div class="d">Próximo: ${prox?fmtDate(prox):'não calculado'}</div>
+        </div>
+        <div class="dt"><input type="date" id="d-retorno" value="${gp.dataRetorno||''}" ${!gp.retornoMarcado?'disabled':''}></div>
+      </div>
+    </div>
+
+    ${!p.migradaParaObstetrica?`
+    <div class="card" style="margin-bottom:14px;border-left:3px solid var(--teal);">
+      <div class="card-section-title">Migração de acompanhamento</div>
+      <p style="font-size:13px;color:var(--ink-muted);margin-bottom:10px;">Paciente passa a ter acompanhamento obstétrico. As informações de pré-natal serão preenchidas na aba Gestantes.</p>
+      <button class="btn btn-secondary btn-sm" id="btn-migrar-obst">Migrar para Gestantes →</button>
+    </div>`:''}
+    ${p.migradaParaObstetrica?`<div class="banner banner-note" style="margin-bottom:14px;">✓ Paciente migrada para a aba Gestantes.</div>`:''}
+
+    <div style="text-align:right;">
+      <button class="btn btn-danger btn-sm" id="btn-del">Excluir</button>
+    </div>
+  `;
+
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelector('#btn-edit-gin').onclick=()=>{state.modal={type:'editarGin',id};render();};
+
+  // Migration gyneco → obstetric
+  const btnMigrarObst=wrap.querySelector('#btn-migrar-obst');
+  if(btnMigrarObst) btnMigrarObst.onclick=async()=>{
+    if(!confirm('Migrar '+p.nome+' para a aba Gestantes? As informações de pré-natal serão preenchidas lá.')) return;
+    // Create obstetric patient with no auto data
+    const op=newObstPatient();
+    op.nome=p.nome; op.telefone=p.telefone||'';
+    op.migradaDeGineco=true;
+    state.obstetric=await addPatient(KEY_OBST,op);
+    // Mark gyneco as migrated
+    p.migradaParaObstetrica=true;
+    await commitGinEdit(p);
+    showToast(p.nome+' migrada para Gestantes. Complete as informações lá.');
+    render();
+  };
+  // DIU checkboxes
+  ['interesse','disponivel','agendamento','insercao','pagamento','nf'].forEach((key,i)=>{
+    const ids=['diu-interesse','diu-disponivel','diu-agenda','diu-insercao','diu-pagto','diu-nf'];
+    const cb=wrap.querySelector('#'+ids[i]);
+    if(cb) cb.onchange=async(e)=>{
+      if(!gp.diu) gp.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,pagamento:false,nf:false};
+      gp.diu[key]=e.target.checked;
+      const idx=state.gyneco.findIndex(x=>x.id===id);
+      if(idx>=0) state.gyneco[idx].diu={...state.gyneco[idx].diu,[key]:e.target.checked};
+      await commitGinEdit(state.gyneco[idx]||gp);render();
+    };
+  });
+
+  wrap.querySelector('#c-pap').onchange=async(e)=>{
+    gp.papColetado=e.target.checked;
+    if(e.target.checked) gp.dataColeta=isoDate(t);
+    else{gp.dataColeta=null;gp.papChecado=false;gp.papResultado='';gp.pacienteNotificada=false;}
+    const idx=state.gyneco.findIndex(x=>x.id===id);
+    if(idx>=0) state.gyneco[idx]={...state.gyneco[idx],...gp};
+    await commitGinEdit(state.gyneco[idx]);render();
+  };
+  wrap.querySelector('#d-pap').onchange=async(e)=>{gp.dataColeta=e.target.value;const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)state.gyneco[idx].dataColeta=e.target.value;await commitGinEdit(state.gyneco[idx]);};
+  const cCheck=wrap.querySelector('#c-check');
+  if(cCheck) cCheck.onchange=async(e)=>{
+    if(e.target.checked){
+      // Show inline result picker instead of prompt
+      const picker=el(`<div style="margin-top:8px;padding:10px 12px;background:var(--teal-light);border-radius:8px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <span style="font-size:12.5px;font-weight:600;color:var(--teal-dark);">Resultado:</span>
+        <button class="btn btn-secondary btn-sm" id="pick-normal">✓ Normal</button>
+        <button class="btn btn-secondary btn-sm" id="pick-alterado">⚠ Alterado</button>
+        <button class="btn btn-secondary btn-sm" id="pick-cancel" style="margin-left:auto;">Cancelar</button>
+      </div>`);
+      cCheck.closest('.checkrow').after(picker);
+      cCheck.disabled=true;
+      picker.querySelector('#pick-cancel').onclick=()=>{
+        e.target.checked=false; e.target.disabled=false; picker.remove();
+      };
+      const pickResult=async(res)=>{
+        gp.papChecado=true; gp.dataChecagem=isoDate(t); gp.papResultado=res;
+        const idx=state.gyneco.findIndex(x=>x.id===id);
+        if(idx>=0) Object.assign(state.gyneco[idx],gp);
+        await commitGinEdit(state.gyneco[idx]); render();
+      };
+      picker.querySelector('#pick-normal').onclick=()=>pickResult('normal');
+      picker.querySelector('#pick-alterado').onclick=()=>pickResult('alterado');
+    } else {
+      gp.papChecado=false;gp.dataChecagem=null;gp.papResultado='';gp.pacienteNotificada=false;
+      const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)Object.assign(state.gyneco[idx],gp);
+      await commitGinEdit(state.gyneco[idx]);render();
+    }
+  };
+  const dCheck=wrap.querySelector('#d-check');
+  if(dCheck) dCheck.onchange=async(e)=>{gp.dataChecagem=e.target.value;const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)state.gyneco[idx].dataChecagem=e.target.value;await commitGinEdit(state.gyneco[idx]);};
+  const updateRes=async(res)=>{gp.papResultado=res;const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)state.gyneco[idx].papResultado=res;await commitGinEdit(state.gyneco[idx]);render();};
+  const btnN=wrap.querySelector('#res-normal');const btnA=wrap.querySelector('#res-alterado');const btnL=wrap.querySelector('#res-limpar');
+  if(btnN) btnN.onclick=()=>updateRes('normal');
+  if(btnA) btnA.onclick=()=>updateRes('alterado');
+  if(btnL) btnL.onclick=()=>updateRes('');
+  const cNotif=wrap.querySelector('#c-notif');
+  if(cNotif) cNotif.onchange=async(e)=>{gp.pacienteNotificada=e.target.checked;const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)state.gyneco[idx].pacienteNotificada=e.target.checked;await commitGinEdit(state.gyneco[idx]);render();};
+  const cPapMedico=wrap.querySelector('#c-pap-medico');
+  if(cPapMedico){
+    cPapMedico.onchange=async(e)=>{
+      const field=wrap.querySelector('#pap-medico-field');
+      if(field) field.style.display=e.target.checked?'block':'none';
+      gp.papMedicoResponsavel=e.target.checked;
+      const idx=state.gyneco.findIndex(x=>x.id===id);
+      if(idx>=0){state.gyneco[idx].papMedicoResponsavel=e.target.checked;await commitGinEdit(state.gyneco[idx]);}
+    };
+    const nomeInput=wrap.querySelector('#pap-medico-nome');
+    if(nomeInput) nomeInput.onblur=async()=>{
+      gp.papNomeMedico=nomeInput.value;
+      const idx=state.gyneco.findIndex(x=>x.id===id);
+      if(idx>=0){state.gyneco[idx].papNomeMedico=nomeInput.value;await commitGinEdit(state.gyneco[idx]);}
+    };
+  }
+  wrap.querySelector('#c-retorno').onchange=async(e)=>{
+    gp.retornoMarcado=e.target.checked;gp.dataRetorno=e.target.checked?isoDate(t):null;
+    const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)Object.assign(state.gyneco[idx],{retornoMarcado:gp.retornoMarcado,dataRetorno:gp.dataRetorno});
+    await commitGinEdit(state.gyneco[idx]);render();
+  };
+  wrap.querySelector('#d-retorno').onchange=async(e)=>{gp.dataRetorno=e.target.value;const idx=state.gyneco.findIndex(x=>x.id===id);if(idx>=0)state.gyneco[idx].dataRetorno=e.target.value;await commitGinEdit(state.gyneco[idx]);};
+  wrap.querySelector('#btn-del').onclick=async()=>{
+    if(confirm('Excluir?')){const gid=gp.id;state.gyneco=state.gyneco.filter(x=>x.id!==gid);await saveLocal(KEY_GIN,state.gyneco);await syncToSheets('deleteGin',{id:gid});state.modal=null;render();}
+  };
+  return wrap;
+}
+
+
+
+function modalFupPosParto(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+
+  const groups=[
+    {key:'duasSemanas', label:'Retorno 2 semanas', dias:0, prazo:21, alvo:14, cor:'var(--warn)', corBg:'var(--warn-light)'},
+    {key:'quarentaDias', label:'Retorno 40 dias', dias:10, prazo:55, alvo:40, cor:'var(--warn)', corBg:'var(--warn-light)'},
+    {key:'seisMeses', label:'Retorno 6 meses', dias:150, prazo:210, alvo:180, cor:'var(--teal)', corBg:'var(--teal-light)'},
+  ];
+
+  const sections = groups.map(g=>{
+    const pacientes = state.obstetric
+      .filter(p=>p.parto.realizado&&p.parto.data&&!p.posParto[g.key].feita)
+      .filter(p=>{ const d=diffDays(t,parseDate(p.parto.data)); return d>=g.dias; })
+      .sort((a,b)=>parseDate(a.parto.data)-parseDate(b.parto.data));
+
+    if(!pacientes.length) return `
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--teal-dark);margin-bottom:8px;">${g.label}</div>
+        <div style="padding:12px;background:var(--ok-light);border-radius:8px;font-size:13px;color:var(--ok);font-weight:600;">✓ Todas as pacientes em dia</div>
+      </div>`;
+
+    const rows = pacientes.map(p=>{
+      const dp=parseDate(p.parto.data);
+      const dias=diffDays(t,dp);
+      const atrasado=dias>g.prazo;
+      return `<tr>
+        <td style="cursor:pointer;" data-open="${p.id}"><strong>${p.nome}</strong></td>
+        <td class="mono">${fmtDate(p.parto.data)}</td>
+        <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
+        <td>
+          <button class="btn btn-secondary btn-sm" data-agendar="${p.id}" data-key="${g.key}">Agendado</button>
+        </td>
+      </tr>`;
+    }).join('');
+
+    return `
+      <div style="margin-bottom:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--teal-dark);">${g.label}</div>
+          <span class="tag tag-warn">${pacientes.length} pendente${pacientes.length>1?'s':''}</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Paciente</th><th>Data do parto</th><th>Dias pós-parto</th><th></th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
+
+  const totalPend = groups.reduce((acc,g)=>acc+state.obstetric.filter(p=>
+    p.parto.realizado&&p.parto.data&&!p.posParto[g.key].feita&&diffDays(t,parseDate(p.parto.data))>=g.dias
+  ).length, 0);
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div>
+        <h2>F-Up Pós-Parto</h2>
+        <p class="muted-x">${totalPend>0?totalPend+' retorno(s) pendente(s)':'Todas as pacientes em dia'}</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${state.fupUndoStack&&state.fupUndoStack.length>0?`
+    <div style="background:var(--teal-light);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-size:13px;color:var(--teal-dark);">✓ ${state.fupUndoStack[state.fupUndoStack.length-1].nome.split(' ')[0]} marcada como agendada</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="btn-undo-fup">Desfazer</button>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-undo">✕</button>
+      </div>
+    </div>`:''}
+    <div style="margin-top:4px;">${sections}</div>
+  `;
+
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;state.fupUndoStack=[];render();};
+
+  // Undo last action
+  const btnUndoFup=wrap.querySelector('#btn-undo-fup');
+  if(btnUndoFup) btnUndoFup.onclick=async()=>{
+    const last=(state.fupUndoStack||[]).pop();
+    if(!last) return;
+    const pu=state.obstetric.find(x=>x.id===last.patientId); if(!pu) return;
+    pu.posParto[last.key]={feita:false,data:''};
+    await commitObstEdit(pu);
+    showToast('Retorno desmarcado para '+last.nome.split(' ')[0]+'.');render();
+  };
+  const btnClearUndo=wrap.querySelector('#btn-clear-undo');
+  if(btnClearUndo) btnClearUndo.onclick=()=>{state.fupUndoStack=[];render();};
+  wrap.querySelectorAll('[data-open]').forEach(td=>td.onclick=()=>openObstetricModal(td.dataset.open));
+
+  // Agendado: marca como feito, mostra desfazer no topo via re-render
+  wrap.querySelectorAll('[data-agendar]').forEach(btn=>{
+    btn.onclick=async(e)=>{
+      e.stopPropagation();
+      const p=state.obstetric.find(x=>x.id===btn.dataset.agendar); if(!p) return;
+      const key=btn.dataset.key;
+      p.posParto[key]={feita:true,data:isoDate(t)};
+      await commitObstEdit(p);
+      // Store last action for undo
+      if(!state.fupUndoStack) state.fupUndoStack=[];
+      state.fupUndoStack.push({patientId:p.id,key,nome:p.nome});
+      render();
+    };
+  });
+
+  return wrap;
+}
+
+
+
+function modalFupRetornoGineco(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+  const lista=state.gyneco.map(migrateGin).filter(p=>{
+    if(p.retornoMarcado) return false;
+    const prox=proximoRetornoGineco(p); return prox&&diffDays(prox,t)<0;
+  }).sort((a,b)=>{
+    const pa=proximoRetornoGineco(a),pb=proximoRetornoGineco(b); return pa-pb;
+  });
+
+  const rows=lista.map(p=>{
+    const prox=proximoRetornoGineco(p);
+    const dias=Math.abs(diffDays(prox,t));
+    return `<tr data-pid="${p.id}" style="cursor:pointer;">
+      <td><strong>${p.nome}</strong></td>
+      <td>${({'30dias':'30 dias','3meses':'3 meses','6meses':'6 meses','1ano':'1 ano'}[p.seguimento]||'1 ano')}</td>
+      <td class="mono">${fmtDate(prox)}</td>
+      <td style="font-weight:600;color:var(--alert);">${dias} dias em atraso</td>
+      <td><button class="btn btn-primary btn-sm" data-mark="${p.id}">Agendado</button></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>F-Up Retorno Periódico</h2>
+        <p class="muted-x">${lista.length} paciente${lista.length!==1?'s':''} com retorno em atraso</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${state.ginFupUndo?`
+    <div style="background:var(--teal-light);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-size:13px;color:var(--teal-dark);">✓ ${state.ginFupUndo.nome.split(' ')[0]} marcada como agendada</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="btn-undo-gin-ret">Desfazer</button>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-gin-ret">✕</button>
+      </div>
+    </div>`:''}
+    ${lista.length===0?`<div class="empty"><h3>✓ Todas em dia</h3><p>Nenhuma paciente com retorno em atraso.</p></div>`:`
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>Seguimento</th><th>Retorno previsto</th><th>Atraso</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`}
+  `;
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;state.ginFupUndo=null;render();};
+  const btnUndoGin=wrap.querySelector('#btn-undo-gin-ret');
+  if(btnUndoGin) btnUndoGin.onclick=async()=>{
+    const u=state.ginFupUndo; if(!u) return;
+    const pu=state.gyneco.find(x=>x.id===u.id); if(!pu) return;
+    pu.retornoMarcado=false; pu.dataRetorno=null;
+    await commitGinEdit(pu);
+    state.ginFupUndo=null;
+    showToast('Retorno desmarcado.'); render();
+  };
+  const btnClearGin=wrap.querySelector('#btn-clear-gin-ret');
+  if(btnClearGin) btnClearGin.onclick=()=>{state.ginFupUndo=null;render();};
+  wrap.querySelectorAll('tr[data-pid]').forEach(r=>r.onclick=(e)=>{if(e.target.tagName==='BUTTON')return;openGinecoModal(r.dataset.pid);});
+  wrap.querySelectorAll('[data-mark]').forEach(btn=>btn.onclick=async(e)=>{
+    e.stopPropagation();
+    const p=state.gyneco.find(x=>x.id===btn.dataset.mark); if(!p) return;
+    p.retornoMarcado=true; p.dataRetorno=isoDate(t);
+    await commitGinEdit(p);
+    state.ginFupUndo={id:p.id,nome:p.nome};
+    render();
+  });
+  return wrap;
+}
+
+
+
+function modalAlertaContratos(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+  const lista=state.obstetric.filter(p=>{
+    if(p.parto.realizado) return false;
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+    return !p.contratoAssinado&&semanas>=20;
+  }).sort((a,b)=>{
+    const sa=calcSemanasNaData(a.dum,t).semanas, sb=calcSemanasNaData(b.dum,t).semanas;
+    return sb-sa;
+  });
+  const rows=lista.map(p=>{
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+    const dpp=calcDPP(p.dum,p.dppManual);
+    const level=semanas>=24?'alert':'warn';
+    return `<tr>
+      <td style="cursor:pointer;" data-open="${p.id}"><strong>${p.nome}</strong></td>
+      <td><span class="tag tag-${level}">${semanas} semanas</span></td>
+      <td class="mono">${fmtDate(dpp)}</td>
+      <td><span class="tag tag-${level}">${semanas>=24?'⚠️ Atrasado':'⏰ Urgente'}</span></td>
+      <td><button class="btn btn-secondary btn-sm" data-assinar="${p.id}">Assinado</button></td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>Contratos Pendentes</h2>
+        <p class="muted-x">${lista.length} gestante${lista.length!==1?'s':''} sem contrato assinado (≥20 semanas)</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${lista.length===0?`<div class="empty"><h3>✓ Nenhuma pendência</h3><p>Todas as gestantes em prazo estão com contrato assinado.</p></div>`:`
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>IG atual</th><th>DPP</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`}
+  `;
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelectorAll('[data-open]').forEach(td=>td.onclick=()=>openObstetricModal(td.dataset.open));
+  wrap.querySelectorAll('[data-assinar]').forEach(btn=>btn.onclick=async(e)=>{
+    e.stopPropagation();
+    const p=state.obstetric.find(x=>x.id===btn.dataset.assinar); if(!p) return;
+    p.contratoAssinado=true; p.dataContrato=isoDate(t);
+    await commitObstEdit(p);
+    const td=btn.closest('td');
+    td.innerHTML=`<span style="color:var(--ok);font-size:12px;font-weight:600;">✓ Assinado</span>
+      <button class="btn btn-secondary btn-sm" data-undo-contrato="${p.id}" style="margin-left:6px;font-size:11px;">Desfazer</button>`;
+    td.querySelector('[data-undo-contrato]').onclick=async ev=>{
+      ev.stopPropagation();
+      p.contratoAssinado=false; p.dataContrato=''; p.numeroContrato='';
+      await commitObstEdit(p); showToast('Contrato desmarcado.'); render();
+    };
+  });
+  return wrap;
+}
+
+function modalAlertaParceiro(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+  const lista=state.obstetric.filter(p=>{
+    if(p.parto.realizado) return false;
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+    return !p.apresentadoParceiro&&semanas>=24;
+  }).sort((a,b)=>{
+    const sa=calcSemanasNaData(a.dum,t).semanas, sb=calcSemanasNaData(b.dum,t).semanas;
+    return sb-sa;
+  });
+  const rows=lista.map(p=>{
+    const {semanas}=calcSemanasNaData(p.dum,t,p.dppManual);
+    const dpp=calcDPP(p.dum,p.dppManual);
+    const level=semanas>=28?'alert':'warn';
+    return `<tr>
+      <td style="cursor:pointer;" data-open="${p.id}"><strong>${p.nome}</strong></td>
+      <td><span class="tag tag-${level}">${semanas} semanas</span></td>
+      <td class="mono">${fmtDate(dpp)}</td>
+      <td><span class="tag tag-${level}">${semanas>=28?'⚠️ Fora do prazo':'⏰ Janela 24–28s'}</span></td>
+      <td><button class="btn btn-secondary btn-sm" data-apresentar="${p.id}">Apresentado</button></td>
+    </tr>`;
+  }).join('');
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>Apresentação ao Médico Parceiro Pendente</h2>
+        <p class="muted-x">${lista.length} gestante${lista.length!==1?'s':''} sem apresentação ao parceiro (≥24 semanas)</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${lista.length===0?`<div class="empty"><h3>✓ Nenhuma pendência</h3><p>Todas as gestantes em prazo foram apresentadas ao parceiro.</p></div>`:`
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>IG atual</th><th>DPP</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`}
+  `;
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelectorAll('[data-open]').forEach(td=>td.onclick=()=>openObstetricModal(td.dataset.open));
+  wrap.querySelectorAll('[data-apresentar]').forEach(btn=>btn.onclick=async(e)=>{
+    e.stopPropagation();
+    const p=state.obstetric.find(x=>x.id===btn.dataset.apresentar); if(!p) return;
+    p.apresentadoParceiro=true; p.dataApresentacao=isoDate(t);
+    await commitObstEdit(p);
+    const td=btn.closest('td');
+    td.innerHTML=`<span style="color:var(--ok);font-size:12px;font-weight:600;">✓ Apresentado</span>
+      <button class="btn btn-secondary btn-sm" data-undo-apres="${p.id}" style="margin-left:6px;font-size:11px;">Desfazer</button>`;
+    td.querySelector('[data-undo-apres]').onclick=async ev=>{
+      ev.stopPropagation();
+      p.apresentadoParceiro=false; p.dataApresentacao='';
+      await commitObstEdit(p); showToast('Apresentação desmarcada.'); render();
+    };
+  });
+  return wrap;
+}
+
+
+
+function modalAssinarParceiro(patientId){
+  const wrap=el(`<div></div>`);
+  const p=state.obstetric.find(x=>x.id===patientId);
+  if(!p){wrap.innerHTML='<p>Paciente não encontrada.</p>';return wrap;}
+  const fp=p.parto.funcoesParceiro||{};
+  const funcLabel=(f)=>{const l=[];if(f.inducao)l.push('Indução');if(f.conducao)l.push('Condução');if(f.auxiliar)l.push('Auxiliar');if(f.titular)l.push('Médico Titular');if(f.outros)l.push(f.outros);return l.join(', ')||'—';};
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>Assinar participação no parto</h2>
+        <p class="muted-x">${state.settings.nomeParceiro||'Médico Parceiro'}</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    <div class="card" style="margin-bottom:16px;background:var(--surface-2);">
+      <div style="font-size:13px;line-height:1.8;">
+        <div><strong>Paciente:</strong> ${p.nome}</div>
+        <div><strong>Data do parto:</strong> ${fmtDate(p.parto.data)}</div>
+        <div><strong>Hospital:</strong> ${p.parto.hospital||'—'}</div>
+        <div><strong>Via:</strong> ${p.parto.viaParto||'—'}</div>
+        <div><strong>Funções:</strong> ${funcLabel(fp)}</div>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:16px;">
+      <label>Digite o PIN para confirmar a assinatura</label>
+      <input type="password" id="pin-input" placeholder="PIN do médico parceiro" maxlength="6"
+        style="font-size:20px;text-align:center;letter-spacing:8px;padding:12px;">
+      <p id="pin-erro" style="color:var(--alert);font-size:12px;margin-top:6px;display:none;">PIN incorreto. Tente novamente.</p>
+    </div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-primary" id="btn-confirmar-pin">Confirmar assinatura</button>
+      <button class="btn btn-secondary" id="btn-cancelar-pin">Cancelar</button>
+    </div>
+  `;
+
+  wrap.querySelector('.close-x').onclick=
+  wrap.querySelector('#btn-cancelar-pin').onclick=()=>{state.modal=null;render();};
+
+  const pinInput=wrap.querySelector('#pin-input');
+  const btnConfirmar=wrap.querySelector('#btn-confirmar-pin');
+  const pinErro=wrap.querySelector('#pin-erro');
+
+  pinInput.onkeydown=(e)=>{ if(e.key==='Enter') btnConfirmar.click(); };
+  setTimeout(()=>pinInput.focus(),100);
+
+  btnConfirmar.onclick=async()=>{
+    const pin=pinInput.value.trim();
+    if(pin!==String(state.settings.pinParceiro)){
+      pinErro.style.display='block';
+      pinInput.value=''; pinInput.focus();
+      return;
+    }
+    p.parto.parceiroAssinou=true;
+    p.parto.dataAssinaturaParceiro=isoDate(today());
+    p.parto.assinadoPor=state.settings.nomeParceiro||'Médico Parceiro';
+    await commitObstEdit(p);
+    showToast('✓ Assinatura confirmada com PIN.');
+    state.modal=null;render();
+  };
+
+  return wrap;
+}
+
+
+function modalFupDIU(){
+  const wrap=el(`<div></div>`);
+  const lista=state.gyneco.map(migrateGin).filter(p=>{
+    const s=statusDIU(p); return s&&s.level!=='ok';
+  }).sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
+
+  const rows=lista.map(p=>{
+    const s=statusDIU(p);
+    return `<tr data-pid="${p.id}" style="cursor:pointer;">
+      <td><strong>${p.nome}</strong></td>
+      <td><span style="font-size:12px;color:var(--warn);">${s?s.label:'—'}</span></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div><h2>F-Up DIU</h2>
+        <p class="muted-x">${lista.length} paciente${lista.length!==1?'s':''} com DIU pendente</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${lista.length===0?`<div class="empty"><h3>✓ Tudo em dia</h3><p>Nenhuma paciente com DIU pendente.</p></div>`:`
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>Status</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`}
+  `;
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelectorAll('tr[data-pid]').forEach(r=>r.onclick=()=>openGinecoModal(r.dataset.pid));
+  return wrap;
+}
+
+function exportarPdfParceiro(listaPartos, listaPap, mesesFiltro, nomeFiltro, resumo, filtros){
+  const t=today();
+  filtros=filtros||{};
+
+  // Build period label
+  const partes=[];
+  if(filtros.medico) partes.push('Médico: '+filtros.medico);
+  if(filtros.anos&&filtros.anos.size>0) partes.push([...filtros.anos].sort().join(', '));
+  if(mesesFiltro&&mesesFiltro.size>0) partes.push([...mesesFiltro].sort().map(m=>{const[y,mo]=m.split('-');return new Date(Number(y),Number(mo)-1,1).toLocaleDateString('pt-BR',{month:'long',year:'numeric'});}).join(', '));
+  if(filtros.semana) partes.push(filtros.semana.replace('sem','Semana '));
+  const periodoLabel=partes.length>0?partes.join(' · '):'Todos os registros';
+
+  const funcoesConfig=[
+    ['apresentacao','Consulta de apresentação'],['inducao','Indução'],['conducao','Condução'],
+    ['auxiliar','Auxiliar'],['titular','Médico Titular'],['visita1','1ª visita pós-parto'],['visita2','2ª visita pós-parto'],
+  ];
+
+  const rowsPartos=listaPartos.map((p,i)=>{
+    const f=p.parto.funcoesParceiro||{};
+    const outros=f.outros?`<div style="font-size:11px;margin-top:4px;color:#5C3D2E;">Outros: ${f.outros}</div>`:'';
+    const funcsHtml=funcoesConfig.map(([k,label])=>`
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+        <span style="display:inline-block;width:12px;height:12px;border:1.5px solid #2A8880;border-radius:2px;background:${f[k]?'#2A8880':'#fff'};text-align:center;line-height:12px;font-size:9px;color:#fff;">${f[k]?'✓':''}</span>
+        <span style="font-size:11px;${f[k]?'font-weight:600;color:#2A8880;':''}">${label}</span>
+      </div>`).join('');
+    return `<tr style="${i%2===0?'background:#f8f5f2;':''}">
+      <td>${p.nome}</td>
+      <td>${p.parto.realizado&&p.parto.data?new Date(p.parto.data+'T00:00:00').toLocaleDateString('pt-BR'):'DPP: '+(calcDPP(p.dum,p.dppManual)?calcDPP(p.dum,p.dppManual).toLocaleDateString('pt-BR'):'—')}</td>
+      <td>${p.parto.nomeMedicoParceiro||'—'}</td>
+      <td>${p.parto.viaParto||'—'}</td>
+      <td>${funcsHtml}${outros}</td>
+    </tr>`;
+  }).join('');
+
+  const rowsPap=listaPap.map((g,i)=>`
+    <tr style="${i%2===0?'background:#f8f5f2;':''}">
+      <td>${g.nome}</td>
+      <td>${g.papNomeMedico||'—'}</td>
+      <td>${g.dataChecagem?new Date(g.dataChecagem+'T00:00:00').toLocaleDateString('pt-BR'):'—'}</td>
+      <td style="font-weight:600;color:${g.papResultado==='normal'?'#1e8c6e':g.papResultado==='alterado'?'#c0392b':'#888'};">${g.papResultado==='normal'?'Normal':g.papResultado==='alterado'?'Alterado':'—'}</td>
+    </tr>`).join('');
+
+  const html=`<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Médico Parceiro — Clínica AD</title>
+  <style>
+    body{font-family:Arial,sans-serif;color:#2C1810;margin:0;padding:32px;font-size:12px;}
+    h1{font-size:20px;margin:0 0 4px;}h2{font-size:15px;margin:20px 0 8px;color:#2A8880;border-bottom:1px solid #2A8880;padding-bottom:4px;}
+    table{width:100%;border-collapse:collapse;margin-bottom:24px;}
+    th{background:#2A8880;color:#fff;padding:8px 10px;text-align:left;font-size:11px;}
+    td{padding:7px 10px;border-bottom:1px solid #e0d8d0;vertical-align:top;}
+    .header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;border-bottom:2px solid #2A8880;padding-bottom:14px;}
+    .periodo{background:#e0f3f1;padding:8px 14px;border-radius:6px;font-size:12px;color:#2A8880;font-weight:600;margin-bottom:18px;}
+    .assinatura{margin-top:40px;display:flex;gap:80px;}
+    .assinatura-box{flex:1;border-top:1px solid #2C1810;padding-top:8px;font-size:11px;color:#5C3D2E;}
+    @media print{body{padding:20px;}button{display:none;}}
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div>
+      <h1 style="color:#2A8880;">Clínica AD — Relatório Médico Parceiro</h1>
+      <div style="font-size:11px;color:#8a8c94;">Gerado em ${t.toLocaleDateString('pt-BR',{day:'2-digit',month:'long',year:'numeric'})}</div>
+    </div>
+    <button onclick="window.print()" style="background:#2A8880;color:#fff;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:13px;">🖨️ Imprimir / Salvar PDF</button>
+  </div>
+
+  <div class="periodo">📅 Período: ${periodoLabel}</div>
+
+  ${listaPartos.length>0?`
+  <h2>Gestantes</h2>
+  <table>
+    <thead><tr><th>Paciente</th><th>Data do Parto</th><th>Médico Parceiro</th><th>Via</th><th>Funções realizadas</th></tr></thead>
+    <tbody>${rowsPartos||'<tr><td colspan="5" style="text-align:center;color:#8a8c94;">Nenhum registro.</td></tr>'}</tbody>
+  </table>`:''}
+
+  ${listaPap.length>0?`
+  <h2>Ginecológicas — Conferência Papanicolau</h2>
+  <table>
+    <thead><tr><th>Paciente</th><th>Médico</th><th>Data conferência</th><th>Resultado</th></tr></thead>
+    <tbody>${rowsPap}</tbody>
+  </table>`:''}
+
+  ${listaPartos.length===0&&listaPap.length===0?`<p style="color:#8a8c94;text-align:center;padding:40px;">Nenhum registro encontrado para o período selecionado.</p>`:''}
+
+  <div class="assinatura">
+    <div class="assinatura-box">Dra. Amanda Dantas<br>Médica Responsável — CRM</div>
+    <div class="assinatura-box">${state.settings.nomeParceiro||'Médico Parceiro'}<br>CRM</div>
+  </div>
+</body>
+</html>`;
+
+  const win=window.open('','_blank','width=1000,height=700');
+  win.document.write(html);
+  win.document.close();
+}
+
+
+
+/* ═══════════════════════════════════════════════
+   MODAL: FILTRO PDF MÉDICO PARCEIRO
+═══════════════════════════════════════════════ */
+function modalPdfParceiroFiltro(allPartos, allPapGineco){
+  const wrap=el(`<div></div>`);
+  const mesesDisp=new Set();
+  allPartos.forEach(p=>{
+    const ref=p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual);
+    if(ref) mesesDisp.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  allPapGineco.forEach(g=>{
+    const ref=g.dataChecagem?parseDate(g.dataChecagem):null;
+    if(ref) mesesDisp.add(`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`);
+  });
+  const mesesOrd=[...mesesDisp].sort();
+  const anos=[...new Set(mesesOrd.map(m=>m.split('-')[0]))].sort();
+  const medicos=[...new Set([...allPartos.map(p=>p.parto.nomeMedicoParceiro),...allPapGineco.map(g=>g.papNomeMedico)].filter(Boolean))].sort();
+
+  let selAnos=new Set(), selMeses=new Set(), selSemana='', selMedico='';
+
+  const rerender=()=>{
+    const mesesFiltrados=selAnos.size>0?mesesOrd.filter(m=>selAnos.has(m.split('-')[0])):mesesOrd;
+    let semanasDisp=[];
+    if(selMeses.size>0){
+      const wkSet=new Set();
+      const addWk=(ref)=>{if(!ref)return;const m=`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`;if(!selMeses.has(m))return;wkSet.add(Math.floor((ref.getDate()-1)/7)+1);};
+      allPartos.forEach(p=>addWk(p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual)));
+      allPapGineco.forEach(g=>addWk(g.dataChecagem?parseDate(g.dataChecagem):null));
+      semanasDisp=[...wkSet].sort((a,b)=>a-b).map(w=>({key:'sem'+w,label:`Semana ${w} (dias ${((w-1)*7)+1}–${Math.min(w*7,31)})`}));
+    }
+    const {lp,lg}=aplicarFiltrosPdf(allPartos,allPapGineco,selAnos,selMeses,selSemana,selMedico);
+    wrap.innerHTML=`
+      <div class="modal-head">
+        <div><h2>Exportar PDF</h2><p class="muted-x">Selecione os filtros ou exporte tudo</p></div>
+        <button class="close-x">✕</button>
+      </div>
+      ${medicos.length>0?`
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">MÉDICO</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${medicos.map(m=>`<button class="btn btn-sm ${selMedico===m?'btn-primary':'btn-secondary'}" data-medico="${m}">${m}</button>`).join('')}
+        </div>
+      </div>`:''}
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">ANO</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${anos.map(a=>`<button class="btn btn-sm ${selAnos.has(a)?'btn-primary':'btn-secondary'}" data-ano="${a}">${a}</button>`).join('')}
+        </div>
+      </div>
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">MÊS</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${mesesFiltrados.map(m=>{const[y,mo]=m.split('-');const label=new Date(Number(y),Number(mo)-1,1).toLocaleDateString('pt-BR',{month:'short',year:'2-digit'});return`<button class="btn btn-sm ${selMeses.has(m)?'btn-primary':'btn-secondary'}" data-mes="${m}">${label}</button>`;}).join('')}
+        </div>
+      </div>
+      ${semanasDisp.length>0?`
+      <div style="margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:8px;">SEMANA <span style="font-weight:400;">(opcional)</span></div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          ${semanasDisp.map(s=>`<button class="btn btn-sm ${selSemana===s.key?'btn-primary':'btn-secondary'}" data-sem="${s.key}">${s.label}</button>`).join('')}
+        </div>
+      </div>`:''}
+      <div style="background:var(--surface-2);border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--ink-muted);">
+        ${selAnos.size===0&&selMeses.size===0&&!selMedico?
+          `📄 PDF com <strong style="color:var(--ink);">todos os registros</strong> (${allPartos.length+allPapGineco.length} no total)`:
+          `📄 PDF com <strong style="color:var(--ink);">${lp.length} gestante${lp.length!==1?'s':''}</strong> e <strong style="color:var(--ink);">${lg.length} conf. Pap</strong>`}
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-primary" id="btn-gerar-pdf">📄 Gerar PDF</button>
+        <button class="btn btn-secondary" id="btn-limpar-filtros-pdf">Limpar filtros</button>
+      </div>
+    `;
+    wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+    wrap.querySelectorAll('[data-medico]').forEach(b=>b.onclick=()=>{selMedico=selMedico===b.dataset.medico?'':b.dataset.medico;rerender();});
+    wrap.querySelectorAll('[data-ano]').forEach(b=>b.onclick=()=>{if(selAnos.has(b.dataset.ano))selAnos.delete(b.dataset.ano);else selAnos.add(b.dataset.ano);selSemana='';rerender();});
+    wrap.querySelectorAll('[data-mes]').forEach(b=>b.onclick=()=>{if(selMeses.has(b.dataset.mes))selMeses.delete(b.dataset.mes);else selMeses.add(b.dataset.mes);selSemana='';rerender();});
+    wrap.querySelectorAll('[data-sem]').forEach(b=>b.onclick=()=>{selSemana=selSemana===b.dataset.sem?'':b.dataset.sem;rerender();});
+    wrap.querySelector('#btn-limpar-filtros-pdf').onclick=()=>{selAnos=new Set();selMeses=new Set();selSemana='';selMedico='';rerender();};
+    wrap.querySelector('#btn-gerar-pdf').onclick=()=>{
+      const{lp,lg,resumo}=aplicarFiltrosPdf(allPartos,allPapGineco,selAnos,selMeses,selSemana,selMedico);
+      exportarPdfParceiro(lp,lg,selMeses,selMedico,resumo,{anos:selAnos,meses:selMeses,semana:selSemana,medico:selMedico});
+      state.modal=null;render();
+    };
+  };
+  rerender();
+  return wrap;
+}
+
+function aplicarFiltrosPdf(allPartos,allPapGineco,selAnos,selMeses,selSemana,selMedico){
+  const inPeriod=(ref)=>{
+    if(!ref) return selAnos.size===0&&selMeses.size===0;
+    const ano=String(ref.getFullYear());
+    const mes=`${ref.getFullYear()}-${String(ref.getMonth()+1).padStart(2,'0')}`;
+    const wk='sem'+(Math.floor((ref.getDate()-1)/7)+1);
+    if(selAnos.size>0&&!selAnos.has(ano)) return false;
+    if(selMeses.size>0&&!selMeses.has(mes)) return false;
+    if(selSemana&&selSemana!==wk) return false;
+    return true;
+  };
+  const lp=allPartos.filter(p=>inPeriod(p.parto.realizado&&p.parto.data?parseDate(p.parto.data):calcDPP(p.dum,p.dppManual))&&(!selMedico||p.parto.nomeMedicoParceiro===selMedico));
+  const lg=allPapGineco.filter(g=>inPeriod(g.dataChecagem?parseDate(g.dataChecagem):null)&&(!selMedico||g.papNomeMedico===selMedico));
+  const fp=p=>p.parto.funcoesParceiro||{};
+  const resumo={total:lp.length,apresentacao:lp.filter(p=>fp(p).apresentacao).length,inducao:lp.filter(p=>fp(p).inducao).length,conducao:lp.filter(p=>fp(p).conducao).length,auxiliar:lp.filter(p=>fp(p).auxiliar).length,titular:lp.filter(p=>fp(p).titular).length,visita1:lp.filter(p=>fp(p).visita1).length,visita2:lp.filter(p=>fp(p).visita2).length,confPap:lg.length};
+  return {lp,lg,resumo};
+}
+
+loadAll();
+</script>
+</body>
+</html>
