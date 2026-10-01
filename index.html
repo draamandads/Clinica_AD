@@ -59,6 +59,7 @@ function newObstPatient(){
     notaFiscalEnviada: false,
     parto: { realizado: false, data: '', hospital: '', equipObstetrica: '', viaParto: '', auxilio: false, auxilioNome: '', medicoTitular: '', observacao: '', temMedicoParceiro: false, nomeMedicoParceiro: '', funcoesParceiro: {apresentacao:false,inducao:false,conducao:false,auxiliar:false,titular:false,visita1:false,visita2:false,outros:''}, parceiroAssinou: false, dataAssinaturaParceiro: '' },
     posParto: { duasSemanas:{feita:false,data:''}, quarentaDias:{feita:false,data:''}, seisMeses:{feita:false,data:''} },
+    fupNovaGestante: { retorno:{feita:false,data:''} },
     pagamentos: [],
     numeroContrato: '',
     migradaDeGineco: false,
@@ -104,6 +105,7 @@ function migrateObst(p){
     if(c.statusPagamento===undefined){ c.statusPagamento = c.pago?'pendente':'isenta'; c.valor = c.valor||(c.pago?(state.settings.valorConsultaObstetrica||0):0); }
   });
   if(!p.posParto) p.posParto = { duasSemanas:{feita:false,data:''}, quarentaDias:{feita:false,data:''}, seisMeses:{feita:false,data:''} };
+  if(!p.fupNovaGestante) p.fupNovaGestante = { retorno:{feita:false,data:''} };
   // Auto-marcar retornos passados para partos antigos
   if(p.parto.realizado && p.parto.data){
     const dp=parseDate(p.parto.data);
@@ -126,12 +128,13 @@ function migrateGin(p){
   if(p.pacienteNotificada===undefined) p.pacienteNotificada = false;
   if(p.migradaDeObstetrica===undefined) p.migradaDeObstetrica = false;
   if(p.migradaParaObstetrica===undefined) p.migradaParaObstetrica = false;
-  if(!p.diu) p.diu = {interesse:false,disponivel:false,agendamento:false,insercao:false,pagamento:false,nf:false};
+  if(!p.diu) p.diu = {interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
   else {
     if(p.diu.interesse===undefined) p.diu.interesse=false;
     if(p.diu.disponivel===undefined) p.diu.disponivel=false;
     if(p.diu.agendamento===undefined) p.diu.agendamento=false;
     if(p.diu.insercao===undefined) p.diu.insercao=false;
+    if(p.diu.dataInsercao===undefined) p.diu.dataInsercao='';
     if(p.diu.pagamento===undefined) p.diu.pagamento=false;
     if(p.diu.nf===undefined) p.diu.nf=false;
   }
@@ -530,13 +533,15 @@ function viewDashboard(){
     for(let i=0;i<12;i++){
       const d=new Date(yr,i,1);
       meses.push({key:`${yr}-${i}`,label:d.toLocaleDateString('pt-BR',{month:'short',year:sortedYears.length>1?'2-digit':undefined}),
-        month:i,year:yr,previstos:[],realizados:[]});
+        month:i,year:yr,previstos:[],realizados:[],desistencias:[]});
     }
   });
   state.obstetric.forEach(p=>{
     if(!p.parto.realizado){
       const dpp=calcDPP(p.dum,p.dppManual); if(!dpp) return;
-      const m=meses.find(mm=>mm.month===dpp.getMonth()&&mm.year===dpp.getFullYear()); if(m) m.previstos.push(p.nome);
+      const m=meses.find(mm=>mm.month===dpp.getMonth()&&mm.year===dpp.getFullYear()); if(!m) return;
+      if(p.desistiu) m.desistencias.push(p.nome);
+      else m.previstos.push(p.nome);
     } else if(p.parto.data){
       const dp=parseDate(p.parto.data); if(!dp) return;
       const m=meses.find(mm=>mm.month===dp.getMonth()&&mm.year===dp.getFullYear()); if(m) m.realizados.push(p.nome);
@@ -588,6 +593,7 @@ function viewDashboard(){
       <div style="display:flex;gap:12px;font-size:11.5px;color:var(--ink-muted);">
         <span><span style="color:var(--ok);font-weight:700;">✓</span> realizados</span>
         <span>○ previstos (DPP)</span>
+        <span>✗ desistências</span>
       </div>
     </div>
     <div class="month-grid" id="month-grid" style="margin-bottom:20px;"></div>
@@ -619,11 +625,12 @@ function viewDashboard(){
   meses.forEach(m=>{
     const card=el(`<div class="month-card ${isCurrent(m)?'current':''} ${isPast(m)?'past':''}">
       <div class="mc-label">${m.label}</div>
-      <div class="mc-count">${m.previstos.length+m.realizados.length}</div>
+      <div class="mc-count">${m.previstos.length+m.realizados.length+m.desistencias.length}</div>
       <div class="mc-names">
         ${m.realizados.length?`<span style="color:var(--ok);font-size:10px;">✓ ${m.realizados.length} realizado${m.realizados.length>1?'s':''}</span><br>`:''}
-        ${m.previstos.length?`<span style="font-size:10px;">${m.previstos.length} previsto${m.previstos.length>1?'s':''}</span>`:''}
-        ${!m.previstos.length&&!m.realizados.length?'<span style="opacity:.5;font-size:10px;">nenhum</span>':''}
+        ${m.previstos.length?`<span style="font-size:10px;">${m.previstos.length} previsto${m.previstos.length>1?'s':''}</span><br>`:''}
+        ${m.desistencias.length?`<span style="color:var(--ink-muted);font-size:10px;">✗ ${m.desistencias.length} desistência${m.desistencias.length>1?'s':''}</span>`:''}
+        ${!m.previstos.length&&!m.realizados.length&&!m.desistencias.length?'<span style="opacity:.5;font-size:10px;">nenhum</span>':''}
       </div>
     </div>`);
     grid.appendChild(card);
@@ -689,6 +696,9 @@ function viewGestantes(){
         <button class="btn btn-secondary" id="btn-fup" style="position:relative;">
           📋 F-Up Pós-Parto<span id="fup-badge"></span>
         </button>
+        <button class="btn btn-secondary" id="btn-fup-nova-gestante" style="position:relative;">
+          🤰 F-Up Novas Gestantes<span id="fup-nova-gestante-badge"></span>
+        </button>
         <button class="btn btn-primary" id="btn-nova">+ Nova gestante</button>
       </div>
     </div>
@@ -744,6 +754,20 @@ function viewGestantes(){
     badge.textContent = fupPendCount;
     badge.style.cssText='display:inline-flex;align-items:center;justify-content:center;background:var(--alert);color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;';
   }
+  // F-Up Novas Gestantes badge
+  const t_ng=today();
+  const fupNovaGestCount=state.obstetric.map(migrateObst).filter(p=>{
+    if(p.parto.realizado||p.desistiu) return false;
+    if(!p.cadastradoEm) return false;
+    const dc=parseDate(p.cadastradoEm); if(!dc) return false;
+    const dias=diffDays(t_ng,dc);
+    return dias>=23 && !(p.fupNovaGestante&&p.fupNovaGestante.retorno&&p.fupNovaGestante.retorno.feita);
+  }).length;
+  const badgeNovaGest=wrap.querySelector('#fup-nova-gestante-badge');
+  if(badgeNovaGest&&fupNovaGestCount>0){
+    badgeNovaGest.textContent=fupNovaGestCount;
+    badgeNovaGest.style.cssText='display:inline-flex;align-items:center;justify-content:center;background:var(--alert);color:#fff;border-radius:50%;font-size:10px;font-weight:700;width:18px;height:18px;margin-left:6px;';
+  }
   // Alert badges
   const t_g=today();
   const alertsC=state.obstetric.filter(p=>{if(p.parto.realizado)return false;const{semanas}=calcSemanasNaData(p.dum,t_g,p.dppManual);return !p.contratoAssinado&&semanas>=20;}).length;
@@ -754,6 +778,8 @@ function viewGestantes(){
   wrap.querySelector('#btn-alerta-contrato').onclick=()=>{state.modal={type:'alertaContratos'};render();};
   wrap.querySelector('#btn-alerta-parceiro').onclick=()=>{state.modal={type:'alertaParceiro'};render();};
   wrap.querySelector('#btn-fup').onclick=()=>{state.modal={type:'fupPosParto'};render();};
+  const btnFupNovaGestante=wrap.querySelector('#btn-fup-nova-gestante');
+  if(btnFupNovaGestante) btnFupNovaGestante.onclick=()=>{state.modal={type:'fupNovasGestantes'};state.fupNovaGestUndoStack=[];render();};
   const tblWrap=wrap.querySelector('#tbl');
   if(lista.length===0){
     tblWrap.innerHTML=`<div class="empty"><h3>Nenhuma gestante cadastrada</h3><p>Cadastre a primeira consulta de pré-natal.</p></div>`;
@@ -1271,6 +1297,7 @@ function renderModal(){
   }
   else if(state.modal.type==='editarGin') modal.appendChild(modalEditarGin(state.modal.id));
   else if(state.modal.type==='fupPosParto') modal.appendChild(modalFupPosParto());
+  else if(state.modal.type==='fupNovasGestantes') modal.appendChild(modalFupNovasGestantes());
   else if(state.modal.type==='alertaContratos') modal.appendChild(modalAlertaContratos());
   else if(state.modal.type==='alertaParceiro') modal.appendChild(modalAlertaParceiro());
   else if(state.modal.type==='fupRetornoGineco') modal.appendChild(modalFupRetornoGineco());
@@ -2027,10 +2054,16 @@ function modalDetalheGineco(id){
     <div class="card" style="margin-bottom:14px;">
       <div class="card-section-title">DIU</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 16px;padding:4px 0 8px;">
-        ${[['diu-interesse','interesse','Interesse por DIU'],['diu-disponivel','disponivel','DIU disponível'],['diu-agenda','agendamento','Agendamento realizado'],['diu-insercao','insercao','Inserção realizada'],['diu-pagto','pagamento','Pagamento realizado'],['diu-nf','nf','Nota fiscal enviada']].map(([id,key,label])=>`
+        ${[['diu-interesse','interesse','Interesse por DIU'],['diu-disponivel','disponivel','DIU disponível'],['diu-agenda','agendamento','Agendamento realizado'],['diu-pagto','pagamento','Pagamento realizado'],['diu-nf','nf','Nota fiscal enviada']].map(([id,key,label])=>`
           <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
             <input type="checkbox" id="${id}" ${(gp.diu||{})[key]?'checked':''} style="accent-color:var(--teal);width:14px;height:14px;"> ${label}
           </label>`).join('')}
+        <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">
+          <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer;">
+            <input type="checkbox" id="diu-insercao" ${(gp.diu||{}).insercao?'checked':''} style="accent-color:var(--teal);width:14px;height:14px;"> Inserção realizada
+          </label>
+          ${(gp.diu||{}).insercao?`<input type="date" id="diu-data-insercao" value="${(gp.diu||{}).dataInsercao||''}" style="font-size:12px;padding:2px 6px;border:1px solid var(--border);border-radius:5px;font-family:inherit;">`:''}
+        </div>
       </div>
       ${statusDIU(gp)?`<div class="banner banner-${statusDIU(gp).level==='ok'?'note':'warn'}" style="margin-top:6px;">${statusDIU(gp).label}</div>`:''}
     </div>
@@ -2085,17 +2118,36 @@ function modalDetalheGineco(id){
     render();
   };
   // DIU checkboxes
-  ['interesse','disponivel','agendamento','insercao','pagamento','nf'].forEach((key,i)=>{
-    const ids=['diu-interesse','diu-disponivel','diu-agenda','diu-insercao','diu-pagto','diu-nf'];
+  ['interesse','disponivel','agendamento','pagamento','nf'].forEach((key,i)=>{
+    const ids=['diu-interesse','diu-disponivel','diu-agenda','diu-pagto','diu-nf'];
     const cb=wrap.querySelector('#'+ids[i]);
     if(cb) cb.onchange=async(e)=>{
-      if(!gp.diu) gp.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,pagamento:false,nf:false};
+      if(!gp.diu) gp.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
       gp.diu[key]=e.target.checked;
       const idx=state.gyneco.findIndex(x=>x.id===id);
       if(idx>=0) state.gyneco[idx].diu={...state.gyneco[idx].diu,[key]:e.target.checked};
       await commitGinEdit(state.gyneco[idx]||gp);render();
     };
   });
+  // DIU inserção checkbox (separate to handle dataInsercao date visibility)
+  const cbInsercao=wrap.querySelector('#diu-insercao');
+  if(cbInsercao) cbInsercao.onchange=async(e)=>{
+    if(!gp.diu) gp.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
+    gp.diu.insercao=e.target.checked;
+    if(!e.target.checked) gp.diu.dataInsercao='';
+    const idx=state.gyneco.findIndex(x=>x.id===id);
+    if(idx>=0) state.gyneco[idx].diu={...state.gyneco[idx].diu,insercao:e.target.checked,dataInsercao:e.target.checked?gp.diu.dataInsercao:''};
+    await commitGinEdit(state.gyneco[idx]||gp);render();
+  };
+  // DIU data inserção date input
+  const diuDataInput=wrap.querySelector('#diu-data-insercao');
+  if(diuDataInput) diuDataInput.onchange=async(e)=>{
+    if(!gp.diu) gp.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
+    gp.diu.dataInsercao=e.target.value;
+    const idx=state.gyneco.findIndex(x=>x.id===id);
+    if(idx>=0) state.gyneco[idx].diu={...state.gyneco[idx].diu,dataInsercao:e.target.value};
+    await commitGinEdit(state.gyneco[idx]||gp);
+  };
 
   wrap.querySelector('#c-pap').onchange=async(e)=>{
     gp.papColetado=e.target.checked;
@@ -2275,6 +2327,90 @@ function modalFupPosParto(){
       // Store last action for undo
       if(!state.fupUndoStack) state.fupUndoStack=[];
       state.fupUndoStack.push({patientId:p.id,key,nome:p.nome});
+      render();
+    };
+  });
+
+  return wrap;
+}
+
+
+function modalFupNovasGestantes(){
+  const wrap=el(`<div></div>`);
+  const t=today();
+
+  // Pacientes gestantes ativas sem parto realizado, sem desistência,
+  // com 1ª consulta há mais de 23 dias e sem retorno marcado como feito
+  const pacientes=state.obstetric.map(migrateObst).filter(p=>{
+    if(p.parto.realizado||p.desistiu) return false;
+    if(!p.cadastradoEm) return false;
+    const dc=parseDate(p.cadastradoEm); if(!dc) return false;
+    const dias=diffDays(t,dc);
+    return dias>=23 && !(p.fupNovaGestante&&p.fupNovaGestante.retorno&&p.fupNovaGestante.retorno.feita);
+  }).sort((a,b)=>parseDate(a.cadastradoEm)-parseDate(b.cadastradoEm));
+
+  const rows=pacientes.map(p=>{
+    const dc=parseDate(p.cadastradoEm);
+    const dias=diffDays(t,dc);
+    const atrasado=dias>45;
+    return `<tr>
+      <td style="cursor:pointer;" data-open="${p.id}"><strong>${p.nome}</strong></td>
+      <td class="mono">${fmtDate(p.cadastradoEm)}</td>
+      <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
+      <td><button class="btn btn-secondary btn-sm" data-agendar="${p.id}">Agendado</button></td>
+    </tr>`;
+  }).join('');
+
+  wrap.innerHTML=`
+    <div class="modal-head">
+      <div>
+        <h2>F-Up Novas Gestantes</h2>
+        <p class="muted-x">${pacientes.length>0?pacientes.length+' retorno(s) de 1 mês pendente(s)':'Todas as pacientes em dia'}</p>
+      </div>
+      <button class="close-x">✕</button>
+    </div>
+    ${state.fupNovaGestUndoStack&&state.fupNovaGestUndoStack.length>0?`
+    <div style="background:var(--teal-light);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-size:13px;color:var(--teal-dark);">✓ ${state.fupNovaGestUndoStack[state.fupNovaGestUndoStack.length-1].nome.split(' ')[0]} marcada como agendada</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="btn-undo-nova-gest">Desfazer</button>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-undo-nova-gest">✕</button>
+      </div>
+    </div>`:''}
+    ${pacientes.length===0?`<div class="empty"><h3>✓ Tudo em dia</h3><p>Todas as novas gestantes têm retorno de 1 mês em dia.</p></div>`:`
+    <div style="margin-bottom:8px;font-size:13px;color:var(--ink-muted);">Gestantes com 1ª consulta há mais de 23 dias sem retorno de 1 mês agendado:</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Paciente</th><th>1ª consulta</th><th>Dias desde 1ª consulta</th><th></th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+    </div>`}
+  `;
+
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;state.fupNovaGestUndoStack=[];render();};
+  wrap.querySelectorAll('[data-open]').forEach(td=>td.onclick=()=>openObstetricModal(td.dataset.open));
+
+  const btnUndo=wrap.querySelector('#btn-undo-nova-gest');
+  if(btnUndo) btnUndo.onclick=async()=>{
+    const last=(state.fupNovaGestUndoStack||[]).pop(); if(!last) return;
+    const pu=state.obstetric.find(x=>x.id===last.patientId); if(!pu) return;
+    if(!pu.fupNovaGestante) pu.fupNovaGestante={retorno:{feita:false,data:''}};
+    pu.fupNovaGestante.retorno={feita:false,data:''};
+    await commitObstEdit(pu);
+    showToast('Retorno desmarcado para '+last.nome.split(' ')[0]+'.');render();
+  };
+  const btnClear=wrap.querySelector('#btn-clear-undo-nova-gest');
+  if(btnClear) btnClear.onclick=()=>{state.fupNovaGestUndoStack=[];render();};
+
+  wrap.querySelectorAll('[data-agendar]').forEach(btn=>{
+    btn.onclick=async(e)=>{
+      e.stopPropagation();
+      const p=state.obstetric.find(x=>x.id===btn.dataset.agendar); if(!p) return;
+      if(!p.fupNovaGestante) p.fupNovaGestante={retorno:{feita:false,data:''}};
+      p.fupNovaGestante.retorno={feita:true,data:isoDate(t)};
+      await commitObstEdit(p);
+      if(!state.fupNovaGestUndoStack) state.fupNovaGestUndoStack=[];
+      state.fupNovaGestUndoStack.push({patientId:p.id,nome:p.nome});
       render();
     };
   });
@@ -2537,11 +2673,63 @@ function modalAssinarParceiro(patientId){
 
 function modalFupDIU(){
   const wrap=el(`<div></div>`);
-  const lista=state.gyneco.map(migrateGin).filter(p=>{
+  const t=today();
+
+  // Seção 1: DIU pendente (status não ok)
+  const listaPend=state.gyneco.map(migrateGin).filter(p=>{
     const s=statusDIU(p); return s&&s.level!=='ok';
   }).sort((a,b)=>(a.nome||'').localeCompare(b.nome||''));
 
-  const rows=lista.map(p=>{
+  // Seção 2: Follow-up pós-inserção (30 dias e 6 meses)
+  const fupGroups=[
+    {key:'fupDiu30d', label:'Retorno 30 dias', alvo:30, prazo:45},
+    {key:'fupDiu6m', label:'Retorno 6 meses', alvo:182, prazo:210},
+  ];
+
+  const fupSections=fupGroups.map(g=>{
+    const pacientes=state.gyneco.map(migrateGin).filter(p=>{
+      if(!(p.diu&&p.diu.insercao&&p.diu.dataInsercao)) return false;
+      const di=parseDate(p.diu.dataInsercao); if(!di) return false;
+      const dias=diffDays(t,di);
+      if(dias<g.alvo-7) return false; // ainda não chegou a janela
+      if(p.diu[g.key]) return false; // já marcado como feito
+      return true;
+    }).sort((a,b)=>parseDate(a.diu.dataInsercao)-parseDate(b.diu.dataInsercao));
+
+    if(!pacientes.length) return `
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--teal-dark);margin-bottom:8px;">${g.label}</div>
+        <div style="padding:12px;background:var(--ok-light);border-radius:8px;font-size:13px;color:var(--ok);font-weight:600;">✓ Todas as pacientes em dia</div>
+      </div>`;
+
+    const rows=pacientes.map(p=>{
+      const di=parseDate(p.diu.dataInsercao);
+      const dias=diffDays(t,di);
+      const atrasado=dias>g.prazo;
+      return `<tr>
+        <td style="cursor:pointer;" data-open-gin="${p.id}"><strong>${p.nome}</strong></td>
+        <td class="mono">${fmtDate(p.diu.dataInsercao)}</td>
+        <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
+        <td><button class="btn btn-secondary btn-sm" data-agendar-diu="${p.id}" data-key="${g.key}">Agendado</button></td>
+      </tr>`;
+    }).join('');
+
+    return `
+      <div style="margin-bottom:24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--teal-dark);">${g.label}</div>
+          <span class="tag tag-warn">${pacientes.length} pendente${pacientes.length>1?'s':''}</span>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Paciente</th><th>Data inserção</th><th>Dias pós-inserção</th><th></th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>
+      </div>`;
+  }).join('');
+
+  const rowsPend=listaPend.map(p=>{
     const s=statusDIU(p);
     return `<tr data-pid="${p.id}" style="cursor:pointer;">
       <td><strong>${p.nome}</strong></td>
@@ -2549,23 +2737,68 @@ function modalFupDIU(){
     </tr>`;
   }).join('');
 
+  const totalFup=fupGroups.reduce((acc,g)=>acc+state.gyneco.map(migrateGin).filter(p=>{
+    if(!(p.diu&&p.diu.insercao&&p.diu.dataInsercao)) return false;
+    const di=parseDate(p.diu.dataInsercao); if(!di) return false;
+    return diffDays(t,di)>=g.alvo-7 && !p.diu[g.key];
+  }).length,0);
+
   wrap.innerHTML=`
     <div class="modal-head">
       <div><h2>F-Up DIU</h2>
-        <p class="muted-x">${lista.length} paciente${lista.length!==1?'s':''} com DIU pendente</p>
+        <p class="muted-x">${listaPend.length} com DIU pendente · ${totalFup} retorno(s) pós-inserção</p>
       </div>
       <button class="close-x">✕</button>
     </div>
-    ${lista.length===0?`<div class="empty"><h3>✓ Tudo em dia</h3><p>Nenhuma paciente com DIU pendente.</p></div>`:`
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Paciente</th><th>Status</th></tr></thead>
-        <tbody>${rows}</tbody>
-      </table>
-    </div>`}
+    ${state.fupDiuUndoStack&&state.fupDiuUndoStack.length>0?`
+    <div style="background:var(--teal-light);border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <span style="font-size:13px;color:var(--teal-dark);">✓ ${state.fupDiuUndoStack[state.fupDiuUndoStack.length-1].nome.split(' ')[0]} marcada como agendada</span>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-secondary btn-sm" id="btn-undo-fup-diu">Desfazer</button>
+        <button class="btn btn-secondary btn-sm" id="btn-clear-undo-diu">✕</button>
+      </div>
+    </div>`:''}
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--teal-dark);margin-bottom:8px;">DIU pendente</div>
+      ${listaPend.length===0?`<div style="padding:12px;background:var(--ok-light);border-radius:8px;font-size:13px;color:var(--ok);font-weight:600;">✓ Nenhuma paciente com DIU pendente</div>`:`
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Paciente</th><th>Status</th></tr></thead>
+          <tbody>${rowsPend}</tbody>
+        </table>
+      </div>`}
+    </div>
+    <div style="margin-top:4px;">${fupSections}</div>
   `;
-  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
+  wrap.querySelector('.close-x').onclick=()=>{state.modal=null;state.fupDiuUndoStack=[];render();};
   wrap.querySelectorAll('tr[data-pid]').forEach(r=>r.onclick=()=>openGinecoModal(r.dataset.pid));
+  wrap.querySelectorAll('[data-open-gin]').forEach(td=>td.onclick=()=>openGinecoModal(td.dataset.openGin));
+
+  const btnUndoDiu=wrap.querySelector('#btn-undo-fup-diu');
+  if(btnUndoDiu) btnUndoDiu.onclick=async()=>{
+    const last=(state.fupDiuUndoStack||[]).pop(); if(!last) return;
+    const pu=state.gyneco.find(x=>x.id===last.patientId); if(!pu) return;
+    if(!pu.diu) pu.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
+    pu.diu[last.key]=false;
+    await commitGinEdit(pu);
+    showToast('Retorno desmarcado para '+last.nome.split(' ')[0]+'.');render();
+  };
+  const btnClearUndoDiu=wrap.querySelector('#btn-clear-undo-diu');
+  if(btnClearUndoDiu) btnClearUndoDiu.onclick=()=>{state.fupDiuUndoStack=[];render();};
+
+  wrap.querySelectorAll('[data-agendar-diu]').forEach(btn=>{
+    btn.onclick=async(e)=>{
+      e.stopPropagation();
+      const p=state.gyneco.find(x=>x.id===btn.dataset.agendarDiu); if(!p) return;
+      const key=btn.dataset.key;
+      if(!p.diu) p.diu={interesse:false,disponivel:false,agendamento:false,insercao:false,dataInsercao:'',pagamento:false,nf:false};
+      p.diu[key]=true;
+      await commitGinEdit(p);
+      if(!state.fupDiuUndoStack) state.fupDiuUndoStack=[];
+      state.fupDiuUndoStack.push({patientId:p.id,key,nome:p.nome});
+      render();
+    };
+  });
   return wrap;
 }
 
