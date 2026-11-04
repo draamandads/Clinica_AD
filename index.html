@@ -1559,6 +1559,11 @@ function modalDetalheObstetrica(id){
         <div class="ct"><div class="t">Interesse confirmado no parto</div><div class="d">Paciente confirmou desejo de realizar o parto na clínica</div></div>
       </div>
       <div class="checkrow">
+        <input type="checkbox" id="c-contrato-env" ${p.contratoEnviado?'checked':''}>
+        <div class="ct"><div class="t">Contrato de parto enviado</div></div>
+        <div class="dt"><input type="date" id="d-contrato-env" value="${p.dataContratoEnviado||''}" ${!p.contratoEnviado?'disabled':''}></div>
+      </div>
+      <div class="checkrow">
         <input type="checkbox" id="c-contrato" ${p.contratoAssinado?'checked':''}>
         <div class="ct">
           <div class="t">Contrato de parto assinado ${!p.contratoAssinado&&semanas>=24?'<span style="color:var(--alert);font-size:11px;">⚠️ ATRASADO</span>':(!p.contratoAssinado&&semanas>=20?'<span style="color:var(--warn);font-size:11px;">⏰ urgente</span>':'')}</div>
@@ -1573,6 +1578,10 @@ function modalDetalheObstetrica(id){
           <div class="d">Janela ideal: 24–28 semanas · Sugerido: ${fmtDate(p.dataApresParc)||'—'}</div>
         </div>
         <div class="dt"><input type="date" id="d-parceiro" value="${p.dataApresentacao||''}" ${!p.apresentadoParceiro?'disabled':''}></div>
+      </div>
+      <div class="checkrow">
+        <input type="checkbox" id="c-consultas" ${p.consultasAgendadas===true?'checked':''}>
+        <div class="ct"><div class="t">Consultas quinzenais e semanais agendadas?</div></div>
       </div>
     </div>
 
@@ -1609,6 +1618,13 @@ function modalDetalheObstetrica(id){
       <div class="checkrow">
         <input type="checkbox" id="c-nf" ${p.notaFiscalEnviada?'checked':''}>
         <div class="ct"><div class="t">Nota fiscal enviada</div><div class="d">NF emitida e enviada à paciente</div></div>
+        <label style="display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;cursor:pointer;"><input type="checkbox" id="c-nf-nao" ${p.naoPrecisaNF?'checked':''}> Não precisa de NF</label>
+      </div>
+      <div class="field" style="margin-top:12px;"><label>Informações da negociação</label>
+        <textarea id="f-info-neg" rows="3">${p.infoNegociacao||''}</textarea>
+      </div>
+      <div class="field"><label>Datas de pagamentos</label>
+        <textarea id="f-datas-pgto" rows="3">${p.datasPagamentos||''}</textarea>
       </div>
 
 
@@ -1710,12 +1726,19 @@ function modalDetalheObstetrica(id){
     await commitObstEdit(p);render();
   };
   wrap.querySelector('#d-contrato').onchange=async(e)=>{p.dataContrato=e.target.value;await commitObstEdit(p);};
+  wrap.querySelector('#c-contrato-env').onchange=async(e)=>{
+    p.contratoEnviado=e.target.checked;
+    p.dataContratoEnviado=e.target.checked?isoDate(t):'';
+    await commitObstEdit(p);render();
+  };
+  wrap.querySelector('#d-contrato-env').onchange=async(e)=>{p.dataContratoEnviado=e.target.value;await commitObstEdit(p);};
   wrap.querySelector('#c-parceiro').onchange=async(e)=>{
     p.apresentadoParceiro=e.target.checked;
     p.dataApresentacao=e.target.checked?isoDate(t):'';
     await commitObstEdit(p);render();
   };
   wrap.querySelector('#d-parceiro').onchange=async(e)=>{p.dataApresentacao=e.target.value;await commitObstEdit(p);};
+  wrap.querySelector('#c-consultas').onchange=async(e)=>{p.consultasAgendadas=e.target.checked;await commitObstEdit(p);};
 
   // Financeiro — auto-save on blur/change
   const saveFinanceiro=async()=>{
@@ -1763,6 +1786,9 @@ function modalDetalheObstetrica(id){
   };
   wrap.querySelector('#c-pgto').onchange=async(e)=>{p.pgtoFinalizado=e.target.checked;await commitObstEdit(p);};
   wrap.querySelector('#c-nf').onchange=async(e)=>{p.notaFiscalEnviada=e.target.checked;await commitObstEdit(p);};
+  wrap.querySelector('#c-nf-nao').onchange=async(e)=>{p.naoPrecisaNF=e.target.checked;await commitObstEdit(p);};
+  wrap.querySelector('#f-info-neg').onblur=async(e)=>{p.infoNegociacao=e.target.value;await commitObstEdit(p);};
+  wrap.querySelector('#f-datas-pgto').onblur=async(e)=>{p.datasPagamentos=e.target.value;await commitObstEdit(p);};
 
 
 
@@ -2257,7 +2283,7 @@ function modalFupPosParto(){
         <td class="mono">${fmtDate(p.parto.data)}</td>
         <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
         <td>
-          <button class="btn btn-secondary btn-sm" data-agendar="${p.id}" data-key="${g.key}">Agendado</button>
+          <button class="btn btn-secondary btn-sm" data-agendar="${p.id}" data-key="${g.key}">Agendado?</button>
         </td>
       </tr>`;
     }).join('');
@@ -2357,7 +2383,7 @@ function modalFupNovasGestantes(){
       <td style="cursor:pointer;" data-open="${p.id}"><strong>${p.nome}</strong></td>
       <td class="mono">${fmtDate(p.cadastradoEm)}</td>
       <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
-      <td><button class="btn btn-secondary btn-sm" data-agendar="${p.id}">Agendado</button></td>
+      <td><button class="btn btn-secondary btn-sm" data-agendar="${p.id}">Agendado?</button></td>
     </tr>`;
   }).join('');
 
@@ -2438,7 +2464,7 @@ function modalFupRetornoGineco(){
       <td>${({'30dias':'30 dias','3meses':'3 meses','6meses':'6 meses','1ano':'1 ano'}[p.seguimento]||'1 ano')}</td>
       <td class="mono">${fmtDate(prox)}</td>
       <td style="font-weight:600;color:var(--alert);">${dias} dias em atraso</td>
-      <td><button class="btn btn-primary btn-sm" data-mark="${p.id}">Agendado</button></td>
+      <td><button class="btn btn-primary btn-sm" data-mark="${p.id}">Agendado?</button></td>
     </tr>`;
   }).join('');
 
@@ -2511,7 +2537,7 @@ function modalAlertaContratos(){
       <td><span class="tag tag-${level}">${semanas} semanas</span></td>
       <td class="mono">${fmtDate(dpp)}</td>
       <td><span class="tag tag-${level}">${semanas>=24?'⚠️ Atrasado':'⏰ Urgente'}</span></td>
-      <td><button class="btn btn-secondary btn-sm" data-assinar="${p.id}">Assinado</button></td>
+      <td><button class="btn btn-secondary btn-sm" data-assinar="${p.id}">Assinado?</button></td>
     </tr>`;
   }).join('');
   wrap.innerHTML=`
@@ -2568,7 +2594,7 @@ function modalAlertaParceiro(){
       <td><span class="tag tag-${level}">${semanas} semanas</span></td>
       <td class="mono">${fmtDate(dpp)}</td>
       <td><span class="tag tag-${level}">${semanas>=28?'⚠️ Fora do prazo':'⏰ Janela 24–28s'}</span></td>
-      <td><button class="btn btn-secondary btn-sm" data-apresentar="${p.id}">Apresentado</button></td>
+      <td><button class="btn btn-secondary btn-sm" data-apresentar="${p.id}">Apresentado?</button></td>
     </tr>`;
   }).join('');
   wrap.innerHTML=`
@@ -2710,7 +2736,7 @@ function modalFupDIU(){
         <td style="cursor:pointer;" data-open-gin="${p.id}"><strong>${p.nome}</strong></td>
         <td class="mono">${fmtDate(p.diu.dataInsercao)}</td>
         <td style="font-weight:600;color:${atrasado?'var(--alert)':'var(--ink-muted)'};">${dias} dias${atrasado?' ⚠️':''}</td>
-        <td><button class="btn btn-secondary btn-sm" data-agendar-diu="${p.id}" data-key="${g.key}">Agendado</button></td>
+        <td><button class="btn btn-secondary btn-sm" data-agendar-diu="${p.id}" data-key="${g.key}">Agendado?</button></td>
       </tr>`;
     }).join('');
 
