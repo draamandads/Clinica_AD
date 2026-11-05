@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Clínica AD · Financeiro</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F5F0; --surface:#FFFFFF; --border:#E3DED2; --ink:#26241F; --ink-muted:#79735F; --teal:#2F5D62; --teal-light:#E4EEED; --teal-dark:#1E3F43; --brick:#9C5233; --brick-light:#F3E6DC; --alert:#B23A32; --alert-light:#FBEAE8; --warn:#B8863B; --warn-light:#FBF1E1; --ok:#3F7A52; --ok-light:#E7F1E9; --radius:10px}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5}
+h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0 0 4px 0;letter-spacing:-0.01em}
+.mono{font-family:'IBM Plex Mono',monospace}
+#app{display:flex;min-height:100vh}
+.sidebar{width:220px;background:var(--teal-dark);color:#EDEBE3;flex-shrink:0;padding:24px 16px;display:flex;flex-direction:column;gap:4px;position:sticky;top:0;height:100vh}
+.brand{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}
+.brand-sub{font-size:11.5px;color:#B9CFCE;margin-bottom:28px}
+.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#D9E6E5;cursor:pointer;font-size:13.5px;font-weight:500;border:none;background:transparent;text-align:left;width:100%}
+.nav-btn:hover{background:#28494D}
+.nav-btn.active{background:var(--teal);color:#fff}
+.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0}
+.sidebar-foot{margin-top:auto;font-size:11px;color:#8FADAC;padding-top:16px}
+main{flex:1;padding:28px 36px;max-width:1320px;overflow-y:auto}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;flex-wrap:wrap;gap:12px}
+.page-head p{color:var(--ink-muted);margin:2px 0 0;font-size:13px}
+.btn{border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.btn-primary{background:var(--teal);color:#fff}
+.btn-primary:hover{background:var(--teal-dark)}
+.btn-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border)}
+.btn-secondary:hover{background:#F1EEE6}
+.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px}
+.btn-soft{background:none;border:1px solid #E3DED2;color:var(--ink-muted);font-family:inherit;font-weight:400;font-size:10.5px;padding:2px 9px;border-radius:12px;cursor:pointer;white-space:nowrap}
+.btn-soft:hover{background:#F7F5EE;color:var(--ink)}
+.grid{display:grid;gap:16px}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:1000px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.grid-2,.grid-4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}
+.stat-card{padding:13px 16px}
+.stat-card .num{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--teal-dark);line-height:1}
+.stat-card .label{font-size:11px;color:var(--ink-muted);margin-top:5px}
+.stat-card .sub{font-size:10px;color:var(--ink-muted);margin-top:2px}
+.section-title{font-size:15px;margin:28px 0 10px;color:var(--teal-dark)}
+.section-title:first-child{margin-top:0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}
+td{padding:9px 10px;border-bottom:1px solid #EEEAE0;vertical-align:middle}
+tr:hover td{background:#FBFAF7}
+.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;overflow-x:auto}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}
+.tag-teal{background:var(--teal-light);color:var(--teal-dark)}
+.tag-brick{background:var(--brick-light);color:var(--brick)}
+.tag-alert{background:var(--alert-light);color:var(--alert)}
+.tag-warn{background:var(--warn-light);color:var(--warn)}
+.tag-muted{background:#EFEBE2;color:var(--ink-muted)}
+.banner{padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:16px;display:flex;gap:8px;align-items:flex-start}
+.banner-note{background:var(--teal-light);color:var(--teal-dark)}
+.banner-warn{background:var(--warn-light);color:var(--warn)}
+.field{margin-bottom:0}
+.field label{display:block;font-size:11px;font-weight:600;color:var(--ink-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:.03em}
+.field input,.field select{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13.5px;background:#FBFAF7}
+.field input:focus,.field select:focus{outline:2px solid var(--teal);outline-offset:0;background:#fff}
+.month-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.month-pill{padding:7px 13px;border-radius:20px;border:1px solid var(--border);background:var(--surface);font-size:12.5px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--ink-muted)}
+.month-pill.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.calc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.crosslink{display:flex;align-items:center;gap:8px;background:#28494D;border:none;color:#D9E6E5;font-size:12px;padding:9px 10px;border-radius:8px;cursor:pointer;width:100%;text-align:left;font-family:inherit;text-decoration:none}
+.crosslink:hover{background:#345d61}
+.cat-select{padding:5px 8px;border:1px solid var(--border);border-radius:6px;font-family:inherit;font-size:12px;background:#FBFAF7}
+.modal-overlay{position:fixed;inset:0;background:rgba(38,36,31,0.45);display:flex;align-items:center;justify-content:center;z-index:1000;padding:20px}
+.modal-box{background:var(--surface);border-radius:var(--radius);padding:24px;max-width:440px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,0.25)}
+.modal-title{font-family:'Fraunces',serif;font-weight:600;font-size:17px;color:var(--ink);margin-bottom:4px}
+.modal-sub{font-size:12.5px;color:var(--ink-muted);margin-bottom:16px}
+.modal-options{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.modal-opt{text-align:left;border:1.5px solid var(--border);border-radius:9px;padding:11px 14px;background:#FBFAF7;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;gap:2px}
+.modal-opt:hover{border-color:var(--teal);background:var(--teal-light)}
+.modal-opt strong{font-size:13px;color:var(--ink)}
+.modal-opt span{font-size:11.5px;color:var(--ink-muted)}
+.modal-cancel{width:100%;text-align:center;border:none;background:transparent;color:var(--ink-muted);font-family:inherit;font-size:12.5px;padding:8px;cursor:pointer}
+.modal-cancel:hover{color:var(--ink)}
+.login-wrap{flex:1;width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.login-card{width:100%;max-width:340px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px 26px;display:flex;flex-direction:column;gap:12px;text-align:center}
+.login-brand{font-family:'Fraunces',serif;font-weight:700;font-size:24px;color:var(--teal-dark)}
+.login-sub{font-size:12px;color:var(--ink-muted);margin-top:-8px;margin-bottom:6px}
+.login-card input[type=password]{font-family:inherit;font-size:14px;padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:#FBFAF7;width:100%}
+.login-lembrar{font-size:12px;color:var(--ink-muted);display:flex;gap:6px;align-items:center;justify-content:center;cursor:pointer}
+.login-msg{font-size:12.5px;color:var(--ink-muted);min-height:16px}
+.up-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+.up-label{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#A39E8E;font-weight:600}
+.up-chip{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1.5px dashed var(--border);border-radius:20px;background:#FBFAF7;font-size:12.5px;color:var(--ink);cursor:pointer}
+.up-chip:hover{background:#F4F1E8}
+.up-chip input{display:none}
+.up-tag{font-size:11px;background:#E7EDE8;color:var(--teal-dark);padding:1px 7px;border-radius:5px}
+.up-ate{color:var(--ink-muted);font-size:12px}
+.up-badge{font-size:11px;background:var(--warn-light);color:var(--warn);padding:1px 8px;border-radius:10px;font-weight:600}
+.upload-status{font-size:12.5px;color:var(--ink-muted)}
+.upload-status.ok{color:var(--ok)}
+.upload-status.err{color:var(--alert)}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+if (window.pdfjsLib) {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+let DATA = null; // os dados chegam do servidor depois da senha; não ficam neste arquivo
+
+// -------- Sincronização em nuvem (Google Sheets via Apps Script) --------
+// Depois de publicar o Apps Script como Web App, cole aqui a URL que termina em /exec
+const CLOUD_URL = 'https://script.google.com/macros/s/AKfycbwK7flA_qPYh6gCAentPP52r2oV2GN-hjTjTfN_D35Qx0-i1diQ6uC-hetMDVmSyXAopw/exec';
+const SENHA_KEY = 'clinicaad_fin_senha';
+let senhaAtual = null; // senha digitada nesta sessão (nunca fica no código)
+const CLOUD_AUTOR = 'Dra. Amanda Dantas';
+let cloudStatus = { state:'idle', atualizado_em:null }; // idle | loading | synced | saving | error | offline
+let cloudSaveTimer = null;
+
+function cloudConfigured(){ return CLOUD_URL && CLOUD_URL.indexOf('COLE_AQUI') === -1; }
+
+function setCloudStatus(s, extra){
+  cloudStatus = Object.assign({state:s}, extra||{});
+  const foot = document.getElementById('cloud-status');
+  if(foot) foot.innerHTML = cloudStatusLabel();
+}
+
+function cloudStatusLabel(){
+  if(!cloudConfigured()) return 'Dados salvos neste navegador';
+  if(cloudStatus.state==='loading') return 'Carregando dados salvos…';
+  if(cloudStatus.state==='saving') return 'Sincronizando…';
+  if(cloudStatus.state==='synced') return 'Sincronizado' + (cloudStatus.atualizado_em ? ' às '+new Date(cloudStatus.atualizado_em).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}) : '');
+  if(cloudStatus.state==='error') return 'Sem conexão — salvo só neste navegador';
+  return 'Dados salvos neste navegador';
+}
+
+function cloudSave(){
+  if(!cloudConfigured() || !senhaAtual) return;
+  clearTimeout(cloudSaveTimer);
+  cloudSaveTimer = setTimeout(async ()=>{
+    setCloudStatus('saving');
+    const payload = JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos});
+    try{
+      const res = await fetch(CLOUD_URL, {
+        method:'POST',
+        headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body: JSON.stringify({acao:'salvar', colecao:'financeiro', id:'estado', json:payload, autor:CLOUD_AUTOR, senha:senhaAtual})
+      });
+      const data = await res.json();
+      if(data.ok) setCloudStatus('synced', {atualizado_em: data.atualizado_em});
+      else if(data.error==='senha incorreta'){ esquecerSenha(); senhaAtual = null; telaLogin('A senha foi alterada. Entre novamente.'); }
+      else setCloudStatus('error');
+    }catch(e){
+      setCloudStatus('error');
+    }
+  }, 1200);
+}
+
+const state = {
+  view: 'objetivo',
+  custosYear: null,  // "YYYY"; definido no primeiro render com o ano mais recente
+  custosMonth: null, // "YYYY-MM"; definido no primeiro render com o mês mais recente
+  custosCatFiltro: null, // categoria selecionada (clique no resumo, ou filtro manual)
+  custosBusca: '',       // texto livre pra filtrar lançamentos
+  recebYear: null,   // "YYYY"; definido no primeiro render com o ano mais recente
+  recebMonth: 1,
+  recebChartArea: 'Obstetrícia',
+  recebChartMonth: 'all',
+  overrides: {},        // { "lancIndex": novaCategoria }
+  learnedCategorias: {}, // { "nome da contraparte": categoria } — aplicado a lançamentos futuros dessa contraparte
+  extraLancs: [],        // lançamentos importados via upload de PDF, além dos originais embutidos
+  extraAtendimentos: [], // atendimentos importados via upload do relatório iClinic (.xlsx), além dos originais embutidos
+  uploadMsgReceb: null,
+  uploadMsg: null,
+  premises: {
+    valorConsultaPorMes: {'2026-1':600,'2026-2':600,'2026-3':600,'2026-4':600,'2026-5':600,'2026-6':600,'2026-7':600,'2026-8':600,'2026-9':600,'2026-10':600,'2026-11':600,'2026-12':600},
+    valorPartoPorMes: {'2026-1':16500,'2026-2':16500,'2026-3':16500,'2026-4':16500,'2026-5':16500,'2026-6':16500,'2026-7':16500,'2026-8':16500,'2026-9':16500,'2026-10':16500,'2026-11':16500,'2026-12':16500},
+    partosPorMes: {'2026-1':6,'2026-2':6,'2026-3':10,'2026-4':11,'2026-5':10,'2026-6':6,'2026-7':11,'2026-8':11,'2026-9':8,'2026-10':8,'2026-11':8,'2026-12':8},
+    medico: {
+      solicitacoes:{qtd:30, limite:30, valorLote:25, valorExcedente:25},
+      checagem:{qtd:30, limite:30, valorLote:25, valorExcedente:25},
+      prenatal:{qtd:10, desconto:0, pct:70, valor:600},
+      prenatalParceria:{qtd:10, desconto:0, pct:30, valor:600},
+      inducoes:{qtd:3, limite:3, valorLote:1000, valorExcedente:650},
+      conducao:{qtd:5, desconto:15, pct:25, valor:16500},
+      auxiliar:{qtd:4, desconto:15, pct:15, valor:16500},
+      visitas:{qtd:15, limite:15, valorLote:250, valorExcedente:162.5},
+      cirurgiao:{qtd:0, desconto:15, pct:60, valor:16500}
+    },
+    medicoVersao: 2
+  },
+  sim: {
+    calc: { qtdAtend:145, pctPagas:69, valAtend:600, qtdPartos:9, valParto:16500, retiradas:114292, medico:38396, outros:43816 }
+  }
+};
+
+// Dados salvos antes do suporte a múltiplos anos guardavam essas premissas por
+// número do mês (1–12), assumindo sempre 2026. Migra essas chaves antigas para
+// o formato "ano-mês" (ex.: "2026-3"), preservando o que já foi editado.
+function migrateLegacyMonthKeys(dict){
+  const out = {};
+  Object.keys(dict).forEach(k=>{
+    if(/^\d+$/.test(k)) out['2026-'+k] = dict[k];
+    else out[k] = dict[k];
+  });
+  return out;
+}
+function premGet(dict, year, m, def){
+  const v = dict[year+'-'+m];
+  return v===undefined ? def : v;
+}
+// cópia dos valores padrão do simulador médico (usada pelo botão "Voltar ao padrão" e para completar dados salvos)
+const MEDICO_PADRAO = JSON.parse(JSON.stringify(state.premises.medico));
+
+function premSet(dict, year, m, val){
+  dict[year+'-'+m] = val;
+}
+function applyState(saved){
+  if(!saved) { state.sim.calc.medico = Math.round(computeMedicoTotal()); return; }
+  Object.assign(state.premises, saved.premises||{});
+  if(saved.premises && saved.premises.medico){
+    // completa cada linha com o padrão (linhas novas, como o pré-natal em parceria, entram sozinhas)
+    const medicoDesatualizado = !saved.premises.medicoVersao;
+    const m = {};
+    Object.keys(MEDICO_PADRAO).forEach(k=>{
+      m[k] = Object.assign({}, MEDICO_PADRAO[k], saved.premises.medico[k] || {});
+    });
+    if(medicoDesatualizado) m.cirurgiao.pct = 60; // migração única: cirurgião principal passou de 40% para 60%
+    state.premises.medico = m;
+  }
+  state.premises.medicoVersao = 2;
+  if(saved.premises && saved.premises.partosPorMes) Object.assign(state.premises.partosPorMes, migrateLegacyMonthKeys(saved.premises.partosPorMes));
+  if(saved.premises && saved.premises.valorConsultaPorMes) Object.assign(state.premises.valorConsultaPorMes, migrateLegacyMonthKeys(saved.premises.valorConsultaPorMes));
+  if(saved.premises && saved.premises.valorPartoPorMes) Object.assign(state.premises.valorPartoPorMes, migrateLegacyMonthKeys(saved.premises.valorPartoPorMes));
+  // a calculadora não é gravada: sempre abre com as médias dos últimos 3 meses (edições valem só enquanto a página está aberta)
+  state.overrides = saved.overrides || {};
+  state.learnedCategorias = saved.learnedCategorias || {};
+  state.extraLancs = saved.extraLancs || [];
+  state.extraAtendimentos = (saved.extraAtendimentos || []).map(r=>r.slice(0,3)); // descarta nomes de pacientes de importações antigas
+}
+function loadState(){
+  try{
+    const raw = localStorage.getItem('clinicaad_fin_v6');
+    applyState(raw ? JSON.parse(raw) : null);
+  }catch(e){
+    state.sim.calc.medico = Math.round(computeMedicoTotal());
+  }
+}
+function saveState(){
+  try{
+    localStorage.setItem('clinicaad_fin_v6', JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos}));
+  }catch(e){}
+  cloudSave();
+}
+loadState();
+
+// ---------------- Acesso com senha ----------------
+// Ao abrir: pede a senha, o servidor confere e só então entrega os dados históricos e o estado salvo.
+async function chamarServidor(corpo){
+  const res = await fetch(CLOUD_URL, {method:'POST', headers:{'Content-Type':'text/plain;charset=utf-8'}, body: JSON.stringify(corpo)});
+  return await res.json();
+}
+function senhaSalvaEmLocal(){ try{ return !!localStorage.getItem(SENHA_KEY); }catch(e){ return false; } }
+function lerSenhaSalva(){ try{ return localStorage.getItem(SENHA_KEY) || sessionStorage.getItem(SENHA_KEY) || null; }catch(e){ return null; } }
+function esquecerSenha(){ try{ localStorage.removeItem(SENHA_KEY); sessionStorage.removeItem(SENHA_KEY); }catch(e){} }
+function guardarSenha(senha, lembrar){
+  esquecerSenha();
+  try{ (lembrar ? localStorage : sessionStorage).setItem(SENHA_KEY, senha); }catch(e){}
+}
+
+function telaMensagem(texto, comBotao){
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const caixa = el('<div class="login-wrap"><div class="login-card"><div class="login-brand">Clínica AD</div><div class="login-sub">Financeiro</div><div class="login-msg" id="tela-msg"></div></div></div>');
+  caixa.querySelector('#tela-msg').textContent = texto;
+  if(comBotao){
+    const b = el('<button class="btn btn-secondary" style="margin-top:12px;">Tentar de novo</button>');
+    b.onclick = ()=>iniciar();
+    caixa.querySelector('.login-card').appendChild(b);
+  }
+  app.appendChild(caixa);
+}
+
+function telaLogin(msg){
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  const caixa = el('<div class="login-wrap"><div class="login-card"><div class="login-brand">Clínica AD</div><div class="login-sub">Financeiro</div>'+
+    '<input type="password" id="login-senha" placeholder="Senha" autocomplete="current-password">'+
+    '<label class="login-lembrar"><input type="checkbox" id="login-lembrar" checked> Lembrar neste navegador</label>'+
+    '<button class="btn btn-primary" id="login-entrar" style="width:100%;">Entrar</button>'+
+    '<div class="login-msg" id="login-msg" style="color:var(--alert);"></div></div></div>');
+  caixa.querySelector('#login-msg').textContent = msg || '';
+  app.appendChild(caixa);
+  const campo = caixa.querySelector('#login-senha');
+  const enviar = ()=>{ if(campo.value) entrar(campo.value, caixa.querySelector('#login-lembrar').checked); };
+  caixa.querySelector('#login-entrar').onclick = enviar;
+  campo.onkeydown = (e)=>{ if(e.key==='Enter') enviar(); };
+  campo.focus();
+}
+
+async function entrar(senha, lembrar){
+  telaMensagem('Abrindo…');
+  let r;
+  try{
+    r = await chamarServidor({acao:'abrir', colecao:'financeiro', id:'estado', senha:senha});
+  }catch(e){
+    setCloudStatus('error');
+    return telaMensagem('Não consegui conectar ao servidor. Confira a internet e tente de novo.', true);
+  }
+  if(!r || !r.ok){
+    if(r && r.error==='senha incorreta'){ esquecerSenha(); return telaLogin('Senha incorreta.'); }
+    return telaMensagem('O servidor não respondeu como esperado' + (r && r.error ? ' ('+r.error+')' : '') + '.', true);
+  }
+  senhaAtual = senha;
+  guardarSenha(senha, lembrar);
+  DATA = JSON.parse(r.base);
+  if(!DATA.costCategories.includes('A classificar')) DATA.costCategories.push('A classificar');
+  let cloudData = null;
+  if(r.json){ try{ cloudData = JSON.parse(r.json); }catch(e){} }
+  if(cloudData) applyState(cloudData);
+  setCloudStatus('synced', {atualizado_em: r.atualizado_em || null});
+  render();
+  // dados na nuvem em formato antigo (sem a versão do simulador médico, com a calculadora gravada ou com nomes de pacientes
+  // nos atendimentos): regrava já na versão atual, para o Sheets não guardar mais nada disso
+  if(cloudData){
+    const desatualizado = !(cloudData.premises && cloudData.premises.medicoVersao) || ('sim' in cloudData) || (cloudData.extraAtendimentos||[]).some(r=>r.length>3);
+    if(desatualizado) cloudSave();
+  }
+}
+
+function sair(){
+  if(!confirm('Sair deste navegador? A senha lembrada e os dados guardados aqui serão apagados (o que está no Sheets continua salvo).')) return;
+  esquecerSenha();
+  try{ localStorage.removeItem('clinicaad_fin_v6'); }catch(e){}
+  location.reload();
+}
+
+function iniciar(){
+  if(!cloudConfigured()) return telaMensagem('O endereço do servidor não está configurado neste arquivo.');
+  const s = lerSenhaSalva();
+  if(s) entrar(s, senhaSalvaEmLocal());
+  else telaLogin();
+}
+
+function el(html){ const t=document.createElement('template'); t.innerHTML=html.trim(); return t.content.firstElementChild; }
+function fmt(n){ return (n<0?'-':'') + 'R$ ' + Math.abs(Math.round(n)).toLocaleString('pt-BR'); }
+function fmt2(n){ return (n<0?'-':'') + 'R$ ' + Math.abs(n).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtInt(n){ return Math.round(n).toLocaleString('pt-BR'); }
+
+// ---------------- Helpers de gráfico (SVG, sem libs externas) ----------------
+const CHART_PALETTE = ['#2F5D62','#9C5233','#B8863B','#7C9A7F','#79735F','#6B8E8C','#C17A4F','#4A7C7F'];
+function closedMonthCount(year){
+  const now = new Date();
+  if(year===undefined) year = now.getFullYear();
+  if(year > now.getFullYear()) return 0;
+  if(year < now.getFullYear()) return 12;
+  return Math.max(0, now.getMonth()); // getMonth() é 0-indexado = qtd de meses ANTERIORES ao atual
+}
+function fmtK(n){
+  if(Math.abs(n)>=1000) return (n<0?'-':'') + Math.round(Math.abs(n)/1000)+'k';
+  return fmtInt(n);
+}
+function render(){
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  app.appendChild(sidebar());
+  const main = el('<main></main>');
+  if(state.view==='objetivo') main.appendChild(viewObjetivo());
+  else if(state.view==='custos') main.appendChild(viewCustos());
+  else if(state.view==='recebimentos') main.appendChild(viewRecebimentos());
+  else if(state.view==='medico') main.appendChild(viewMedico());
+  else if(state.view==='simulador') main.appendChild(viewSimulador());
+  app.appendChild(main);
+}
+
+function sidebar(){
+  const items=[
+    {id:'objetivo',label:'Objetivo'},
+    {id:'custos',label:'Despesas'},
+    {id:'recebimentos',label:'Faturamento'},
+    {id:'medico',label:'Simulador Médico Parceiro'},
+    {id:'simulador',label:'Calculadora Financeira'}
+  ];
+  const wrap = el('<div class="sidebar"></div>');
+  wrap.innerHTML = '<div class="brand">Clínica AD</div><div class="brand-sub">Financeiro</div>';
+  items.forEach(it=>{
+    const b = el('<button class="nav-btn '+(state.view===it.id?'active':'')+'"><span class="nav-dot"></span>'+it.label+'</button>');
+    b.onclick = ()=>{ state.view=it.id; render(); };
+    wrap.appendChild(b);
+  });
+  const foot = el('<div class="sidebar-foot" style="display:flex;flex-direction:column;gap:8px;"></div>');
+  const link = el('<a class="crosslink" href="https://draamandads.github.io/Clinica_AD/" target="_blank">↗ Controle de Partos</a>');
+  foot.appendChild(link);
+  foot.appendChild(el('<div id="cloud-status" style="padding-top:6px;">'+cloudStatusLabel()+'</div>'));
+  const btnSair = el('<a style="color:#9FB4B3;font-size:11px;cursor:pointer;text-decoration:underline;">Sair</a>');
+  btnSair.onclick = sair;
+  foot.appendChild(btnSair);
+  wrap.appendChild(foot);
+  return wrap;
+}
+
+// ---------------- CUSTOS ----------------
+function catColor(cat){
+  const map = {'Retiradas':'brick','Médico Parceiro':'warn','Impostos':'alert','Outros':'muted','A classificar':'alert'};
+  return map[cat] || 'teal';
+}
+
+function getLancamentos(){
+  const base = DATA.costLancamentos.map((l,i)=>({...l, c: state.overrides[i] || l.c, idx:i}));
+  const extra = state.extraLancs.map((l,i)=>{
+    const idx = 'x'+i;
+    return {...l, c: state.overrides[idx] || l.c, idx};
+  });
+  return base.concat(extra);
+}
+
+function promptCategoriaChange(selectEl){
+  const idx = selectEl.dataset.idx;
+  const nome = selectEl.dataset.n || '';
+  const catAnterior = selectEl.dataset.catAtual;
+  const novaCat = selectEl.value;
+  if(novaCat === catAnterior) return;
+
+  const lancs = getLancamentos();
+  const relacionados = nome ? lancs.filter(l=>l.n===nome) : [];
+  const qtdHistorico = relacionados.length;
+
+  const overlay = el('<div class="modal-overlay"></div>');
+  overlay.innerHTML = '<div class="modal-box">'+
+    '<div class="modal-title">Mudar para "'+novaCat+'"</div>'+
+    '<div class="modal-sub">'+(nome? ('Contraparte: <strong style="color:var(--ink);">'+nome+'</strong>') : 'Este lançamento não tem contraparte identificada.')+'</div>'+
+    '<div class="modal-options">'+
+      '<button class="modal-opt" data-choice="pontual"><strong>Só este lançamento</strong><span>Muda só esta linha, não mexe em mais nada.</span></button>'+
+      (nome ? '<button class="modal-opt" data-choice="historico"><strong>Esse e todo o histórico</strong><span>Atualiza os '+qtdHistorico+' lançamento(s) já importados de "'+nome+'".</span></button>' : '') +
+      (nome ? '<button class="modal-opt" data-choice="futuro"><strong>Histórico + próximos lançamentos</strong><span>Atualiza os '+qtdHistorico+' já importados e categoriza automaticamente os próximos uploads de "'+nome+'".</span></button>' : '') +
+    '</div>'+
+    '<button class="modal-cancel">Cancelar</button>'+
+  '</div>';
+  document.body.appendChild(overlay);
+
+  function close(){ overlay.remove(); }
+  overlay.querySelector('.modal-cancel').onclick = ()=>{ selectEl.value = catAnterior; close(); };
+  overlay.addEventListener('click', (e)=>{ if(e.target===overlay){ selectEl.value = catAnterior; close(); } });
+
+  overlay.querySelectorAll('.modal-opt').forEach(btn=>{
+    btn.onclick = ()=>{
+      const choice = btn.dataset.choice;
+      if(choice==='pontual'){
+        state.overrides[idx] = novaCat;
+      } else {
+        relacionados.forEach(l=>{ state.overrides[l.idx] = novaCat; });
+        if(choice==='futuro') state.learnedCategorias[nome] = novaCat;
+      }
+      saveState();
+      close();
+      render();
+    };
+  });
+}
+
+function lancFingerprint(l){
+  return l.d+'|'+l.l+'|'+(l.n||'')+'|'+Math.round(l.v*100);
+}
+
+// ---------------- Importação de extrato (PDF) ----------------
+const COL_BOUNDS = {data:[0,80], lanc:[80,220], razao:[220,355], cnpj:[355,465], valor:[465,515], saldo:[515,100000]};
+function colFor(x){
+  for(const k in COL_BOUNDS){ const b=COL_BOUNDS[k]; if(x>=b[0] && x<b[1]) return k; }
+  return 'other';
+}
+const DATE_RE = /^\d{2}\/\d{2}\/\d{4}$/;
+function splitGlued(word){
+  let m = word.match(/^(.+?)(\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2})$/);
+  if(m) return [m[1], m[2]];
+  m = word.match(/^(.+?)(\d{3}\.\d{3}\.\d{3}-\d{2})$/);
+  if(m) return [m[1], m[2]];
+  return [word, null];
+}
+function toFloatBR(s){
+  if(!s || !s.trim()) return null;
+  const clean = s.trim().replace(/\./g,'').replace(',', '.');
+  const f = parseFloat(clean);
+  return isNaN(f) ? null : f;
+}
+
+async function parsePdfToLancamentos(file){
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data: buf}).promise;
+  const records = [];
+  for(let p=1; p<=pdf.numPages; p++){
+    const page = await pdf.getPage(p);
+    const viewport = page.getViewport({scale:1});
+    const tc = await page.getTextContent();
+    let words = [];
+    tc.items.forEach(it=>{
+      const str = it.str;
+      if(!str || !str.trim()) return;
+      const topY = Math.round((viewport.height - it.transform[5])*10)/10;
+      const x0 = it.transform[4];
+      const totalW = it.width || (str.length*5);
+      const charW = totalW/Math.max(str.length,1);
+      const tokens = str.split(/(\s+)/).filter(t=>t.length>0);
+      let cursor = x0;
+      tokens.forEach(tok=>{
+        if(!tok.trim()){ cursor += tok.length*charW; return; }
+        words.push({text:tok, x0:cursor, top:topY});
+        cursor += tok.length*charW;
+      });
+    });
+    if(words.length===0) continue;
+    // group into lines
+    const tops = [];
+    const lineMap = {};
+    words.forEach(w=>{
+      let found=null;
+      for(const t of tops){ if(Math.abs(t-w.top)<1.0){ found=t; break; } }
+      if(found===null){ found=w.top; tops.push(found); lineMap[found]=[]; }
+      lineMap[found].push(w);
+    });
+    tops.sort((a,b)=>a-b);
+    // footer cutoff
+    let footerTop = null;
+    tops.forEach(t=>{
+      lineMap[t].forEach(w=>{ if(w.text.toLowerCase()==='aviso:'){ footerTop = (footerTop===null)?t:Math.min(footerTop,t); } });
+    });
+    const usableTops = footerTop===null ? tops : tops.filter(t=>t<footerTop-0.5);
+    if(usableTops.length===0) continue;
+    // date-line tops
+    const dateTops = usableTops.filter(t=> lineMap[t].some(w=> colFor(w.x0)==='data' && DATE_RE.test(w.text)) );
+    if(dateTops.length===0) continue;
+    function nearestDateTop(t){
+      let best=dateTops[0], bd=Math.abs(dateTops[0]-t);
+      dateTops.forEach(d=>{ const dist=Math.abs(d-t); if(dist<bd){ bd=dist; best=d; } });
+      return best;
+    }
+    const recMap = {};
+    usableTops.forEach(t=>{
+      if(t < dateTops[0]-5) return;
+      const rt = nearestDateTop(t);
+      if(!recMap[rt]) recMap[rt]=[];
+      recMap[rt].push(t);
+    });
+    Object.keys(recMap).map(Number).sort((a,b)=>a-b).forEach(rt=>{
+      const lineTops = recMap[rt].sort((a,b)=>a-b);
+      const cols = {data:[], lanc:[], razao:[], cnpj:[], valor:[], saldo:[]};
+      lineTops.forEach(t=>{
+        const ws = lineMap[t].slice().sort((a,b)=>a.x0-b.x0);
+        ws.forEach(w=>{
+          const c = colFor(w.x0);
+          if(cols[c]) cols[c].push(w.text);
+        });
+      });
+      if(cols.cnpj.length===0 && cols.razao.length>0){
+        const last = cols.razao[cols.razao.length-1];
+        const [namepart, idpart] = splitGlued(last);
+        if(idpart){ cols.razao[cols.razao.length-1]=namepart; cols.cnpj=[idpart]; }
+      }
+      const dataTxt = cols.data.join(' ').trim();
+      const m = dataTxt.match(/\d{2}\/\d{2}\/\d{4}/);
+      if(!m) return;
+      const [dd,mm,yyyy] = m[0].split('/');
+      const isoDate = yyyy+'-'+mm+'-'+dd;
+      const lancTxt = cols.lanc.join(' ').replace(/\s+/g,' ').trim();
+      const razaoTxt = cols.razao.join(' ').replace(/\s+/g,' ').trim();
+      const cnpjTxt = cols.cnpj.join(' ').replace(/\s+/g,' ').trim();
+      const valorTxt = cols.valor.join(' ').replace(/\s+/g,' ').trim();
+      if(lancTxt.toUpperCase().startsWith('SALDO')) return; // linha de saldo, não é transação
+      const valor = toFloatBR(valorTxt);
+      if(valor===null || valor>=0) return; // só saídas (valores negativos)
+      records.push({d:isoDate, l:lancTxt, n:razaoTxt, cnpj:cnpjTxt, v:Math.abs(valor)});
+    });
+  }
+  return records;
+}
+
+function categorizeNew(rec){
+  if(rec.n && state.learnedCategorias[rec.n]) return state.learnedCategorias[rec.n];
+  const key = rec.cnpj || rec.n;
+  return DATA.costMapping[key] || 'A classificar';
+}
+
+async function handlePdfUpload(file){
+  state.uploadMsg = {type:'info', text:'Lendo PDF…'};
+  render();
+  try{
+    const parsed = await parsePdfToLancamentos(file);
+    const existing = new Set();
+    DATA.costLancamentos.forEach(l=> existing.add(lancFingerprint(l)) );
+    state.extraLancs.forEach(l=> existing.add(lancFingerprint(l)) );
+    let added = 0, skipped = 0;
+    parsed.forEach(rec=>{
+      const lanc = {d:rec.d, l:rec.l, n:rec.n, c:categorizeNew(rec), v:rec.v};
+      const fp = lancFingerprint(lanc);
+      if(existing.has(fp)){ skipped++; return; }
+      existing.add(fp);
+      state.extraLancs.push(lanc);
+      added++;
+    });
+    saveState();
+    state.uploadMsg = {type:'ok', text: added+' lançamento(s) novo(s) adicionado(s). '+skipped+' já existiam no histórico e foram ignorados.'};
+  }catch(err){
+    console.error(err);
+    state.uploadMsg = {type:'err', text:'Não consegui ler esse PDF automaticamente (' + (err&&err.message?err.message:'erro desconhecido') + '). Pode me mandar o PDF direto no chat que eu processo por lá.'};
+  }
+  render();
+}
+
+// ---------------- Importação de relatório iClinic (XLSX) ----------------
+function normalizeHeader(h){
+  return String(h||'').trim().toLowerCase()
+    .replace(/[áàâã]/g,'a').replace(/[éê]/g,'e').replace(/[íî]/g,'i')
+    .replace(/[óôõ]/g,'o').replace(/[úû]/g,'u').replace(/ç/g,'c');
+}
+function excelDateToISO(val){
+  if(val===null || val===undefined || val==='') return null;
+  if(typeof val === 'number'){
+    const epoch = Date.UTC(1899,11,30);
+    const d = new Date(epoch + val*86400000);
+    return d.toISOString().slice(0,10);
+  }
+  const s = String(val).trim();
+  let m = s.match(/^(\d{2})\/(\d{2})\/(\d{4})/);
+  if(m) return m[3]+'-'+m[2]+'-'+m[1];
+  m = s.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(m) return s.slice(0,10);
+  return null;
+}
+function atFingerprint(rec){ return rec[0]+'|'+rec[1]+'|'+rec[2]; } // data|horário|procedimento (sem dados da paciente)
+
+async function parseXlsxToAtendimentos(file){
+  const buf = await file.arrayBuffer();
+  const wb = XLSX.read(buf, {type:'array'});
+  const ws = wb.Sheets[wb.SheetNames[0]];
+  const json = XLSX.utils.sheet_to_json(ws, {defval:''});
+  const records = [];
+  json.forEach(row=>{
+    let dataVal=null, horaVal='', procVal='';
+    Object.keys(row).forEach(k=>{
+      const nk = normalizeHeader(k);
+      if(nk==='data') dataVal = row[k];
+      else if(nk==='horario') horaVal = row[k];
+      else if(nk==='procedimento') procVal = row[k];
+    });
+    if(!dataVal || !procVal) return;
+    const iso = excelDateToISO(dataVal);
+    if(!iso) return;
+    records.push([iso, String(horaVal||'').trim(), String(procVal).trim()]);
+  });
+  return records;
+}
+
+function anosComAtendimentos(somenteComDados){
+  const all = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const anos = new Set(all.map(r=>r[0]&&r[0].slice(0,4)).filter(Boolean));
+  if(!somenteComDados) anos.add(String(new Date().getFullYear()));
+  return Array.from(anos).sort();
+}
+function computeRecebData(year, nClosed){
+  const all = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const monthly = {};
+  for(let m=1;m<=nClosed;m++) monthly[m] = {total:0, pagos:0, nao_pagos:0};
+  const procTotals = {};
+  all.forEach(rec=>{
+    const iso = rec[0], proc = rec[2];
+    if(!iso || iso.slice(0,4)!==String(year)) return;
+    const month = parseInt(iso.slice(5,7),10);
+    if(month<1 || month>nClosed) return;
+    const meta = DATA.procCategoryMap[proc] || ['Outro','Consulta'];
+    const tipo = meta[1];
+    monthly[month].total++;
+    const isPago = (tipo!=='Retorno' && tipo!=='Revisão');
+    if(isPago) monthly[month].pagos++; else monthly[month].nao_pagos++;
+    if(!procTotals[proc]) procTotals[proc] = {total:0, byMonth:{}, area:meta[0], tipo:meta[1]};
+    procTotals[proc].total++;
+    procTotals[proc].byMonth[month] = (procTotals[proc].byMonth[month]||0)+1;
+  });
+  return {monthly, procTotals};
+}
+
+async function handleXlsxUpload(file){
+  state.uploadMsgReceb = {type:'info', text:'Lendo planilha…'};
+  render();
+  try{
+    const parsed = await parseXlsxToAtendimentos(file);
+    if(parsed.length===0) throw new Error('nenhuma linha reconhecida — confira se o arquivo tem as colunas Data, Horário, Paciente e Procedimento');
+    // sem nomes: compara quantos atendimentos já existem para cada data|horário|procedimento e só entra o que exceder
+    const existentes = {};
+    DATA.atendimentosRaw.concat(state.extraAtendimentos).forEach(r=>{ const fp = atFingerprint(r); existentes[fp] = (existentes[fp]||0)+1; });
+    const vistos = {};
+    let added=0, skipped=0;
+    parsed.forEach(rec=>{
+      const fp = atFingerprint(rec);
+      vistos[fp] = (vistos[fp]||0)+1;
+      if(vistos[fp] <= (existentes[fp]||0)){ skipped++; return; }
+      state.extraAtendimentos.push(rec);
+      added++;
+    });
+    saveState();
+    state.uploadMsgReceb = {type:'ok', text: added+' atendimento(s) novo(s) adicionado(s). '+skipped+' já existiam e foram ignorados.'};
+  }catch(err){
+    console.error(err);
+    state.uploadMsgReceb = {type:'err', text:'Não consegui ler essa planilha automaticamente (' + (err&&err.message?err.message:'erro desconhecido') + '). Confira se é o relatório "Pacientes por período" do iClinic, ou me manda o arquivo no chat que eu processo por lá.'};
+  }
+  render();
+}
+
+function viewObjetivo(){
+  const wrap = el('<div></div>');
+  wrap.appendChild(el('<div class="page-head"><div><h1>Objetivo</h1><p>Por que este dashboard existe</p></div></div>'));
+
+  const objWrap = el('<div style="text-align:left;margin-bottom:22px;"></div>');
+  const objCard = el('<div class="card" style="display:inline-block;padding:32px 58px;text-align:center;box-sizing:border-box;"></div>');
+  objCard.innerHTML = '<div style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-muted);margin-bottom:18px;">Objetivo estratégico</div>'+
+    '<div style="font-family:\'Fraunces\',serif;font-style:italic;font-weight:500;font-size:19px;color:var(--teal-dark);line-height:2;">'+
+    'Ter uma clínica mais organizada e previsível<br>'+
+    'Reduzir sobrecarga própria e da equipe<br>'+
+    'Tomar decisões com mais segurança para crescer'+
+    '</div>';
+  objWrap.appendChild(objCard);
+  wrap.appendChild(objWrap);
+
+  const readCard = el('<div class="card" style="padding:14px 18px;box-sizing:border-box;"></div>');
+  readCard.innerHTML = '<div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-muted);margin-bottom:8px;">Leitura do dash</div>'+
+    '<div style="font-size:11.5px;line-height:1.9;color:var(--ink-muted);">'+
+    '<div><strong style="color:var(--ink);">Despesas</strong> — tudo que sai do banco, categorizado automaticamente, mês a mês.</div>'+
+    '<div><strong style="color:var(--ink);">Faturamento</strong> — atendimentos (iClinic) e partos (manual); é produtividade, não fluxo de caixa.</div>'+
+    '<div><strong style="color:var(--ink);">Simulador Médico Parceiro</strong> — quanto pagar por mês, pelas regras do contrato.</div>'+
+    '<div><strong style="color:var(--ink);">Calculadora Financeira</strong> — resultado do mês, editável pra simular cenários.</div>'+
+    '<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--border);">'+
+    '<strong style="color:var(--ink);">Atualizar dados:</strong> sobe o PDF do extrato (aba Despesas) e a planilha do iClinic (aba Faturamento) a qualquer momento — nunca duplica. Partos seguem manuais.'+
+    '</div></div>';
+  wrap.appendChild(readCard);
+  setTimeout(()=>{ readCard.style.width = objCard.getBoundingClientRect().width + 'px'; }, 0);
+
+  return wrap;
+}
+
+function monthLabel(key){
+  const [y,m] = key.split('-');
+  return DATA.monthNames[parseInt(m,10)-1]+'/'+y.slice(2);
+}
+
+function viewCustos(){
+  const wrap = el('<div></div>');
+  const lancs = getLancamentos();
+  const now = new Date();
+  const currentMonthKey = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const allClosedMonthKeys = Array.from(new Set(lancs.map(l=>l.d.slice(0,7)))).filter(mk=>mk<currentMonthKey).sort();
+  const anosComDadosCustos = Array.from(new Set(allClosedMonthKeys.map(mk=>mk.slice(0,4)))).sort();
+  // anos com dados + ano atual + próximo ano (o filtro aparece mesmo sem dados importados)
+  const allYears = Array.from(new Set(anosComDadosCustos.concat([String(now.getFullYear()), String(now.getFullYear()+1)]))).sort();
+  if(state.custosYear===null || !allYears.includes(state.custosYear)){
+    state.custosYear = anosComDadosCustos.length ? anosComDadosCustos[anosComDadosCustos.length-1] : String(now.getFullYear());
+  }
+
+  const monthKeys = allClosedMonthKeys.filter(mk=>mk.slice(0,4)===state.custosYear);
+  const rangeLabel = monthKeys.length>1 ? (monthLabel(monthKeys[0])+'–'+monthLabel(monthKeys[monthKeys.length-1])) : (monthKeys.length===1 ? monthLabel(monthKeys[0]) : 'nenhum mês fechado ainda');
+  if(state.custosMonth===null || (state.custosMonth!=='all' && !monthKeys.includes(state.custosMonth))){
+    state.custosMonth = monthKeys.length ? monthKeys[monthKeys.length-1] : 'all';
+  }
+
+  wrap.appendChild(el('<div class="page-head"><div><h1>Despesas</h1><p>Extrato bancário categorizado · '+rangeLabel+' (meses fechados — o mês em andamento fica de fora até acabar)</p></div></div>'));
+
+  if(allYears.length>0){
+    const yearTabs = el('<div class="month-tabs" style="margin-bottom:14px;"></div>');
+    allYears.forEach(y=>{
+      const p = el('<button class="month-pill '+(state.custosYear===y?'active':'')+'" style="font-weight:700;">'+y+'</button>');
+      p.onclick = ()=>{ state.custosYear=y; state.custosMonth=null; state.custosCatFiltro=null; state.custosBusca=''; render(); };
+      yearTabs.appendChild(p);
+    });
+    wrap.appendChild(yearTabs);
+  }
+
+  if(monthKeys.length===0){
+    wrap.appendChild(el('<div class="banner banner-note">Ainda não há meses fechados com lançamentos para '+state.custosYear+'. Assim que o primeiro mês do ano fechar e o extrato for importado, os dados aparecem aqui.</div>'));
+    return wrap;
+  }
+
+  // Upload box
+  const upBox = el('<div class="up-row"></div>');
+  const ultimaData = lancs.reduce((m,l)=>l.d>m?l.d:m,'');
+  const pendentesAno = lancs.filter(l=>l.d.slice(0,4)===state.custosYear && l.c==='A classificar').length;
+  upBox.innerHTML = '<span class="up-label">Enviar</span>'+
+    '<label class="up-chip"><input type="file" id="pdf-upload" accept="application/pdf">↥ <strong>Extrato Itaú</strong> <span class="up-tag">.pdf</span>'+
+    (ultimaData ? ' <span class="up-ate">até '+ultimaData.slice(8,10)+'/'+ultimaData.slice(5,7)+'/'+ultimaData.slice(2,4)+'</span>' : '')+
+    (pendentesAno ? ' <span class="up-badge">'+pendentesAno+' a classificar</span>' : '')+'</label>';
+  wrap.appendChild(upBox);
+  const fileInput = upBox.querySelector('#pdf-upload');
+  fileInput.onchange = (e)=>{
+    const f = e.target.files[0];
+    if(f) handlePdfUpload(f);
+  };
+  if(state.uploadMsg){
+    const cls = state.uploadMsg.type==='ok'?'ok':(state.uploadMsg.type==='err'?'err':'');
+    wrap.appendChild(el('<div class="upload-status '+cls+'" style="margin:-8px 0 16px;">'+state.uploadMsg.text+'</div>'));
+  }
+
+  wrap.appendChild(el('<div class="banner banner-note">📌 Categorização aprendida por contraparte: sempre que um lançamento novo tiver o mesmo nome/CNPJ de um já classificado, a categoria é sugerida automaticamente. O que não tem histórico cai em "A classificar" até ser revisado. Ao mudar a categoria de um lançamento, você escolhe se é só pontual, o histórico todo, ou histórico + próximos lançamentos dessa contraparte.</div>'));
+
+  const monthlyByCat = {};
+  monthKeys.forEach(mk=>{ monthlyByCat[mk]={}; DATA.costCategories.forEach(c=>monthlyByCat[mk][c]=0); });
+  lancs.forEach(l=>{
+    const mk = l.d.slice(0,7);
+    if(monthlyByCat[mk]){ if(monthlyByCat[mk][l.c]===undefined) monthlyByCat[mk][l.c]=0; monthlyByCat[mk][l.c]+=l.v; }
+  });
+
+  // KPI row
+  const totalAno = Object.values(monthlyByCat).reduce((s,m)=>s+Object.values(m).reduce((a,b)=>a+b,0),0);
+  const catTotalsAll = {};
+  DATA.costCategories.forEach(c=>{ catTotalsAll[c]=0; monthKeys.forEach(mk=>catTotalsAll[c]+=(monthlyByCat[mk][c]||0)); });
+  const retiradasTotal = catTotalsAll['Retiradas']||0;
+  const nMonths = monthKeys.length;
+  const medicoTotal = catTotalsAll['Médico Parceiro']||0;
+  const kpis = el('<div class="grid grid-4" style="margin-bottom:24px;"></div>');
+  kpis.appendChild(el('<div class="card stat-card"><div class="num">'+fmt(totalAno)+'</div><div class="label">Total '+rangeLabel+'</div></div>'));
+  kpis.appendChild(el('<div class="card stat-card"><div class="num">'+fmt(totalAno/nMonths)+'</div><div class="label">Média mensal total</div></div>'));
+  kpis.appendChild(el('<div class="card stat-card"><div class="num">'+fmt(retiradasTotal/nMonths)+'</div><div class="label">Média mensal de retiradas pessoais</div></div>'));
+  kpis.appendChild(el('<div class="card stat-card"><div class="num">'+fmt((totalAno-retiradasTotal-medicoTotal)/nMonths)+'</div><div class="label">Média mensal (sem retiradas e sem médico parceiro)</div></div>'));
+  wrap.appendChild(kpis);
+
+  // month tabs for detail
+  wrap.appendChild(el('<div class="section-title">Resumo por categoria</div>'));
+  const tw = el('<div class="table-wrap"></div>');
+  let thead = '<tr><th>Categoria</th>';
+  monthKeys.forEach(mk=> thead += '<th style="text-align:right;">'+monthLabel(mk)+'</th>');
+  thead += '<th style="text-align:right;">Total</th><th style="text-align:right;background:var(--teal-light);">Média/mês (últ. 3)</th></tr>';
+  let tbody = '';
+  const catTotals = catTotalsAll;
+  const last3 = monthKeys.slice(-3);
+  const catTotals3 = {};
+  DATA.costCategories.forEach(c=>{ catTotals3[c]=0; last3.forEach(mk=>{ catTotals3[c]+=(monthlyByCat[mk][c]||0); }); });
+  const priority = ['Retiradas','Médico Parceiro','Impostos'];
+  const rest = DATA.costCategories.filter(c=>!priority.includes(c) && c!=='A classificar').sort((a,b)=>catTotals[b]-catTotals[a]);
+  const sortedCats = [...priority.filter(c=>DATA.costCategories.includes(c)), ...rest, ...(DATA.costCategories.includes('A classificar') ? ['A classificar'] : [])]; // "A classificar" sempre por último
+  tbody += '<tr style="background:#FBFAF7;font-weight:700;"><td>Total</td>';
+  monthKeys.forEach(mk=>{
+    const tm = Object.values(monthlyByCat[mk]).reduce((a,b)=>a+b,0);
+    tbody += '<td style="text-align:right;cursor:pointer;" class="mono resumo-cell" data-mk="'+mk+'" data-cat="">'+fmt(tm)+'</td>';
+  });
+  const total3 = last3.reduce((s,mk)=>s+Object.values(monthlyByCat[mk]).reduce((a,b)=>a+b,0),0);
+  tbody += '<td style="text-align:right;cursor:pointer;" class="mono resumo-cell" data-mk="all" data-cat="">'+fmt(totalAno)+'</td>'+
+    '<td style="text-align:right;background:var(--teal-light);color:var(--teal-dark);" class="mono">'+fmt(total3/last3.length)+'</td></tr>';
+  sortedCats.forEach(c=>{
+    tbody += '<tr><td><span class="tag tag-'+catColor(c)+'">'+c+'</span></td>';
+    monthKeys.forEach(mk=>{
+      const v = monthlyByCat[mk][c]||0;
+      tbody += v
+        ? '<td style="text-align:right;cursor:pointer;" class="mono resumo-cell" data-mk="'+mk+'" data-cat="'+c+'">'+fmt(v)+'</td>'
+        : '<td style="text-align:right;color:var(--ink-muted);">—</td>';
+    });
+    tbody += '<td style="text-align:right;font-weight:700;cursor:pointer;" class="mono resumo-cell" data-mk="all" data-cat="'+c+'">'+fmt(catTotals[c])+'</td>'+
+      '<td style="text-align:right;font-weight:700;background:var(--teal-light);color:var(--teal-dark);" class="mono">'+fmt(catTotals3[c]/last3.length)+'</td></tr>';
+  });
+  tw.innerHTML = '<table style="font-size:11px;"><thead>'+thead+'</thead><tbody>'+tbody+'</tbody></table>';
+  tw.querySelectorAll('th').forEach(th=>{ th.style.padding='6px 8px'; th.style.whiteSpace='nowrap'; th.style.fontSize='10px'; });
+  tw.querySelectorAll('td').forEach(td=>{ td.style.padding='5px 8px'; td.style.whiteSpace='nowrap'; });
+  wrap.appendChild(tw);
+  wrap.appendChild(el('<div style="font-size:10.5px;color:var(--ink-muted);margin:-6px 0 20px;">Clique em qualquer valor da tabela acima para ver os lançamentos correspondentes abaixo.</div>'));
+
+  // Lançamentos detail
+  const lancAnchor = el('<div id="lancamentos-anchor"></div>');
+  wrap.appendChild(lancAnchor);
+  wrap.appendChild(el('<div class="section-title">Lançamentos — clique na categoria para editar</div>'));
+
+  const filterRow = el('<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;"></div>');
+  const catOptsFilter = ['<option value="">Todas as categorias</option>'].concat(
+    DATA.costCategories.map(c=>'<option value="'+c+'" '+(state.custosCatFiltro===c?'selected':'')+'>'+c+'</option>')
+  ).join('');
+  const nAClassificar = lancs.filter(l=>l.d.slice(0,4)===state.custosYear && l.c==='A classificar').length;
+  const aclassAtivo = state.custosCatFiltro==='A classificar';
+  filterRow.innerHTML =
+    '<select id="ano-filter" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;">'+
+      allYears.map(y=>'<option value="'+y+'" '+(state.custosYear===y?'selected':'')+'>'+y+'</option>').join('')+'</select>'+
+    '<select id="mes-filter" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;">'+
+      '<option value="all" '+(state.custosMonth==='all'?'selected':'')+'>Todos os meses</option>'+
+      monthKeys.map(mk=>'<option value="'+mk+'" '+(state.custosMonth===mk?'selected':'')+'>'+monthLabel(mk)+'</option>').join('')+'</select>'+
+    '<select id="cat-filter" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;">'+catOptsFilter+'</select>'+
+    '<input id="busca-filter" type="text" placeholder="Buscar por descrição ou contraparte…" value="'+(state.custosBusca||'').replace(/"/g,'&quot;')+'" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;width:260px;">'+
+    '<button id="btn-aclass" class="btn '+(aclassAtivo?'btn-primary':'btn-secondary')+' btn-sm">A classificar ('+nAClassificar+')</button>'+
+    ((state.custosCatFiltro || state.custosBusca) ? '<button id="clear-filters" class="btn btn-secondary btn-sm">Limpar filtros</button>' : '');
+  wrap.appendChild(filterRow);
+  filterRow.querySelector('#ano-filter').onchange = (e)=>{ state.custosYear = e.target.value; state.custosMonth = null; render(); scrollToLancamentos(); };
+  filterRow.querySelector('#mes-filter').onchange = (e)=>{ state.custosMonth = e.target.value; render(); scrollToLancamentos(); };
+  filterRow.querySelector('#btn-aclass').onclick = ()=>{
+    if(aclassAtivo){ state.custosCatFiltro = null; }
+    else { state.custosCatFiltro = 'A classificar'; state.custosMonth = 'all'; state.custosBusca = ''; }
+    render(); scrollToLancamentos();
+  };
+  filterRow.querySelector('#cat-filter').onchange = (e)=>{ state.custosCatFiltro = e.target.value || null; render(); scrollToLancamentos(); };
+  filterRow.querySelector('#busca-filter').oninput = (e)=>{ state.custosBusca = e.target.value; render(); scrollToLancamentos(); };
+  const clearBtn = filterRow.querySelector('#clear-filters');
+  if(clearBtn) clearBtn.onclick = ()=>{ state.custosCatFiltro=null; state.custosBusca=''; render(); };
+
+
+  const tw2 = el('<div class="table-wrap"></div>');
+  const buscaLower = (state.custosBusca||'').trim().toLowerCase();
+  let rows2 = lancs.filter(l=>{
+    if(state.custosMonth!=='all' && l.d.slice(0,7)!==state.custosMonth) return false;
+    if(l.d.slice(0,4)!==state.custosYear) return false;
+    if(state.custosCatFiltro && l.c!==state.custosCatFiltro) return false;
+    if(buscaLower && !((l.l||'').toLowerCase().includes(buscaLower) || (l.n||'').toLowerCase().includes(buscaLower))) return false;
+    return true;
+  }).sort((a,b)=>a.d.localeCompare(b.d));
+  let body2 = '';
+  rows2.forEach(l=>{
+    const opts = DATA.costCategories.map(c=>'<option value="'+c+'" '+(c===l.c?'selected':'')+'>'+c+'</option>').join('');
+    body2 += '<tr><td class="mono" style="white-space:nowrap;">'+l.d.split('-').reverse().join('/')+'</td>'+
+      '<td>'+l.l+'</td><td>'+(l.n||'—')+'</td>'+
+      '<td><select class="cat-select" data-idx="'+l.idx+'" data-n="'+(l.n||'').replace(/"/g,'&quot;')+'" data-cat-atual="'+l.c+'">'+opts+'</select></td>'+
+      '<td style="text-align:right;" class="mono">'+fmt2(l.v)+'</td></tr>';
+  });
+  if(rows2.length===0) body2 = '<tr><td colspan="5" class="upload-status" style="padding:20px;">Nenhum lançamento encontrado com esses filtros.</td></tr>';
+  else body2 += '<tr style="background:#FBFAF7;font-weight:700;"><td colspan="4">'+rows2.length+' lançamento(s) · Total</td><td style="text-align:right;" class="mono">'+fmt2(rows2.reduce((s,l)=>s+l.v,0))+'</td></tr>';
+  tw2.innerHTML = '<table><thead><tr><th>Data</th><th>Lançamento</th><th>Contraparte</th><th>Categoria</th><th style="text-align:right;">Valor</th></tr></thead><tbody>'+body2+'</tbody></table>';
+  wrap.appendChild(tw2);
+  tw2.querySelectorAll('select.cat-select').forEach(s=>{
+    s.onchange = (e)=>{ promptCategoriaChange(e.target); };
+  });
+
+  tw.querySelectorAll('.resumo-cell').forEach(td=>{
+    td.onclick = ()=>{
+      state.custosMonth = td.dataset.mk;
+      state.custosCatFiltro = td.dataset.cat || null;
+      state.custosBusca = '';
+      render();
+      scrollToLancamentos();
+    };
+  });
+
+  return wrap;
+}
+function scrollToLancamentos(){
+  setTimeout(()=>{
+    const a = document.getElementById('lancamentos-anchor');
+    if(a) a.scrollIntoView({behavior:'smooth', block:'start'});
+  }, 0);
+}
+
+// ---------------- RECEBIMENTOS ----------------
+function viewRecebimentos(){
+  const wrap = el('<div></div>');
+  wrap.appendChild(el('<div class="page-head"><div><h1>Faturamento</h1><p>Produtividade da clínica — iClinic + premissas de valor</p></div></div>'));
+
+  const anosDados = anosComAtendimentos(true);
+  // anos com dados + ano atual + próximo ano (o filtro aparece mesmo sem dados importados)
+  const anos = Array.from(new Set(anosComAtendimentos().concat([String(new Date().getFullYear()+1)]))).sort();
+  if(state.recebYear===null || !anos.includes(state.recebYear)){
+    state.recebYear = anosDados.length ? anosDados[anosDados.length-1] : String(new Date().getFullYear());
+  }
+  if(anos.length>0){
+    const yearTabs = el('<div class="month-tabs" style="margin-bottom:14px;"></div>');
+    anos.forEach(y=>{
+      const p = el('<button class="month-pill '+(state.recebYear===y?'active':'')+'" style="font-weight:700;">'+y+'</button>');
+      p.onclick = ()=>{ state.recebYear=y; state.recebChartMonth='all'; render(); };
+      yearTabs.appendChild(p);
+    });
+    wrap.appendChild(yearTabs);
+  }
+
+  const yearNum = parseInt(state.recebYear,10);
+  const nClosed = closedMonthCount(yearNum);
+  if(nClosed===0){
+    wrap.appendChild(el('<div class="banner banner-note">Ainda não há meses fechados em '+state.recebYear+'. Assim que o primeiro mês do ano fechar e os atendimentos forem importados, os dados aparecem aqui.</div>'));
+    return wrap;
+  }
+  const recebData = computeRecebData(yearNum, nClosed);
+
+  const PREFERRED_AREAS = ['Obstetrícia','Ginecologia','Procedimento'];
+  const rowsByArea = {};
+  Object.keys(recebData.procTotals).forEach(nome=>{
+    const pt = recebData.procTotals[nome];
+    if(!rowsByArea[pt.area]) rowsByArea[pt.area]=[];
+    rowsByArea[pt.area].push({nome, tipo:pt.tipo, total:pt.total});
+  });
+  const AREA_ORDER = PREFERRED_AREAS.filter(a=>rowsByArea[a]).concat(Object.keys(rowsByArea).filter(a=>!PREFERRED_AREAS.includes(a)));
+
+  function countFor(nome, month){
+    const pt = recebData.procTotals[nome];
+    if(!pt) return 0;
+    if(month==='all') return pt.total;
+    return pt.byMonth[month]||0;
+  }
+
+  const upBox = el('<div class="up-row" style="margin-bottom:10px;"></div>');
+  const hojeISO = new Date().toISOString().slice(0,10);
+  const ultimoAt = DATA.atendimentosRaw.concat(state.extraAtendimentos).reduce((m,r)=>(r[0]<=hojeISO && r[0]>m)?r[0]:m,''); // última data já realizada (a agenda futura não conta)
+  upBox.innerHTML = '<span class="up-label">Enviar</span>'+
+    '<label class="up-chip"><input type="file" id="xlsx-upload" accept=".xlsx,.xls">↥ <strong>Relatório iClinic</strong> <span class="up-tag">.xlsx</span>'+
+    (ultimoAt ? ' <span class="up-ate">até '+ultimoAt.slice(8,10)+'/'+ultimoAt.slice(5,7)+'/'+ultimoAt.slice(2,4)+'</span>' : '')+'</label>';
+  wrap.appendChild(upBox);
+  const fileInputX = upBox.querySelector('#xlsx-upload');
+  fileInputX.onchange = (e)=>{
+    const f = e.target.files[0];
+    if(f) handleXlsxUpload(f);
+  };
+  if(state.uploadMsgReceb){
+    const cls = state.uploadMsgReceb.type==='ok'?'ok':(state.uploadMsgReceb.type==='err'?'err':'');
+    wrap.appendChild(el('<div class="upload-status '+cls+'" style="margin:-8px 0 16px;">'+state.uploadMsgReceb.text+'</div>'));
+  }
+
+  wrap.appendChild(el('<div class="section-title" style="margin-top:0;">Atendimentos por categoria</div>'));
+  const monthFilterRow = el('<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:10px;"></div>');
+  const yearSuffix = state.recebYear.slice(2);
+  const monthOpts = ['<option value="all" '+(state.recebChartMonth==='all'?'selected':'')+'>Ano todo (jan–'+DATA.monthNames[nClosed-1].toLowerCase()+')</option>']
+    .concat(DATA.monthNames.slice(0,nClosed).map((mn,i)=>'<option value="'+(i+1)+'" '+(state.recebChartMonth==(i+1)?'selected':'')+'>'+mn+'/'+yearSuffix+'</option>'));
+  monthFilterRow.innerHTML = '<select id="year-filter-chart" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;">'+
+    anos.map(y=>'<option value="'+y+'" '+(state.recebYear===y?'selected':'')+'>'+y+'</option>').join('')+'</select>'+
+    '<select id="month-filter" style="font-family:inherit;font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:7px;background:#FBFAF7;">'+monthOpts.join('')+'</select>';
+  wrap.appendChild(monthFilterRow);
+  monthFilterRow.querySelector('#year-filter-chart').onchange = (e)=>{ state.recebYear = e.target.value; state.recebChartMonth = 'all'; render(); };
+  monthFilterRow.querySelector('#month-filter').onchange = (e)=>{
+    state.recebChartMonth = e.target.value==='all' ? 'all' : parseInt(e.target.value,10);
+    render();
+  };
+
+  const chartsRow = el('<div class="grid grid-2" style="margin-bottom:12px;"></div>');
+
+  // Donut 1: totais por área
+  const donutCard1 = el('<div class="card"></div>');
+  donutCard1.innerHTML = '<div style="font-size:12.5px;font-weight:700;margin-bottom:10px;">Totais por área</div>'+
+    '<div style="display:flex;align-items:center;gap:16px;"><div style="width:150px;height:150px;flex-shrink:0;"><canvas id="donutArea"></canvas></div><div id="legendArea" style="flex:1;"></div></div>';
+  chartsRow.appendChild(donutCard1);
+
+  // Donut 2: por tipo dentro da área (com filtro)
+  const donutCard2 = el('<div class="card"></div>');
+  const areaOptions = AREA_ORDER.map(a=>'<option value="'+a+'" '+(a===state.recebChartArea?'selected':'')+'>'+a+'</option>').join('');
+  donutCard2.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">'+
+    '<strong style="font-size:12.5px;">Por tipo, dentro da área</strong>'+
+    '<select id="area-filter" style="font-family:inherit;font-size:12px;padding:5px 8px;border:1px solid var(--border);border-radius:6px;background:#FBFAF7;">'+areaOptions+'</select></div>'+
+    '<div style="display:flex;align-items:center;gap:16px;"><div style="width:150px;height:150px;flex-shrink:0;"><canvas id="donutTipo"></canvas></div><div id="legendTipo" style="flex:1;"></div></div>';
+  chartsRow.appendChild(donutCard2);
+
+  wrap.appendChild(chartsRow);
+
+  function legendHTML(items, month){
+    const total = items.reduce((s,i)=>s+i.value,0) || 1;
+    const showMedia = month==='all';
+    let html = '<div>';
+    html += '<div style="display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;color:var(--ink-muted);padding-bottom:5px;border-bottom:1px solid var(--border);margin-bottom:5px;">'+
+      '<span style="width:10px;flex-shrink:0;"></span>'+
+      '<span style="flex:1;"></span>'+
+      '<span style="width:32px;text-align:right;">Qtde</span>'+
+      (showMedia?'<span style="width:52px;text-align:right;">Méd/mês</span>':'')+
+      '<span style="width:34px;text-align:right;">%</span></div>';
+    items.forEach(it=>{
+      const pct = Math.round(it.value/total*100);
+      const media = showMedia ? Math.round(it.value/nClosed) : null;
+      html += '<div style="display:flex;align-items:center;gap:7px;font-size:11.5px;padding:3px 0;">'+
+        '<span style="width:10px;height:10px;border-radius:3px;background:'+it.color+';flex-shrink:0;"></span>'+
+        '<span style="flex:1;">'+it.label+'</span>'+
+        '<span class="mono" style="width:32px;text-align:right;color:var(--ink-muted);">'+it.value+'</span>'+
+        (showMedia?'<span class="mono" style="width:52px;text-align:right;color:var(--ink-muted);">'+media+'</span>':'')+
+        '<span class="mono" style="width:34px;text-align:right;color:var(--ink-muted);">'+pct+'%</span></div>';
+    });
+    const totalMedia = showMedia ? Math.round(total/nClosed) : null;
+    html += '<div style="display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:700;padding:6px 0 0;margin-top:4px;border-top:1px solid var(--border);">'+
+      '<span style="width:10px;flex-shrink:0;"></span>'+
+      '<span style="flex:1;">Total</span>'+
+      '<span class="mono" style="width:32px;text-align:right;">'+total+'</span>'+
+      (showMedia?'<span class="mono" style="width:52px;text-align:right;">'+totalMedia+'</span>':'')+
+      '<span class="mono" style="width:34px;text-align:right;">100%</span></div>';
+    html += '</div>';
+    return html;
+  }
+
+  let chartArea=null, chartTipo=null;
+  function drawDonut(canvasEl, legendEl, items, which){
+    if(which==='area' && chartArea){ chartArea.destroy(); }
+    if(which==='tipo' && chartTipo){ chartTipo.destroy(); }
+    const c = new Chart(canvasEl, {
+      type:'doughnut',
+      data:{ labels: items.map(i=>i.label), datasets:[{ data: items.map(i=>i.value), backgroundColor: items.map(i=>i.color), borderWidth:2, borderColor:'#fff' }] },
+      options:{ responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{display:false}, tooltip:{ callbacks:{ label: c => ' '+c.label+': '+c.raw } } } }
+    });
+    if(which==='area') chartArea=c; else chartTipo=c;
+    legendEl.innerHTML = legendHTML(items, state.recebChartMonth);
+  }
+
+  function renderCharts(){
+    const areaTotals = AREA_ORDER.map((a,i)=>({
+      label:a,
+      value: rowsByArea[a].reduce((s,r)=>s+countFor(r.nome, state.recebChartMonth),0),
+      color: CHART_PALETTE[i%CHART_PALETTE.length]
+    }));
+    drawDonut(donutCard1.querySelector('#donutArea'), donutCard1.querySelector('#legendArea'), areaTotals, 'area');
+
+    const tipoItems = (rowsByArea[state.recebChartArea]||[]).map((r,i)=>({
+      label:r.nome, value: countFor(r.nome, state.recebChartMonth), color: CHART_PALETTE[i%CHART_PALETTE.length]
+    }));
+    drawDonut(donutCard2.querySelector('#donutTipo'), donutCard2.querySelector('#legendTipo'), tipoItems, 'tipo');
+  }
+  setTimeout(renderCharts, 0);
+  donutCard2.querySelector('#area-filter').onchange = (e)=>{ state.recebChartArea = e.target.value; renderCharts(); };
+
+  // -------- Gráfico de barras: receita mensal (consultas + partos) --------
+  wrap.appendChild(el('<div class="section-title" style="margin:14px 0 8px;">Receita mensal — atendimentos + partos</div>'));
+  const barCard = el('<div class="card" style="margin-bottom:8px;"></div>');
+  barCard.innerHTML = '<div style="display:flex;gap:14px;align-items:stretch;">'+
+    '<div style="flex:1;height:210px;"><canvas id="barMensal"></canvas></div>'+
+    '<div style="width:90px;height:210px;border-left:1px solid var(--border);padding-left:14px;flex-shrink:0;"><canvas id="barTotalAno"></canvas></div>'+
+    '</div>'+
+    '<div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--ink-muted);padding-left:4px;">'+
+    '<span><span style="display:inline-block;width:9px;height:9px;background:#8FB4B6;border-radius:2px;margin-right:5px;"></span>Atendimentos</span>'+
+    '<span><span style="display:inline-block;width:9px;height:9px;background:#D9AF8B;border-radius:2px;margin-right:5px;"></span>Partos</span></div>';
+  wrap.appendChild(barCard);
+  wrap.appendChild(el('<div class="banner banner-warn" style="margin-bottom:10px;">⚠️ Isto é produtividade, não fluxo de caixa: o valor do parto pode ser parcelado e não bate necessariamente com o que entra no extrato bancário no mesmo mês.</div>'));
+
+  const mesesLbl = [], consultaVals=[], partoVals=[], consultaQty=[], partoQty=[];
+  for(let m=1;m<=nClosed;m++){
+    const d = recebData.monthly[m]||{pagos:0,total:0};
+    mesesLbl.push(DATA.monthNames[m-1]);
+    const valConsulta = premGet(state.premises.valorConsultaPorMes, yearNum, m, 600);
+    const valParto = premGet(state.premises.valorPartoPorMes, yearNum, m, 16500);
+    const partos = premGet(state.premises.partosPorMes, yearNum, m, 0);
+    consultaVals.push(d.pagos*valConsulta);
+    partoVals.push(partos*valParto);
+    consultaQty.push(d.total);
+    partoQty.push(partos);
+  }
+  const COR_ATEND = '#8FB4B6', COR_PARTO = '#D9AF8B';
+  const CAT_PCT = 0.62, BAR_PCT = 0.92;
+  const maxTotalMes = Math.max(...mesesLbl.map((_,i)=>consultaVals[i]+partoVals[i]), 1);
+  const yMaxMes = Math.ceil(maxTotalMes/25000)*25000 + 15000;
+
+  const totalLabelPlugin = {
+    id:'totalLabelPlugin',
+    afterDatasetsDraw(chart){
+      const {ctx, data, scales} = chart;
+      const meta0 = chart.getDatasetMeta(0);
+      ctx.save();
+      ctx.fillStyle = '#1E3F43';
+      ctx.font = '700 10px "IBM Plex Sans", sans-serif';
+      ctx.textAlign = 'center';
+      data.labels.forEach((label,i)=>{
+        let total = 0;
+        data.datasets.forEach(ds=> total += (ds.data[i]||0));
+        const xPixel = meta0.data[i].x;
+        const yPixel = scales.y.getPixelForValue(total);
+        ctx.fillText(fmtK(total), xPixel, yPixel - 8);
+      });
+      ctx.restore();
+    }
+  };
+
+  const segmentLabelPlugin = {
+    id:'segmentLabelPlugin',
+    afterDatasetsDraw(chart){
+      const {ctx} = chart;
+      ctx.save();
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      chart.data.datasets.forEach((ds, dsIndex)=>{
+        const meta = chart.getDatasetMeta(dsIndex);
+        meta.data.forEach((bar,i)=>{
+          const val = ds.data[i];
+          if(!val) return;
+          const segH = Math.abs(bar.base - bar.y);
+          if(segH < 9) return;
+          const midY = (bar.base + bar.y)/2;
+          const qty = ds.qty ? ds.qty[i] : null;
+          const label = fmtK(val) + (qty!=null ? ' ('+qty+')' : '');
+          const fontSize = segH < 18 ? 6.2 : (segH < 26 ? 7.2 : 8.2);
+          ctx.fillStyle = '#fff';
+          ctx.font = '600 '+fontSize+'px "IBM Plex Sans", sans-serif';
+          ctx.fillText(label, bar.x, midY);
+        });
+      });
+      ctx.restore();
+    }
+  };
+
+  setTimeout(()=>{
+  const chartMensal = new Chart(barCard.querySelector('#barMensal'), {
+    type:'bar',
+    data:{ labels: mesesLbl, datasets:[
+      {label:'Atendimentos', data:consultaVals, backgroundColor:COR_ATEND, stack:'s', borderRadius:3, qty:consultaQty, categoryPercentage:CAT_PCT, barPercentage:BAR_PCT},
+      {label:'Partos', data:partoVals, backgroundColor:COR_PARTO, stack:'s', borderRadius:3, qty:partoQty, categoryPercentage:CAT_PCT, barPercentage:BAR_PCT}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:22}},
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label: c => ' '+c.dataset.label+': '+fmt(c.raw)+' ('+c.dataset.qty[c.dataIndex]+')' } } },
+      scales:{
+        x:{ grid:{display:false}, ticks:{font:{size:10.5}} },
+        y:{ suggestedMax:yMaxMes, grid:{color:'rgba(0,0,0,0.05)'}, ticks:{font:{size:10}, callback:v=>fmtK(v)} }
+      } },
+    plugins:[totalLabelPlugin, segmentLabelPlugin]
+  });
+
+  // mede a espessura real da barra mensal renderizada, pra usar EXATAMENTE a mesma no gráfico Total
+  const medidaBarra0 = chartMensal.getDatasetMeta(0).data[0];
+  const medidaBarra = medidaBarra0 ? medidaBarra0.width : undefined;
+
+  const totalQtyC = consultaQty.reduce((a,b)=>a+b,0), totalQtyP = partoQty.reduce((a,b)=>a+b,0);
+  const totalCVal = consultaVals.reduce((a,b)=>a+b,0), totalPVal = partoVals.reduce((a,b)=>a+b,0);
+  new Chart(barCard.querySelector('#barTotalAno'), {
+    type:'bar',
+    data:{ labels:['Total'], datasets:[
+      {label:'Atendimentos', data:[totalCVal], backgroundColor:'#1E3F43', stack:'s', borderRadius:3, qty:[totalQtyC], barThickness:medidaBarra},
+      {label:'Partos', data:[totalPVal], backgroundColor:'#9C5233', stack:'s', borderRadius:3, qty:[totalQtyP], barThickness:medidaBarra}
+    ]},
+    options:{ responsive:true, maintainAspectRatio:false,
+      layout:{padding:{top:22}},
+      plugins:{ legend:{display:false},
+        tooltip:{ callbacks:{ label: c => ' '+c.dataset.label+': '+fmt(c.raw)+' ('+c.dataset.qty[c.dataIndex]+')' } } },
+      scales:{
+        x:{ grid:{display:false}, ticks:{font:{size:10.5, weight:'700'}} },
+        y:{ display:false, suggestedMax:(totalCVal+totalPVal)*1.08 }
+      } },
+    plugins:[totalLabelPlugin, segmentLabelPlugin]
+  });
+  }, 0);
+
+  // -------- Tabela mensal editável --------
+  wrap.appendChild(el('<div class="banner banner-note" style="margin-bottom:8px;">📌 Número e valor de parto são editáveis por mês na tabela abaixo — ajuste conforme os números reais.</div>'));
+
+  const tw = el('<div class="table-wrap"></div>');
+  let head = '<tr><th>Mês</th><th style="text-align:right;">Total atend.</th><th style="text-align:right;">Pagos</th><th style="text-align:right;">Não pagos</th><th style="text-align:right;">% pagos</th><th style="text-align:right;">Valor consulta</th><th style="text-align:right;">Receita atend.</th><th style="text-align:right;">Partos</th><th style="text-align:right;">Valor parto</th><th style="text-align:right;">Receita partos</th><th style="text-align:right;">Total</th></tr>';
+  let body = '';
+  let totTotalAtend=0, totPagos=0, totNaoPagos=0, totRecAtend=0, totPartos=0, totRecPartos=0, totGeral=0;
+  for(let m=1;m<=nClosed;m++){
+    const d = recebData.monthly[m] || {pagos:0,nao_pagos:0,total:0};
+    const valConsulta = premGet(state.premises.valorConsultaPorMes, yearNum, m, 600);
+    const valParto = premGet(state.premises.valorPartoPorMes, yearNum, m, 16500);
+    const partos = premGet(state.premises.partosPorMes, yearNum, m, 0);
+    const recAtend = d.pagos * valConsulta;
+    const recPartos = partos * valParto;
+    const total = recAtend + recPartos;
+    const pct = d.total? Math.round(d.pagos/d.total*100):0;
+    body += '<tr><td>'+DATA.monthNames[m-1]+'</td><td style="text-align:right;">'+d.total+'</td><td style="text-align:right;">'+d.pagos+'</td><td style="text-align:right;">'+d.nao_pagos+'</td>'+
+      '<td style="text-align:right;">'+pct+'%</td>'+
+      '<td><input type="number" class="mono" data-field="valConsulta" data-m="'+m+'" value="'+valConsulta+'" style="width:85px;text-align:right;padding:5px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;background:#FBFAF7;"></td>'+
+      '<td style="text-align:right;" class="mono">'+fmt(recAtend)+'</td>'+
+      '<td><input type="number" data-field="partos" data-m="'+m+'" value="'+partos+'" style="width:55px;text-align:right;padding:5px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;background:#FBFAF7;"></td>'+
+      '<td><input type="number" class="mono" data-field="valParto" data-m="'+m+'" value="'+valParto+'" style="width:90px;text-align:right;padding:5px 7px;border:1px solid var(--border);border-radius:6px;font-family:inherit;background:#FBFAF7;"></td>'+
+      '<td style="text-align:right;" class="mono">'+fmt(recPartos)+'</td>'+
+      '<td style="text-align:right;font-weight:700;" class="mono">'+fmt(total)+'</td></tr>';
+    totTotalAtend+=d.total; totPagos+=d.pagos; totNaoPagos+=d.nao_pagos; totRecAtend+=recAtend; totPartos+=partos; totRecPartos+=recPartos; totGeral+=total;
+  }
+  body += '<tr style="background:#FBFAF7;font-weight:700;"><td>Total</td><td style="text-align:right;">'+totTotalAtend+'</td><td style="text-align:right;">'+totPagos+'</td><td style="text-align:right;">'+totNaoPagos+'</td><td></td><td></td>'+
+    '<td style="text-align:right;" class="mono">'+fmt(totRecAtend)+'</td><td style="text-align:right;">'+totPartos+'</td><td></td>'+
+    '<td style="text-align:right;" class="mono">'+fmt(totRecPartos)+'</td><td style="text-align:right;" class="mono">'+fmt(totGeral)+'</td></tr>';
+  tw.innerHTML = '<table><thead>'+head+'</thead><tbody>'+body+'</tbody></table>';
+  wrap.appendChild(tw);
+  tw.querySelectorAll('input[data-field]').forEach(inp=>{
+    inp.onchange = (e)=>{
+      const m = e.target.dataset.m, f = e.target.dataset.field;
+      const val = parseFloat(e.target.value)||0;
+      if(f==='valConsulta') premSet(state.premises.valorConsultaPorMes, yearNum, m, val);
+      else if(f==='valParto') premSet(state.premises.valorPartoPorMes, yearNum, m, val);
+      else if(f==='partos') premSet(state.premises.partosPorMes, yearNum, m, val);
+      saveState(); render();
+    };
+  });
+  return wrap;
+}
+
+// ---------------- MÉDICO PARCEIRO ----------------
+function viewMedico(){
+  const wrap = el('<div style="font-size:12.5px;"></div>');
+  wrap.appendChild(el('<div class="page-head" style="margin-bottom:14px;"><div><h1 style="font-size:19px;">Simulador Médico Parceiro</h1><p>Contrato RJapecanga</p></div></div>'));
+
+  // -------- Bloco 1: referência do contrato (só pra lembrar de onde vêm os números) --------
+  const refCard = el('<div class="card" style="display:inline-block;padding:12px 16px;margin-bottom:16px;font-size:10.5px;color:var(--ink-muted);line-height:1.6;"></div>');
+  refCard.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--ink-muted);margin-bottom:6px;text-transform:uppercase;letter-spacing:.03em;">Regras do contrato (referência)</div>'+
+    '<div style="margin-bottom:3px;"><strong>Lote/mês:</strong></div>'+
+    '<div style="margin-bottom:3px;">Solicitações pós-consulta e Checagem de exames — até 30 a R$25 cada (lote R$750); excedente R$25.</div>'+
+    '<div style="margin-bottom:3px;">Induções de parto — até 3 a R$1.000 (lote R$3.000); excedente R$650 (65% do valor do lote).</div>'+
+    '<div style="margin-bottom:8px;">Visitas pós-parto — até 15 a R$250 (lote R$3.750); excedente R$162,50 (65% do valor do lote).</div>'+
+    '<div style="margin-bottom:3px;"><strong>Valor do parto ou da consulta conforme pagamento da paciente.</strong></div>'+
+    '<div style="margin-bottom:3px;">Desconto de 15% sobre o valor do parto que é referente ao desconto de imposto pago.</div>'+
+    '<div style="margin-bottom:3px;">% como Cirurgião principal 60%</div>'+
+    '<div style="margin-bottom:3px;">% como Auxiliar 15%</div>'+
+    '<div style="margin-bottom:3px;">% como Condução inicial 25%</div>'+
+    '<div>% como Consulta de Pré-natal: 70% quando atendida individualmente pelo médico ou 30% quando atendida em parceria com a Dra. Amanda</div>';
+  wrap.appendChild(refCard);
+
+  // -------- Bloco 2: simulador do pagamento --------
+  wrap.appendChild(el('<div class="section-title" style="margin-top:0;">Simulador do pagamento</div>'));
+
+  const mp = state.premises.medico;
+  function computeRow(key, type){
+    const it = mp[key];
+    if(type==='lote'){
+      const loteTotal = it.limite*it.valorLote;
+      const fora = Math.max(it.qtd-it.limite,0);
+      return loteTotal + fora*it.valorExcedente;
+    }
+    const base = it.valor*(1-it.desconto/100);
+    return it.qtd*base*(it.pct/100);
+  }
+
+  const dash = '<span class="mono" style="color:#C9C3B4;">—</span>';
+  function inp(key, field, val){
+    return '<input type="number" data-key="'+key+'" data-field="'+field+'" value="'+val+'" style="width:100%;box-sizing:border-box;padding:4px 5px;font-size:11.5px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;">';
+  }
+
+  // linhas do bloco esquerdo (lote): solicitações e checagem sem "Valor a mais" editável
+  const loteRows = [
+    ['solicitacoes','Solicitações pós-consulta', false],
+    ['checagem','Checagem de exames', false],
+    ['inducoes','Induções de parto', true],
+    ['visitas','Visitas pós-parto', true],
+  ];
+  // linhas do bloco direito (%): pré-natal sem "Desconto %" editável
+  const pctRows = [
+    ['prenatal','Pré-natal individual', false],
+    ['prenatalParceria','Pré-natal em parceria', false],
+    ['conducao','Condução inicial de parto', true],
+    ['auxiliar','Assistência como auxiliar (parto)', true],
+    ['cirurgiao','Cirurgião principal (parto)', true],
+  ];
+
+  const gridLote = '150px 46px 62px 62px 76px';
+  const gridPct = '150px 42px 52px 42px 66px 76px';
+
+  const outerWrap = el('<div style="display:inline-block;"></div>');
+  const colsRow = el('<div style="display:flex;gap:16px;align-items:start;"></div>');
+
+  // ---- bloco esquerdo ----
+  const ccLote = el('<div class="calc-card" style="display:inline-block;"></div>');
+  ccLote.appendChild(el('<div style="display:grid;grid-template-columns:'+gridLote+';gap:5px;padding:7px 12px;background:#FBFAF7;font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-muted);font-weight:700;border-bottom:1px solid var(--border);"><div>Atividade</div><div>Qtd</div><div>Vlr lote</div><div>Vlr+</div><div style="text-align:right;">Subtotal</div></div>'));
+  let totalLote = 0;
+  loteRows.forEach(([key,label,temExcedente])=>{
+    const it = mp[key];
+    const sub = computeRow(key,'lote');
+    totalLote += sub;
+    const row = el('<div style="display:grid;grid-template-columns:'+gridLote+';gap:5px;padding:6px 12px;align-items:center;border-bottom:1px solid #EEEAE0;font-size:11px;">'+
+      '<div>'+label+'</div>'+
+      '<div>'+inp(key,'qtd',it.qtd)+'</div>'+
+      '<div>'+inp(key,'valorLote',it.valorLote)+'</div>'+
+      '<div>'+(temExcedente ? inp(key,'valorExcedente',it.valorExcedente) : dash)+'</div>'+
+      '<div style="text-align:right;" class="mono">'+fmt(sub)+'</div></div>');
+    ccLote.appendChild(row);
+  });
+  colsRow.appendChild(ccLote);
+
+  // ---- bloco direito ----
+  const ccPct = el('<div class="calc-card" style="display:inline-block;"></div>');
+  ccPct.appendChild(el('<div style="display:grid;grid-template-columns:'+gridPct+';gap:5px;padding:7px 12px;background:#FBFAF7;font-size:9px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-muted);font-weight:700;border-bottom:1px solid var(--border);"><div>Atividade</div><div>Qtd</div><div>Desc.%</div><div>%</div><div>Valor</div><div style="text-align:right;">Subtotal</div></div>'));
+  let totalPct = 0;
+  pctRows.forEach(([key,label,temDesconto])=>{
+    const it = mp[key];
+    const sub = computeRow(key,'pct');
+    totalPct += sub;
+    const row = el('<div style="display:grid;grid-template-columns:'+gridPct+';gap:5px;padding:6px 12px;align-items:center;border-bottom:1px solid #EEEAE0;font-size:11px;">'+
+      '<div>'+label+'</div>'+
+      '<div>'+inp(key,'qtd',it.qtd)+'</div>'+
+      '<div>'+(temDesconto ? inp(key,'desconto',it.desconto) : dash)+'</div>'+
+      '<div>'+inp(key,'pct',it.pct)+'</div>'+
+      '<div>'+inp(key,'valor',it.valor)+'</div>'+
+      '<div style="text-align:right;" class="mono">'+fmt(sub)+'</div></div>');
+    ccPct.appendChild(row);
+  });
+  colsRow.appendChild(ccPct);
+
+  outerWrap.appendChild(colsRow);
+
+  const total = totalLote + totalPct;
+  const totalBar = el('<div style="display:flex;justify-content:space-between;align-items:center;background:var(--teal-light);border-radius:8px;padding:10px 16px;margin-top:10px;font-weight:700;font-size:13px;width:100%;box-sizing:border-box;"><span>Total a pagar</span><span class="mono">'+fmt(total)+'</span></div>');
+  outerWrap.appendChild(totalBar);
+  const acoesMedico = el('<div style="display:flex;gap:8px;margin-top:10px;"><button id="btn-zerar-medico" class="btn-soft">Zerar quantidades</button><button id="btn-padrao-medico" class="btn-soft">Voltar ao padrão</button></div>');
+  outerWrap.appendChild(acoesMedico);
+  acoesMedico.querySelector('#btn-zerar-medico').onclick = ()=>{
+    if(!confirm('Zerar todas as quantidades do simulador médico? (valores, descontos e percentuais são mantidos)')) return;
+    Object.keys(mp).forEach(k=>{ mp[k].qtd = 0; });
+    saveState(); render();
+  };
+  acoesMedico.querySelector('#btn-padrao-medico').onclick = ()=>{
+    if(!confirm('Voltar todos os valores do simulador médico para o padrão?')) return;
+    state.premises.medico = JSON.parse(JSON.stringify(MEDICO_PADRAO));
+    saveState(); render();
+  };
+  wrap.appendChild(outerWrap);
+
+  wrap.querySelectorAll('input[data-key]').forEach(el2=>{
+    el2.onchange = (e)=>{
+      const k = e.target.dataset.key, f = e.target.dataset.field;
+      const val = parseFloat(e.target.value)||0;
+      mp[k][f] = val;
+      if(f==='valorLote' && (k==='solicitacoes' || k==='checagem')) mp[k].valorExcedente = val;
+      saveState(); render();
+    };
+  });
+
+  return wrap;
+}
+
+// ---------------- SIMULADOR ----------------
+// padrões vivos da calculadora: médias dos 3 últimos meses fechados que têm dados (extrato e iClinic), sempre com os dados mais recentes
+function mediasUlt3(){
+  const now = new Date();
+  const cur = now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  const ult3 = (chaves)=> Array.from(new Set(chaves)).filter(mk=>mk<cur).sort().slice(-3);
+  // despesas (extrato)
+  const lancs = getLancamentos();
+  const mesesD = ult3(lancs.map(l=>l.d.slice(0,7)));
+  const nD = mesesD.length || 1;
+  const soma = (f)=> lancs.filter(l=>mesesD.includes(l.d.slice(0,7)) && f(l)).reduce((s,l)=>s+l.v,0);
+  const retiradas = soma(l=>l.c==='Retiradas')/nD;
+  const medico = soma(l=>l.c==='Médico Parceiro')/nD;
+  const outros = (soma(()=>true) - soma(l=>l.c==='Retiradas') - soma(l=>l.c==='Médico Parceiro'))/nD;
+  // atendimentos (iClinic)
+  const ats = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const mesesA = ult3(ats.map(r=>r[0]&&r[0].slice(0,7)).filter(Boolean));
+  const doPeriodo = ats.filter(r=>mesesA.includes(r[0].slice(0,7)));
+  const pagos = doPeriodo.filter(r=>{ const tipo = (DATA.procCategoryMap[r[2]]||['Outro','Consulta'])[1]; return tipo!=='Retorno' && tipo!=='Revisão'; }).length;
+  return {
+    qtdAtend: mesesA.length ? doPeriodo.length/mesesA.length : 0,
+    pctPagas: doPeriodo.length ? pagos/doPeriodo.length*100 : 0,
+    retiradas, medico, outros
+  };
+}
+
+function computeMedicoTotal(){
+  const mp = state.premises.medico;
+  let total = 0;
+  ['solicitacoes','checagem','inducoes','visitas'].forEach(key=>{
+    const it = mp[key];
+    const loteTotal = it.limite*it.valorLote;
+    const fora = Math.max(it.qtd-it.limite,0);
+    total += loteTotal + fora*it.valorExcedente;
+  });
+  [['cirurgiao',true],['auxiliar',true],['conducao',true],['prenatal',false],['prenatalParceria',false]].forEach(([key,desc])=>{
+    const it = mp[key];
+    const base = it.valor*(1-it.desconto/100);
+    total += it.qtd * base * (it.pct/100);
+  });
+  return total;
+}
+
+function simRow3(label, qKey, pKey, vKey, qVal, pVal, vVal, subtotal, note){
+  return '<div style="display:grid;grid-template-columns:1.3fr .55fr .55fr .75fr 1fr;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;">'+
+    '<div style="font-weight:700;font-size:13.5px;">'+label+(note?'<div style="font-size:10px;color:var(--ink-muted);font-weight:400;">'+note+'</div>':'')+'</div>'+
+    '<div><input type="number" data-field="'+qKey+'" value="'+qVal+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div><input type="number" data-field="'+pKey+'" value="'+pVal+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div><input type="number" data-field="'+vKey+'" value="'+vVal+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div style="text-align:right;" class="mono">'+fmt(subtotal)+'</div></div>';
+}
+function simRow2(label, qKey, vKey, qVal, vVal, subtotal, note){
+  return '<div style="display:grid;grid-template-columns:1.3fr .55fr .55fr .75fr 1fr;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;">'+
+    '<div style="font-weight:700;font-size:13.5px;">'+label+(note?'<div style="font-size:10px;color:var(--ink-muted);font-weight:400;">'+note+'</div>':'')+'</div>'+
+    '<div><input type="number" data-field="'+qKey+'" value="'+qVal+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div></div>'+
+    '<div><input type="number" data-field="'+vKey+'" value="'+vVal+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div style="text-align:right;" class="mono">'+fmt(subtotal)+'</div></div>';
+}
+function simRow1(label, vKey, vVal, note){
+  return '<div style="display:grid;grid-template-columns:1.3fr .55fr .55fr .75fr 1fr;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;">'+
+    '<div style="font-weight:700;font-size:13.5px;">'+label+(note?'<div style="font-size:10px;color:var(--ink-muted);font-weight:400;">'+note+'</div>':'')+'</div><div></div><div></div>'+
+    '<div><input type="number" data-field="'+vKey+'" value="'+Math.round(vVal)+'" style="width:100%;padding:5px 6px;font-size:12px;border:1px solid var(--border);border-radius:5px;font-family:inherit;background:#FBFAF7;text-align:right;"></div>'+
+    '<div style="text-align:right;" class="mono">'+fmt(vVal)+'</div></div>';
+}
+
+function viewSimulador(){
+  const wrap = el('<div style="font-size:12.5px;"></div>');
+  wrap.appendChild(el('<div class="page-head" style="margin-bottom:14px;"><div><h1 style="font-size:19px;">Simulador Financeiro</h1><p style="font-size:16px;">Calculadora</p></div></div>'));
+
+  const s = state.sim.calc;
+  // padrão: médias dos últimos 3 meses; o campo que você digita fica fixo, os demais seguem acompanhando
+  if(!s.manuais) s.manuais = {};
+  const medias = mediasUlt3();
+  ['qtdAtend','pctPagas','retiradas','medico','outros'].forEach(k=>{ if(!s.manuais[k]) s[k] = Math.round(medias[k]); });
+
+  const recAtend = s.qtdAtend * (s.pctPagas/100) * s.valAtend;
+  const recPartos = s.qtdPartos * s.valParto;
+  const recTotal = recAtend + recPartos;
+  const custosTotal = s.retiradas + s.medico + s.outros;
+  const resultado = recTotal - custosTotal;
+
+  const card = el('<div class="card" style="max-width:560px;padding:18px 20px;"></div>');
+  let html = '';
+
+  html += '<div style="display:flex;justify-content:space-between;align-items:baseline;font-family:\'Fraunces\',serif;font-weight:700;font-size:21px;color:'+(resultado>=0?'var(--teal-dark)':'var(--alert)')+';padding-bottom:12px;margin-bottom:14px;border-bottom:2px solid var(--border);"><span>Resultado do mês</span><span>'+fmt(resultado)+'</span></div>';
+
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;background:var(--teal-light);border-radius:7px;padding:8px 12px;font-weight:700;font-size:15px;color:var(--teal-dark);margin:2px 0 8px;"><span>Faturamento Total</span><span class="mono">'+fmt(recTotal)+'</span></div>';
+  html += '<div style="display:grid;grid-template-columns:1.3fr .55fr .55fr .75fr 1fr;gap:8px;font-size:9.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--ink-muted);font-weight:700;padding-bottom:3px;"><div>Item</div><div>Qtd</div><div>%</div><div>Valor</div><div style="text-align:right;">Subtotal</div></div>';
+  html += simRow3('Consultas','qtdAtend','pctPagas','valAtend', s.qtdAtend, s.pctPagas, s.valAtend, recAtend, '% pagas — padrão: média últ. 3 meses');
+  html += simRow2('Partos','qtdPartos','valParto', s.qtdPartos, s.valParto, recPartos);
+
+  html += '<div style="height:16px;"></div>';
+
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;background:var(--brick-light);border-radius:7px;padding:8px 12px;font-weight:700;font-size:15px;color:var(--brick);margin:2px 0 8px;"><span>Despesas Total</span><span class="mono">-'+fmt(custosTotal)+'</span></div>';
+  html += simRow1('Retiradas','retiradas', s.retiradas, 'ref. média últ. 3 meses');
+  html += simRow1('Médico Parceiro','medico', s.medico, 'padrão: média últ. 3 meses do extrato<div style="width:0;overflow:visible;margin-top:4px;"><button class="btn-soft" id="btn-import-medico">↻ importar do simulador ('+fmt(computeMedicoTotal())+')</button></div>');
+  html += simRow1('Outras Despesas','outros', s.outros, 'média últ. 3 meses, exceto retiradas e médico parceiro');
+
+  card.innerHTML = html;
+  wrap.appendChild(card);
+
+  card.querySelector('#btn-import-medico').onclick = ()=>{
+    s.medico = Math.round(computeMedicoTotal());
+    s.manuais.medico = true;
+    saveState(); render();
+  };
+
+  card.querySelectorAll('input[data-field]').forEach(inp=>{
+    inp.onchange = (e)=>{
+      s[e.target.dataset.field] = parseFloat(e.target.value)||0;
+      if(['qtdAtend','pctPagas','retiradas','medico','outros'].includes(e.target.dataset.field)) s.manuais[e.target.dataset.field] = true;
+      saveState(); render();
+    };
+  });
+
+  return wrap;
+}
+
+iniciar();
+</script>
+</body>
+</html>
