@@ -143,7 +143,7 @@ function cloudSave(){
   clearTimeout(cloudSaveTimer);
   cloudSaveTimer = setTimeout(async ()=>{
     setCloudStatus('saving');
-    const payload = JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos});
+    const payload = JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos, janelasAtend:state.janelasAtend});
     try{
       const res = await fetch(CLOUD_URL, {
         method:'POST',
@@ -173,6 +173,7 @@ const state = {
   overrides: {},        // { "lancIndex": novaCategoria }
   learnedCategorias: {}, // { "nome da contraparte": categoria } — aplicado a lançamentos futuros dessa contraparte
   extraLancs: [],        // lançamentos importados via upload de PDF, além dos originais embutidos
+  janelasAtend: [], // períodos [de,até] cobertos por relatórios iClinic importados: nesses períodos o relatório vale no lugar da base embutida
   extraAtendimentos: [], // atendimentos importados via upload do relatório iClinic (.xlsx), além dos originais embutidos
   uploadMsgReceb: null,
   uploadMsg: null,
@@ -240,6 +241,7 @@ function applyState(saved){
   state.overrides = saved.overrides || {};
   state.learnedCategorias = saved.learnedCategorias || {};
   state.extraLancs = saved.extraLancs || [];
+  state.janelasAtend = Array.isArray(saved.janelasAtend) ? saved.janelasAtend : [];
   state.extraAtendimentos = (saved.extraAtendimentos || []).map(r=>r.slice(0,3)); // descarta nomes de pacientes de importações antigas
 }
 function loadState(){
@@ -252,7 +254,7 @@ function loadState(){
 }
 function saveState(){
   try{
-    localStorage.setItem('clinicaad_fin_v6', JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos}));
+    localStorage.setItem('clinicaad_fin_v6', JSON.stringify({premises:state.premises, overrides:state.overrides, learnedCategorias:state.learnedCategorias, extraLancs:state.extraLancs, extraAtendimentos:state.extraAtendimentos, janelasAtend:state.janelasAtend}));
   }catch(e){}
   cloudSave();
 }
@@ -629,7 +631,8 @@ function excelDateToISO(val){
   if(m) return s.slice(0,10);
   return null;
 }
-function atFingerprint(rec){ return rec[0]+'|'+rec[1]+'|'+rec[2]; } // data|horário|procedimento (sem dados da paciente)
+function emJanelaAtend(iso){ return state.janelasAtend.some(j=>iso>=j[0] && iso<=j[1]); }
+function todosAtendimentos(){ return DATA.atendimentosRaw.filter(r=>!emJanelaAtend(r[0])).concat(state.extraAtendimentos); } // base embutida (fora dos períodos já importados) + importados
 
 async function parseXlsxToAtendimentos(file){
   const buf = await file.arrayBuffer();
@@ -654,13 +657,13 @@ async function parseXlsxToAtendimentos(file){
 }
 
 function anosComAtendimentos(somenteComDados){
-  const all = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const all = todosAtendimentos();
   const anos = new Set(all.map(r=>r[0]&&r[0].slice(0,4)).filter(Boolean));
   if(!somenteComDados) anos.add(String(new Date().getFullYear()));
   return Array.from(anos).sort();
 }
 function computeRecebData(year, nClosed){
-  const all = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const all = todosAtendimentos();
   const monthly = {};
   for(let m=1;m<=nClosed;m++) monthly[m] = {total:0, pagos:0, nao_pagos:0};
   const procTotals = {};
@@ -687,20 +690,16 @@ async function handleXlsxUpload(file){
   try{
     const parsed = await parseXlsxToAtendimentos(file);
     if(parsed.length===0) throw new Error('nenhuma linha reconhecida — confira se o arquivo tem as colunas Data, Horário, Paciente e Procedimento');
-    // sem nomes: compara quantos atendimentos já existem para cada data|horário|procedimento e só entra o que exceder
-    const existentes = {};
-    DATA.atendimentosRaw.concat(state.extraAtendimentos).forEach(r=>{ const fp = atFingerprint(r); existentes[fp] = (existentes[fp]||0)+1; });
-    const vistos = {};
-    let added=0, skipped=0;
-    parsed.forEach(rec=>{
-      const fp = atFingerprint(rec);
-      vistos[fp] = (vistos[fp]||0)+1;
-      if(vistos[fp] <= (existentes[fp]||0)){ skipped++; return; }
-      state.extraAtendimentos.push(rec);
-      added++;
-    });
+    // o relatório vale para o período que ele cobre: apaga o que havia nesse período (base embutida e importações anteriores) e coloca o relatório no lugar
+    const datas = parsed.map(r=>r[0]).sort();
+    const de = datas[0], ate = datas[datas.length-1];
+    const antes = todosAtendimentos().filter(r=>r[0]>=de && r[0]<=ate).length;
+    state.extraAtendimentos = state.extraAtendimentos.filter(r=>!(r[0]>=de && r[0]<=ate));
+    if(!state.janelasAtend.some(j=>j[0]===de && j[1]===ate)) state.janelasAtend.push([de, ate]);
+    parsed.forEach(rec=>state.extraAtendimentos.push(rec));
+    const added = parsed.length;
     saveState();
-    state.uploadMsgReceb = {type:'ok', text: added+' atendimento(s) novo(s) adicionado(s). '+skipped+' já existiam e foram ignorados.'};
+    state.uploadMsgReceb = {type:'ok', text: added+' atendimento(s) de '+de.split('-').reverse().join('/')+' a '+ate.split('-').reverse().join('/')+' importado(s), no lugar dos '+antes+' que havia(m) nesse período.'};
   }catch(err){
     console.error(err);
     state.uploadMsgReceb = {type:'err', text:'Não consegui ler essa planilha automaticamente (' + (err&&err.message?err.message:'erro desconhecido') + '). Confira se é o relatório "Pacientes por período" do iClinic, ou me manda o arquivo no chat que eu processo por lá.'};
@@ -987,7 +986,7 @@ function viewRecebimentos(){
 
   const upBox = el('<div class="up-row" style="margin-bottom:10px;"></div>');
   const hojeISO = new Date().toISOString().slice(0,10);
-  const ultimoAt = DATA.atendimentosRaw.concat(state.extraAtendimentos).reduce((m,r)=>(r[0]<=hojeISO && r[0]>m)?r[0]:m,''); // última data já realizada (a agenda futura não conta)
+  const ultimoAt = todosAtendimentos().reduce((m,r)=>(r[0]<=hojeISO && r[0]>m)?r[0]:m,''); // última data já realizada (a agenda futura não conta)
   upBox.innerHTML = '<span class="up-label">Enviar</span>'+
     '<label class="up-chip"><input type="file" id="xlsx-upload" accept=".xlsx,.xls">↥ <strong>Relatório iClinic</strong> <span class="up-tag">.xlsx</span>'+
     (ultimoAt ? ' <span class="up-ate">até '+ultimoAt.slice(8,10)+'/'+ultimoAt.slice(5,7)+'/'+ultimoAt.slice(2,4)+'</span>' : '')+'</label>';
@@ -1406,7 +1405,7 @@ function mediasUlt3(){
   const medico = soma(l=>l.c==='Médico Parceiro')/nD;
   const outros = (soma(()=>true) - soma(l=>l.c==='Retiradas') - soma(l=>l.c==='Médico Parceiro'))/nD;
   // atendimentos (iClinic)
-  const ats = DATA.atendimentosRaw.concat(state.extraAtendimentos);
+  const ats = todosAtendimentos();
   const mesesA = ult3(ats.map(r=>r[0]&&r[0].slice(0,7)).filter(Boolean));
   const doPeriodo = ats.filter(r=>mesesA.includes(r[0].slice(0,7)));
   const pagos = doPeriodo.filter(r=>{ const tipo = (DATA.procCategoryMap[r[2]]||['Outro','Consulta'])[1]; return tipo!=='Retorno' && tipo!=='Revisão'; }).length;
