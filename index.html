@@ -1220,6 +1220,12 @@ function viewConfig(){
       <div class="field"><label>PIN de acesso (deixe em branco para desativar)</label><input type="text" inputmode="numeric" id="cfg-pin" value="${state.settings.pin||''}"></div>
       <button class="btn btn-secondary" id="cfg-pin-save">Salvar PIN</button>
     </div>
+
+    <div class="card">
+      <div class="field"><label>Numeração de contratos</label></div>
+      <p class="muted-x" style="margin:0 0 10px;">Dá número (AD-0XX) às gestantes com interesse confirmado ou contrato assinado que ainda não têm. Números que já existem nunca são alterados; os novos seguem a partir do maior número em uso, pela ordem da data prevista do parto.</p>
+      <button class="btn btn-secondary" id="cfg-numerar-contratos">Numerar contratos sem número</button>
+    </div>
   `;
 
   wrap.querySelector('#cfg-script-save').onclick=async()=>{
@@ -1241,13 +1247,13 @@ function viewConfig(){
   if(btnNumerar) btnNumerar.onclick=async()=>{
     // Assign sequential numbers to signed contracts that don't have one yet
     // Sort by data do parto (realized first) then by DPP
-    const semNúmero=state.obstetric.filter(p=>p.contratoAssinado&&!p.numeroContrato)
+    const semNúmero=state.obstetric.filter(p=>(p.contratoAssinado||p.interesseConfirmado)&&!p.numeroContrato)
       .sort((a,b)=>{
         const da=parseDate(a.parto.data)||calcDPP(a.dum,a.dppManual)||new Date(9999,0,1);
         const db=parseDate(b.parto.data)||calcDPP(b.dum,b.dppManual)||new Date(9999,0,1);
         return da-db;
       });
-    if(!semNúmero.length){showToast('Todos os contratos assinados já têm número.');return;}
+    if(!semNúmero.length){showToast('Todas as gestantes com interesse confirmado ou contrato assinado já têm número.');return;}
     // Find next available number
     const existing=state.obstetric.filter(p=>p.numeroContrato).map(p=>parseInt(p.numeroContrato.replace('AD-',''))||0);
     let next=(existing.length?Math.max(...existing):0)+1;
@@ -1714,14 +1720,17 @@ function modalDetalheObstetrica(id){
   wrap.querySelector('.close-x').onclick=()=>{state.modal=null;render();};
   wrap.querySelector('#btn-edit').onclick=()=>{state.modal={type:'editarObst',id};render();};
 
-  wrap.querySelector('#c-interesse').onchange=async(e)=>{p.interesseConfirmado=e.target.checked;await commitObstEdit(p);};
+  wrap.querySelector('#c-interesse').onchange=async(e)=>{
+    p.interesseConfirmado=e.target.checked;
+    // ao confirmar o interesse, já gera o número do contrato (para redigir o contrato); desmarcar não apaga o número
+    if(e.target.checked && !p.numeroContrato) p.numeroContrato=proximoNumeroContrato();
+    await commitObstEdit(p);render();
+  };
   wrap.querySelector('#c-contrato').onchange=async(e)=>{
     p.contratoAssinado=e.target.checked;
     p.dataContrato=e.target.checked?isoDate(t):'';
     if(e.target.checked&&!p.numeroContrato){
-      // Auto-number: count existing contracts + 1
-      const num=state.obstetric.filter(x=>x.contratoAssinado&&x.numeroContrato).length+1;
-      p.numeroContrato='AD-'+String(num).padStart(3,'0');
+      p.numeroContrato=proximoNumeroContrato();
     }
     await commitObstEdit(p);render();
   };
@@ -2516,6 +2525,12 @@ function modalFupRetornoGineco(){
 }
 
 
+
+// Próximo número de contrato: maior AD-0XX já existente + 1 (nunca reaproveita nem altera número que já existe)
+function proximoNumeroContrato(){
+  const usados = state.obstetric.map(x=>parseInt(String(x.numeroContrato||'').replace(/\D/g,''),10)||0);
+  return 'AD-'+String((usados.length?Math.max(...usados):0)+1).padStart(3,'0');
+}
 
 function modalAlertaContratos(){
   const wrap=el(`<div></div>`);
