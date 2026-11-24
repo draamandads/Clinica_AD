@@ -5,7 +5,7 @@
 <title>Clínica AD · Controle de Partos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>:root{--bg:#F7F5F0; --surface:#FFFFFF; --border:#E3DED2; --ink:#26241F; --ink-muted:#79735F; --teal:#2F5D62; --teal-light:#E4EEED; --teal-dark:#1E3F43; --brick:#9C5233; --brick-light:#F3E6DC; --alert:#B23A32; --alert-light:#FBEAE8; --warn:#B8863B; --warn-light:#FBF1E1; --ok:#3F7A52; --ok-light:#E7F1E9; --radius:10px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5}h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0 0 4px 0;letter-spacing:-0.01em}.mono{font-family:'IBM Plex Mono',monospace}#app{display:flex;min-height:100vh}.sidebar{width:220px;background:var(--teal-dark);color:#EDEBE3;flex-shrink:0;padding:24px 16px;display:flex;flex-direction:column;gap:4px}.brand{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}.brand-sub{font-size:11.5px;color:#B9CFCE;margin-bottom:28px}.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#D9E6E5;cursor:pointer;font-size:13.5px;font-weight:500;border:none;background:transparent;text-align:left;width:100%}.nav-btn:hover{background:#28494D}.nav-btn.active{background:var(--teal);color:#fff}.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0}.sidebar-foot{margin-top:auto;font-size:11px;color:#8FADAC;padding-top:16px}.sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}.sync-ok{background:#4CAF50}.sync-off{background:#999}.sync-err{background:var(--alert)}main{flex:1;padding:28px 36px;max-width:1320px;overflow-y:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;flex-wrap:wrap;gap:12px}.page-head p{color:var(--ink-muted);margin:2px 0 0;font-size:13px}.btn{border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}.btn-primary{background:var(--teal);color:#fff}.btn-primary:hover{background:var(--teal-dark)}.btn-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border)}.btn-secondary:hover{background:#F1EEE6}.btn-brick{background:var(--brick);color:#fff}.btn-danger{background:var(--alert);color:#fff}.btn-ok{background:var(--ok);color:#fff}.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px}.btn:disabled{opacity:.45;cursor:not-allowed}.grid{display:grid;gap:16px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}@media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr}}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}.stat-card .num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--teal-dark);line-height:1}.stat-card .label{font-size:12.5px;color:var(--ink-muted);margin-top:6px}.stat-card .sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px}.section-title{font-size:15px;margin:28px 0 10px;color:var(--teal-dark)}.section-title:first-child{margin-top:0}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}td{padding:9px 10px;border-bottom:1px solid #EEEAE0;vertical-align:middle}tr:hover td{background:#FBFAF7}.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}.tag-teal{background:var(--teal-light);color:var(--teal-dark)}.tag-brick{background:var(--brick-light);color:var(--brick)}.tag-alert{background:var(--alert-light);color:var(--alert)}.tag-warn{background:var(--warn-light);color:var(--warn)}.tag-ok{background:var(--ok-light);color:var(--ok)}.tag-muted{background:#EFEBE2;color:var(--ink-muted)}.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}.empty h3{color:var(--ink);margin-bottom:6px}.gest-timeline{position:relative;height:26px;background:#EFEBE2;border-radius:6px;overflow:hidden;margin:6px 0}.gest-seg{position:absolute;top:0;height:100%}.gest-marker{position:absolute;top:-3px;width:2px;height:32px;background:var(--ink);opacity:.55}.gest-marker-label{position:absolute;top:-16px;font-size:9.5px;color:var(--ink-muted);white-space:nowrap;transform:translateX(-50%)}.gest-now{position:absolute;top:-4px;width:12px;height:34px;background:transparent}.gest-now::after{content:'';position:absolute;left:50%;top:0;width:3px;height:100%;background:var(--teal-dark);transform:translateX(-50%);border-radius:2px}.gest-now-label{position:absolute;top:-16px;font-size:10px;font-weight:700;color:var(--teal-dark);transform:translateX(-50%);white-space:nowrap}.month-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}@media(max-width:900px){.month-grid{grid-template-columns:repeat(3,1fr)}}.month-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s}.month-card:hover{border-color:var(--teal)}.month-card.current{border-color:var(--teal);background:var(--teal-light)}.month-card.past{opacity:.6}.month-card .mc-label{font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.03em}.month-card .mc-count{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal-dark);line-height:1;margin:4px 0}.month-card .mc-names{font-size:11px;color:var(--ink-muted);line-height:1.6}.month-card.expanded .mc-names{max-height:none}.overlay{position:fixed;inset:0;background:rgba(30,28,22,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}.modal{background:var(--surface);border-radius:14px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;padding:26px 28px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.close-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-muted);line-height:1}.field{margin-bottom:14px}.field label{display:block;font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13.5px;background:#FBFAF7}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--teal);outline-offset:0;background:#fff}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EEEAE0}.checkrow:last-child{border-bottom:none}.checkrow input[type=checkbox]{width:17px;height:17px;accent-color:var(--teal);flex-shrink:0}.checkrow .ct{flex:1}.checkrow .ct .t{font-weight:600;font-size:13px}.checkrow .ct .d{font-size:11.5px;color:var(--ink-muted)}.checkrow .dt{width:155px}.checkrow .dt input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;font-family:inherit;background:#FBFAF7}.type-switch{display:flex;gap:8px;margin-bottom:18px}.type-switch button{flex:1;padding:14px;border-radius:9px;border:1.5px solid var(--border);background:#FBFAF7;cursor:pointer;font-weight:600;font-size:13.5px;text-align:left;font-family:inherit}.type-switch button.sel{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark)}.type-switch small{display:block;font-weight:400;color:var(--ink-muted);font-size:11px;margin-top:2px}.hist-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;align-items:center}.hist-item:last-child{border-bottom:none}.banner{padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start}.banner-alert{background:var(--alert-light);color:var(--alert)}.banner-warn{background:var(--warn-light);color:var(--warn)}.banner-note{background:var(--teal-light);color:var(--teal-dark)}.toast{position:fixed;bottom:24px;right:24px;background:var(--teal-dark);color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;z-index:100;box-shadow:0 6px 20px rgba(0,0,0,.2)}.link-btn{background:none;border:none;color:var(--teal);font-weight:600;cursor:pointer;font-size:12.5px;padding:0;font-family:inherit}.muted-x{color:var(--ink-muted);font-size:12px}.card-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--border)}.card-section-title:first-child{margin-top:0;padding-top:0;border-top:none}.parto-badge{display:inline-flex;align-items:center;gap:6px;background:var(--ok-light);color:var(--ok);padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:700;margin-bottom:12px}</style>
+<style>:root{--bg:#F7F5F0; --surface:#FFFFFF; --border:#E3DED2; --ink:#26241F; --ink-muted:#79735F; --teal:#2F5D62; --teal-light:#E4EEED; --teal-dark:#1E3F43; --brick:#9C5233; --brick-light:#F3E6DC; --alert:#B23A32; --alert-light:#FBEAE8; --warn:#B8863B; --warn-light:#FBF1E1; --ok:#3F7A52; --ok-light:#E7F1E9; --radius:10px}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans',sans-serif;font-size:14px;line-height:1.5}h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:600;margin:0 0 4px 0;letter-spacing:-0.01em}.mono{font-family:'IBM Plex Mono',monospace}#app{display:flex;min-height:100vh}.sidebar{width:220px;background:var(--teal-dark);color:#EDEBE3;flex-shrink:0;padding:24px 16px;display:flex;flex-direction:column;gap:4px}.brand{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:#fff;margin-bottom:2px}.brand-sub{font-size:11.5px;color:#B9CFCE;margin-bottom:28px}.nav-btn{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;color:#D9E6E5;cursor:pointer;font-size:13.5px;font-weight:500;border:none;background:transparent;text-align:left;width:100%}.nav-btn:hover{background:#28494D}.nav-btn.active{background:var(--teal);color:#fff}.nav-dot{width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.6;flex-shrink:0}.sidebar-foot{margin-top:auto;font-size:11px;color:#8FADAC;padding-top:16px}.sync-dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:4px}.sync-ok{background:#4CAF50}.sync-off{background:#999}.sync-err{background:var(--alert)}.sync-wait{background:#E0A93B}main{flex:1;padding:28px 36px;max-width:1320px;overflow-y:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;flex-wrap:wrap;gap:12px}.page-head p{color:var(--ink-muted);margin:2px 0 0;font-size:13px}.btn{border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}.btn-primary{background:var(--teal);color:#fff}.btn-primary:hover{background:var(--teal-dark)}.btn-secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border)}.btn-secondary:hover{background:#F1EEE6}.btn-brick{background:var(--brick);color:#fff}.btn-danger{background:var(--alert);color:#fff}.btn-ok{background:var(--ok);color:#fff}.btn-sm{padding:5px 10px;font-size:12px;border-radius:6px}.btn:disabled{opacity:.45;cursor:not-allowed}.grid{display:grid;gap:16px}.grid-3{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:repeat(2,1fr)}@media(max-width:900px){.grid-3,.grid-2{grid-template-columns:1fr}}.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px}.stat-card .num{font-family:'Fraunces',serif;font-size:32px;font-weight:700;color:var(--teal-dark);line-height:1}.stat-card .label{font-size:12.5px;color:var(--ink-muted);margin-top:6px}.stat-card .sub{font-size:11.5px;color:var(--ink-muted);margin-top:2px}.section-title{font-size:15px;margin:28px 0 10px;color:var(--teal-dark)}.section-title:first-child{margin-top:0}table{width:100%;border-collapse:collapse;font-size:13px}th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);font-weight:600;padding:8px 10px;border-bottom:1px solid var(--border)}td{padding:9px 10px;border-bottom:1px solid #EEEAE0;vertical-align:middle}tr:hover td{background:#FBFAF7}.table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-size:11.5px;font-weight:600}.tag-teal{background:var(--teal-light);color:var(--teal-dark)}.tag-brick{background:var(--brick-light);color:var(--brick)}.tag-alert{background:var(--alert-light);color:var(--alert)}.tag-warn{background:var(--warn-light);color:var(--warn)}.tag-ok{background:var(--ok-light);color:var(--ok)}.tag-muted{background:#EFEBE2;color:var(--ink-muted)}.empty{padding:40px 20px;text-align:center;color:var(--ink-muted)}.empty h3{color:var(--ink);margin-bottom:6px}.gest-timeline{position:relative;height:26px;background:#EFEBE2;border-radius:6px;overflow:hidden;margin:6px 0}.gest-seg{position:absolute;top:0;height:100%}.gest-marker{position:absolute;top:-3px;width:2px;height:32px;background:var(--ink);opacity:.55}.gest-marker-label{position:absolute;top:-16px;font-size:9.5px;color:var(--ink-muted);white-space:nowrap;transform:translateX(-50%)}.gest-now{position:absolute;top:-4px;width:12px;height:34px;background:transparent}.gest-now::after{content:'';position:absolute;left:50%;top:0;width:3px;height:100%;background:var(--teal-dark);transform:translateX(-50%);border-radius:2px}.gest-now-label{position:absolute;top:-16px;font-size:10px;font-weight:700;color:var(--teal-dark);transform:translateX(-50%);white-space:nowrap}.month-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}@media(max-width:900px){.month-grid{grid-template-columns:repeat(3,1fr)}}.month-card{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;cursor:pointer;transition:border-color .15s}.month-card:hover{border-color:var(--teal)}.month-card.current{border-color:var(--teal);background:var(--teal-light)}.month-card.past{opacity:.6}.month-card .mc-label{font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.03em}.month-card .mc-count{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--teal-dark);line-height:1;margin:4px 0}.month-card .mc-names{font-size:11px;color:var(--ink-muted);line-height:1.6}.month-card.expanded .mc-names{max-height:none}.overlay{position:fixed;inset:0;background:rgba(30,28,22,.45);display:flex;align-items:center;justify-content:center;z-index:50;padding:20px}.modal{background:var(--surface);border-radius:14px;max-width:680px;width:100%;max-height:90vh;overflow-y:auto;padding:26px 28px}.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}.close-x{background:none;border:none;font-size:20px;cursor:pointer;color:var(--ink-muted);line-height:1}.field{margin-bottom:14px}.field label{display:block;font-size:12px;font-weight:600;color:var(--ink-muted);margin-bottom:5px}.field input,.field select,.field textarea{width:100%;padding:9px 11px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:13.5px;background:#FBFAF7}.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--teal);outline-offset:0;background:#fff}.field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}.checkrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #EEEAE0}.checkrow:last-child{border-bottom:none}.checkrow input[type=checkbox]{width:17px;height:17px;accent-color:var(--teal);flex-shrink:0}.checkrow .ct{flex:1}.checkrow .ct .t{font-weight:600;font-size:13px}.checkrow .ct .d{font-size:11.5px;color:var(--ink-muted)}.checkrow .dt{width:155px}.checkrow .dt input{width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:6px;font-size:12.5px;font-family:inherit;background:#FBFAF7}.type-switch{display:flex;gap:8px;margin-bottom:18px}.type-switch button{flex:1;padding:14px;border-radius:9px;border:1.5px solid var(--border);background:#FBFAF7;cursor:pointer;font-weight:600;font-size:13.5px;text-align:left;font-family:inherit}.type-switch button.sel{border-color:var(--teal);background:var(--teal-light);color:var(--teal-dark)}.type-switch small{display:block;font-weight:400;color:var(--ink-muted);font-size:11px;margin-top:2px}.hist-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #EEEAE0;font-size:12.5px;align-items:center}.hist-item:last-child{border-bottom:none}.banner{padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start}.banner-alert{background:var(--alert-light);color:var(--alert)}.banner-warn{background:var(--warn-light);color:var(--warn)}.banner-note{background:var(--teal-light);color:var(--teal-dark)}.toast{position:fixed;bottom:24px;right:24px;background:var(--teal-dark);color:#fff;padding:11px 18px;border-radius:8px;font-size:13px;z-index:100;box-shadow:0 6px 20px rgba(0,0,0,.2)}.link-btn{background:none;border:none;color:var(--teal);font-weight:600;cursor:pointer;font-size:12.5px;padding:0;font-family:inherit}.muted-x{color:var(--ink-muted);font-size:12px}.card-section-title{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-muted);margin:18px 0 10px;padding-top:14px;border-top:1px solid var(--border)}.card-section-title:first-child{margin-top:0;padding-top:0;border-top:none}.parto-badge{display:inline-flex;align-items:center;gap:6px;background:var(--ok-light);color:var(--ok);padding:6px 12px;border-radius:20px;font-size:12.5px;font-weight:700;margin-bottom:12px}</style>
 </head>
 <body>
 <div id="app"></div>
@@ -159,6 +159,7 @@ async function fetchFromSheets(showFeedback=false){
       state.gyneco = data.gyneco.map(migrateGin);
       await saveLocal(KEY_GIN, state.gyneco);
     }
+    snapBase();
     const total = (data.patients||[]).length + (data.gyneco||[]).length;
     if(total > 0){
       state.syncStatus='ok';
@@ -189,6 +190,7 @@ async function loadAll(){
   state.obstetric = state.obstetric.map(migrateObst);
   state.gyneco = state.gyneco.map(migrateGin);
   state.loading = false;
+  snapBase();
   render();
 
   // Fetch Sheets in background (non-blocking)
@@ -216,17 +218,65 @@ async function saveSet(){
   try{ localStorage.setItem(KEY_SET,JSON.stringify(state.settings)); }catch(e){}
 }
 
-async function syncToSheets(action, payload){
-  if(!state.settings.appsScriptUrl) return;
-  try{
-    await fetch(state.settings.appsScriptUrl, {
-      method:'POST', mode:'no-cors',
-      headers:{'Content-Type':'text/plain'},
-      body: JSON.stringify({action, ...payload})
-    });
-    state.syncStatus = 'ok';
-  }catch(e){ state.syncStatus = 'err'; showToast('Sync com Sheets falhou. Dados salvos localmente.'); }
+// ── Sync com a planilha: fila (uma gravação por vez), status real e retentativa ──
+const _base = {obst:{}, gin:{}};      // última versão CONFIRMADA na planilha, por paciente
+const _failed = {};                   // pacientes cujo último envio falhou
+let _syncChain = Promise.resolve(), _syncPending = 0, _retryTimer = null;
+const _clone = o => JSON.parse(JSON.stringify(o));
+function snapBase(){
+  state.obstetric.forEach(p=>{ _base.obst[p.id]=_clone(p); });
+  state.gyneco.forEach(p=>{ _base.gin[p.id]=_clone(p); });
 }
+function paintSync(){
+  const st=state.syncStatus, d=document.getElementById('sync-dot'), l=document.getElementById('sync-label');
+  if(d) d.className='sync-dot '+(st==='ok'?'sync-ok':st==='err'?'sync-err':st==='syncing'?'sync-wait':'sync-off');
+  if(l) l.textContent = st==='ok'?'Sincronizado com a planilha':st==='err'?'ERRO: não salvou na planilha':st==='syncing'?'Salvando…':'Sem sync Sheets';
+}
+function syncToSheets(action, payload){
+  if(!state.settings.appsScriptUrl) return Promise.resolve(false);
+  _syncPending++; state.syncStatus='syncing'; paintSync();
+  const job = _syncChain.then(async()=>{
+    try{
+      const res = await fetch(state.settings.appsScriptUrl, {
+        method:'POST', headers:{'Content-Type':'text/plain'},
+        body: JSON.stringify({action, ...payload})
+      });
+      const data = await res.json();
+      if(data.status!=='ok') throw new Error(data.error||'resposta inesperada do script');
+      return true;
+    }catch(e){ console.log('Sync falhou:', e); return false; }
+  });
+  _syncChain = job.then(()=>{});
+  return job.then(ok=>{
+    _syncPending--;
+    if(!ok){ state.syncStatus='err'; showToast('⚠ NÃO salvou na planilha. Vou tentar de novo automaticamente.'); }
+    else if(_syncPending===0) state.syncStatus = Object.keys(_failed).length?'err':'ok';
+    paintSync();
+    return ok;
+  });
+}
+// Envia só o que mudou nesta paciente (o script compara com a última versão confirmada)
+async function syncPatient(kind, p){
+  const key = kind+':'+p.id, snap=_clone(p);
+  const ok = await syncToSheets(kind==='obst'?'patch':'patchGin', {patient:snap, base:_base[kind][p.id]||null});
+  if(ok){ _base[kind][p.id]=snap; delete _failed[key]; if(_syncPending===0 && !Object.keys(_failed).length){ state.syncStatus='ok'; paintSync(); } }
+  else { _failed[key]=true; scheduleRetry(); }
+  return ok;
+}
+function scheduleRetry(){
+  if(_retryTimer) return;
+  _retryTimer=setTimeout(async()=>{
+    _retryTimer=null;
+    for(const key of Object.keys(_failed)){
+      const [kind,id]=[key.split(':')[0], key.slice(key.indexOf(':')+1)];
+      const p=(kind==='obst'?state.obstetric:state.gyneco).find(x=>x.id===id);
+      if(!p){ delete _failed[key]; continue; }
+      await syncPatient(kind,p);
+    }
+    if(!Object.keys(_failed).length && _syncPending===0){ state.syncStatus='ok'; paintSync(); }
+  },15000);
+}
+window.addEventListener('beforeunload',e=>{ if(_syncPending>0||Object.keys(_failed).length){ e.preventDefault(); e.returnValue=''; } });
 
 async function saveObst(){
   await saveLocal(KEY_OBST, state.obstetric);
@@ -243,21 +293,20 @@ async function addPatient(key, patient){
   const list = key === KEY_OBST ? [...state.obstetric] : [...state.gyneco];
   list.push(patient);
   await saveLocal(key, list);
-  const action = key === KEY_OBST ? 'upsert' : 'upsertGin';
-  await syncToSheets(action, {patient});
+  await syncPatient(key === KEY_OBST ? 'obst' : 'gin', patient);
   return list;
 }
 async function commitObstEdit(p){
   const idx = state.obstetric.findIndex(x=>x.id===p.id);
   if(idx>=0) state.obstetric[idx]=p; else state.obstetric.push(p);
   await saveLocal(KEY_OBST, state.obstetric);
-  await syncToSheets('upsert', {patient: p});
+  await syncPatient('obst', p);
 }
 async function commitGinEdit(p){
   const idx = state.gyneco.findIndex(x=>x.id===p.id);
   if(idx>=0) state.gyneco[idx]=p; else state.gyneco.push(p);
   await saveLocal(KEY_GIN, state.gyneco);
-  await syncToSheets('upsertGin', {patient: p});
+  await syncPatient('gin', p);
 }
 
 function openObstetricModal(id){
@@ -485,15 +534,16 @@ function sidebar(){
     b.onclick=()=>{state.view=it.id;render();};
     wrap.appendChild(b);
   });
-  const syncLabel = state.syncStatus==='ok'?'Sync Sheets ativo':state.syncStatus==='err'?'Sync com erro':'Sem sync Sheets';
-  const syncClass = state.syncStatus==='ok'?'sync-ok':state.syncStatus==='err'?'sync-err':'sync-off';
+  const syncLabel = state.syncStatus==='ok'?'Sincronizado com a planilha':state.syncStatus==='err'?'ERRO: não salvou na planilha':state.syncStatus==='syncing'?'Salvando…':'Sem sync Sheets';
+  const syncClass = state.syncStatus==='ok'?'sync-ok':state.syncStatus==='err'?'sync-err':state.syncStatus==='syncing'?'sync-wait':'sync-off';
   const foot=el(`<div class="sidebar-foot" style="display:flex;flex-direction:column;gap:8px;">
-    <div><span class="sync-dot ${syncClass}"></span>${syncLabel}</div>
+    <div><span id="sync-dot" class="sync-dot ${syncClass}"></span><span id="sync-label">${syncLabel}</span></div>
     ${state.settings.appsScriptUrl?`<button id="btn-refresh-sheets" style="background:#28494D;border:none;color:#B9CFCE;font-size:12px;padding:7px 10px;border-radius:6px;cursor:pointer;width:100%;text-align:left;font-family:inherit;">🔄 Atualizar do Sheets</button>`:''}
   </div>`);
   wrap.appendChild(foot);
   const btnRefresh=foot.querySelector('#btn-refresh-sheets');
   if(btnRefresh) btnRefresh.onclick=async()=>{
+    if((_syncPending>0||Object.keys(_failed).length) && !confirm('Há alterações que ainda não foram salvas na planilha. Atualizar agora vai descartá-las. Continuar?')) return;
     btnRefresh.textContent='⏳ Buscando…';btnRefresh.disabled=true;
     await fetchFromSheets(true);
     render();
@@ -1275,6 +1325,7 @@ function viewConfig(){
     btnSyncAll.disabled=true; btnSyncAll.textContent='Enviando…';
     await syncToSheets('syncAll',{patients:state.obstetric});
     await syncToSheets('syncAllGin',{patients:state.gyneco});
+    snapBase();
     btnSyncAll.textContent='✓ Enviado!';
     showToast('Sync concluído: '+state.obstetric.length+' gestantes e '+state.gyneco.length+' ginecológicas.');
     setTimeout(()=>{btnSyncAll.disabled=false;btnSyncAll.textContent='⬆ Sync inicial → Sheets';},3000);
